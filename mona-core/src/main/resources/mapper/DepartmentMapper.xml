@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiangyang.dao.DepartmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.xiangyang.model.DepartmentDO">
+        <id column="department_id" jdbcType="BIGINT" property="departmentId" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+        <result column="department_father_id" jdbcType="BIGINT" property="departmentFatherId" />
+        <result column="department_level" jdbcType="INTEGER" property="departmentLevel" />
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
+        <result column="department_leader_id" jdbcType="INTEGER" property="departmentLeaderId" />
+    </resultMap>
+
+    <sql id="Query_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                <trim prefix="(" prefixOverrides="and" suffix=")">
+                    <foreach collection="criteria.criteria" item="criterion">
+                        <choose>
+                            <when test="criterion.noValue">
+                                and ${criterion.condition}
+                            </when>
+                            <when test="criterion.singleValue">
+                                and ${criterion.condition} #{criterion.value}
+                            </when>
+                            <when test="criterion.betweenValue">
+                                and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                            </when>
+                            <when test="criterion.listValue">
+                                and ${criterion.condition}
+                            <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                #{listItem}
+                            </foreach>
+                            </when>
+                        </choose>
+                    </foreach>
+                </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Query_Where_Clause">
+        <where>
+            <foreach collection="query.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List">
+        department_id,gmt_create,gmt_modified,department_father_id,department_level,department_name,department_leader_id
+    </sql>
+
+    <select id="selectByQuery" parameterType="com.xiangyang.query.DepartmentQuery" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+            from mona_department
+        <if test="_parameter != null">
+            <include refid="Query_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <include refid="MysqlDialectSuffix" />
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from mona_department where department_id = #{departmentId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from mona_department where department_id = #{departmentId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByQuery" parameterType="com.xiangyang.query.DepartmentQuery">
+        delete from mona_department
+        <if test="_parameter != null">
+            <include refid="Query_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.xiangyang.model.DepartmentDO">
+        <selectKey keyProperty="departmentId" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into mona_department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            gmt_create,gmt_modified,
+            <if test="departmentFatherId != null">
+                department_father_id,
+            </if>
+            <if test="departmentLevel != null">
+                department_level,
+            </if>
+            <if test="departmentName != null">
+                department_name,
+            </if>
+            <if test="departmentLeaderId != null">
+                department_leader_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            now(),now(),
+            <if test="departmentFatherId != null">
+                #{departmentFatherId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentLevel != null">
+                #{departmentLevel,jdbcType=INTEGER},
+            </if>
+            <if test="departmentName != null">
+                #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentLeaderId != null">
+                #{departmentLeaderId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByQuery" parameterType="com.xiangyang.query.DepartmentQuery" resultType="java.lang.Integer">
+        select count(*) from mona_department
+        <if test="_parameter != null">
+            <include refid="Query_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByQuerySelective" parameterType="map">
+        update mona_department
+        <set>
+            gmt_modified=now(),
+            <if test="record.departmentFatherId != null">
+                department_father_id = #{record.departmentFatherId,jdbcType=BIGINT},
+            </if>
+            <if test="record.departmentLevel != null">
+                department_level = #{record.departmentLevel,jdbcType=INTEGER},
+            </if>
+            <if test="record.departmentName != null">
+                department_name = #{record.departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.departmentLeaderId != null">
+                department_leader_id = #{record.departmentLeaderId,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Query_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByQuery" parameterType="map">
+        update mona_department
+        department_father_id = #{record.departmentFatherId,jdbcType=BIGINT},
+        department_level = #{record.departmentLevel,jdbcType=INTEGER},
+        department_name = #{record.departmentName,jdbcType=VARCHAR},
+        department_leader_id = #{record.departmentLeaderId,jdbcType=INTEGER},
+        gmt_modified = now()
+        <if test="_parameter != null">
+            <include refid="Update_By_Query_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiangyang.model.DepartmentDO">
+        update mona_department
+        <set>
+            gmt_modified=now(),
+            <if test="departmentFatherId != null">
+                department_father_id = #{departmentFatherId,jdbcType=BIGINT},
+            </if>
+            <if test="departmentLevel != null">
+                department_level = #{departmentLevel,jdbcType=INTEGER},
+            </if>
+            <if test="departmentName != null">
+                department_name = #{departmentName,jdbcType=VARCHAR},
+            </if>
+            <if test="departmentLeaderId != null">
+                department_leader_id = #{departmentLeaderId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where department_id = #{departmentId,jdbcType=BIGINT}
+    </update>
+
+    <sql id="MysqlDialectSuffix">
+        <if test="pageOffset &gt;= 0 and pageSize &gt; 0">
+            <![CDATA[ LIMIT #{pageOffset,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER} ]]>
+        </if>
+    </sql>
+
+</mapper>

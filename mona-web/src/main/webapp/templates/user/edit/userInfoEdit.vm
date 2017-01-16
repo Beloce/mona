@@ -1,0 +1,119 @@
+
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<!-- Main content -->
+<section class="invoice">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-user"></i> 个人信息修改
+##                <small class="pull-right">Date: 2/10/2014</small>small
+            </h2>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- info row -->
+
+        <div class="row invoice-info">
+            <form action="/user/edit/userInfoUpdate.htm">
+            <div class="col-sm-3 invoice-col">
+                <div class="form-group">
+                    <label>花名:</label>
+                    <input type="text" class="form-control" value="$!{userInfo.userInfoForm.flowerName}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>真名:</label>
+                    <input type="text" class="form-control" value="$!{userInfo.userInfoForm.realName}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>邮箱:</label>
+                    <input type="hidden" name="email" value="$!{userInfo.userInfoForm.email}">
+                    <input type="text" class="form-control" value="$!{userInfo.userInfoForm.email}" disabled>
+                </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <div class="form-group">
+                    <label>工号:</label>
+                    <input type="text" class="form-control" value="$!{userInfo.userInfoForm.jobNumber}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>联系方式:</label>
+                    <input type="text" class="form-control" name="mobile" value="$!{userInfo.userInfoForm.mobile}" />
+                </div>
+                <div class="form-group">
+                    <label>部门:</label>
+                    #set($departmentDOs=${userInfo.departmentForm.departmentDOs})
+                    #foreach($department in $departmentDOs)
+                    <input type="text" class="form-control" value=
+                            "|——  ${department.departmentName}" disabled>
+                    #end
+                </div>
+            </div>
+            <div class="col-sm-2 invoice-col">
+                <div class="form-group">
+                    <label>头像:</label>
+                        #if(!$!{userInfo.userInfoForm.headImg})##如果后台数据用户没有头像
+                            <div id="uploadheadImg" >
+                                <img src="/static/img/default_head.jpg" width='100' height='100' style='border-radius:50px;'>
+                            </div>
+                        #else
+                            <div id="uploadheadImg" >
+                                 <img src="$!{userInfo.userInfoForm.headImg}" width='100' height='100' style='border-radius:50px;'>
+                            </div>
+                        #end
+                    <input id="uplodHeadImgAjax" type="file"  name="uplodHeadImgAjax" />
+
+                </div>
+                <input id="uploadImg" class="btn btn-primary" value="上传图片" />
+
+            </div>
+        <!-- /.col -->
+        </div>
+    <!-- /.row -->
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <input type="submit" class="btn btn-success pull-right">
+                </input>
+            </div>
+        </div>
+    </form>
+
+
+</section>
+<script src="/static/js/jquery-2.2.3.min.js"></script>
+<script>
+    $("#uploadImg").click(function(){
+        if($("#uplodHeadImgAjax").val()!=''){
+            $.ajaxFileUpload({
+                type: "POST",
+                url: "/img/uploadImg.json",
+                secureuri : false,//是否启用安全提交，默认为false
+                fileElementId:'uplodHeadImgAjax',//文件选择框的id属性
+                dataType: 'Application/json',//服务器返回的格式
+                async : false,
+                success: function(data){
+                    if(data.success){
+                        // var domain = document.domain;
+                        $("#uploadheadImg").html("");
+                        $("#uploadheadImg").append("<img src='"+data.msg+"' width='100' height='100' style='border-radius:50px;' />");
+                        $("#uploadheadImg").append("<input value='"+data.msg+"' type='hidden' name='headImg' />");
+                    }else{
+                        console.log(data);
+                        alert("上传失败");
+                    }
+                },
+                error: function (data, status, e){
+                    //console.log(data);
+                    alert("上传失败");
+                }
+            });
+        }else{
+            alert("请选择图片");
+        }
+    });
+
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+</body>

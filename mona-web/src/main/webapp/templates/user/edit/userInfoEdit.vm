@@ -13,7 +13,6 @@
         <!-- /.col -->
     </div>
     <!-- info row -->
-
         <div class="row invoice-info">
             <form action="/user/edit/userInfoUpdate.htm">
             <div class="col-sm-3 invoice-col">

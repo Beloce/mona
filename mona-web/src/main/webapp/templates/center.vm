@@ -180,7 +180,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">信息修改</a>
+                                    <a href="/user/edit/userInfoEdit.htm" target="frame" class="btn btn-default btn-flat">信息修改</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="#" class="btn btn-default btn-flat">登出</a>

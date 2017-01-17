@@ -1,6 +1,11 @@
 package com.xiangyang.util;
 
+import com.xiangyang.contants.SessionContants;
 import com.xiangyang.form.UserInfoForm;
+import com.xiangyang.model.UserDO;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,11 +14,12 @@ import javax.servlet.http.HttpSession;
  */
 public class UserUtil {
     /**
-     * 从session中获取UserInfoForm对象
-     * @param session
-     * @return
+     * 获取当前登录用户信息
+     * @return UserDO
      */
-    public static UserInfoForm getUserInfoFormBySession(HttpSession session){
-        return (UserInfoForm) session.getAttribute("userInfo");
+    public static UserDO getUser(){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        return (UserDO) session.getAttribute(SessionContants.USER_DO_KEY);
     }
 }

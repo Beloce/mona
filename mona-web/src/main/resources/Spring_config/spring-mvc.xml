@@ -43,7 +43,7 @@
     <!--<property name="prefix" value="/jsp/" />-->
     <!--<property name="suffix" value=".jsp"></property>-->
     <!--</bean>-->
-    <!--请求与返回的json支持 -->
+    <!--请求与返回的json支持 fastjson-->
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean
@@ -67,7 +67,7 @@
             </list>
         </constructor-arg>
     </bean>
-    <!--图片上传插件-->
+    <!--文件上传插件-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="defaultEncoding" value="UTF-8"/>
         <!-- 指定所上传文件的总大小不能超过200KB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->

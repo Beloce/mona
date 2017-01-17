@@ -106,4 +106,24 @@ public class UserAOImpl implements UserAO {
         }
         return true;
     }
+
+    @Override
+    public BizResult queryUserDOByEmail(String email) {
+        BizResult<UserDO> bizResult = new BizResult<UserDO>();
+        if(email!=null){
+            UserQuery query = new UserQuery();
+            query.createCriteria().andEmailEqualTo(email);
+            List<UserDO> userDOs = userManager.selectByQuery(query);
+            if(userDOs.size()>0){
+                bizResult.setSuccess(true);
+                bizResult.setResult(userDOs.get(0));
+            }else{
+                bizResult.setSuccess(false);
+            }
+        }else{
+            bizResult.setSuccess(false);
+        }
+        return bizResult;
+    }
+
 }

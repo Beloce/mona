@@ -37,4 +37,11 @@ public interface UserAO {
      * @return
      */
     boolean updateUserByUserDO(UserDO userDO);
+
+    /**
+     * 根据email来获取userDO
+     * @param email
+     * @return
+     */
+    BizResult queryUserDOByEmail(String email);
 }

@@ -4,6 +4,7 @@ import com.xiangyang.AO.UserAO;
 import com.xiangyang.AO.VerifyAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.form.UserInfoForm;
+import com.xiangyang.model.UserDO;
 import com.xiangyang.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,11 +38,10 @@ public class UserController {
      * @return
      */
     @RequestMapping("/edit/userInfoEdit")
-    public String userInfoEdit(ModelMap modelMap, HttpSession session){
-        UserInfoForm userInfoForm = UserUtil.getUserInfoFormBySession(session);
-        if(userInfoForm!=null && !StringUtils.isEmpty(userInfoForm.getEmail())){
-            BizResult bizResult = new BizResult();
-            bizResult = userAO.getUserInfoByEmail(userInfoForm.getEmail());
+    public String userInfoEdit(ModelMap modelMap){
+        UserDO userDO = UserUtil.getUser();
+        if(userDO!=null && !StringUtils.isEmpty(userDO.getEmail())){
+            BizResult bizResult = userAO.getUserInfoByEmail(userDO.getEmail());
             if(bizResult.isSuccess()){
                 modelMap.addAttribute("userInfo",bizResult.getResult());
             }
@@ -52,14 +52,12 @@ public class UserController {
     /**
      * 保存用户提交的表单信息
      * @param userInfoForm
-     * @param modelMap
-     * @param session
      * @return
      */
     @RequestMapping("/edit/userInfoUpdate")
-    public String userInfoUpdate(UserInfoForm userInfoForm,ModelMap modelMap, HttpSession session){
-        UserInfoForm uif= UserUtil.getUserInfoFormBySession(session);
-        if(userInfoForm != null && !StringUtils.isEmpty(userInfoForm.getEmail()) && userInfoForm.getEmail().equals(uif.getEmail())){
+    public String userInfoUpdate(UserInfoForm userInfoForm){
+        UserDO userDO= UserUtil.getUser();
+        if(userInfoForm != null && !StringUtils.isEmpty(userInfoForm.getEmail()) && userInfoForm.getEmail().equals(userDO.getEmail())){
             userAO.updateUserInfoByUserInfoForm(userInfoForm);
         }
         return "redirect:/user/edit/userInfoEdit.htm";

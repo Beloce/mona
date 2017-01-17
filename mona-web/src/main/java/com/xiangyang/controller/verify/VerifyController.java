@@ -4,12 +4,16 @@ import com.xiangyang.AO.UserAO;
 import com.xiangyang.AO.VerifyAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.form.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +32,6 @@ public class VerifyController {
     @Autowired
     UserAO userAO;
 
-
     /**
      * 登录界面转跳
      * @return
@@ -45,29 +48,16 @@ public class VerifyController {
      */
     @RequestMapping("/loginVerify")
     public String loginVerify(LoginForm loginForm, ModelMap modelMap, HttpServletRequest request) {
-        if (loginForm != null && !StringUtils.isEmpty(loginForm.getEmail()) && !StringUtils.isEmpty(loginForm.getPassword())) {//传递的对象判空
-            if (verifyAO.loginVerify(loginForm)) {
-                logger.info("用户" + loginForm.getEmail() + "登录成功");
-                UserInfoForm userInfoForm = new UserInfoForm();
-                userInfoForm.setEmail(loginForm.getEmail());
-                HttpSession session = request.getSession();
-                session.setAttribute("userInfo", userInfoForm);
-                return "redirect:/center.htm";//到中央控制界面
-            } else {//账号密码错误
-                BizResult bizResult = new BizResult();
-                logger.info("用户" + loginForm.getEmail() + "登录失败");
-                bizResult.setSuccess(false);
-                bizResult.setMsg("账号密码错误");
-                modelMap.addAttribute("result", bizResult);
-                return "verify/login";
-            }
-        } else {//无内容非法请求
-            BizResult bizResult = new BizResult();
-            bizResult.setSuccess(false);
-            bizResult.setMsg("请求非法");
-            modelMap.addAttribute("result", bizResult);
-            return "verify/login";
+        try {
+            //利用shiro来进行登录认证
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(new UsernamePasswordToken(loginForm.getEmail(), loginForm.getPassword()));
+
+        } catch (Exception e) {
+            logger.error("登陆失败[userName=" + loginForm.getEmail() + "]", e);
+            return "redirect:/verify/login.htm";
         }
+        return "redirect:/center.htm";
     }
 
 }

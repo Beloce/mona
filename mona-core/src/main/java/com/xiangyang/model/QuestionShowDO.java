@@ -50,6 +50,11 @@ public class QuestionShowDO implements Serializable {
      */
     private Date gmtModified;
 
+    /**
+     * This field corresponds to the database column mona_question_show.is_deleted
+     */
+    private Integer isDeleted;
+
 	public Long getQuestionId() {
 		return questionId;
 	}
@@ -112,6 +117,14 @@ public class QuestionShowDO implements Serializable {
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
+	}
+
+	public Integer getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Integer isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 

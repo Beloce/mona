@@ -25,6 +25,9 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        /*
+            授权这块还没写完
+         */
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         if(null != session){

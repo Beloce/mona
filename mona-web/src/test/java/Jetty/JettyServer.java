@@ -10,7 +10,6 @@ import java.io.File;
 /**
  * Created by xiangyang on 16/11/13.
  */
-@Slf4j
 public class JettyServer {
 
     //jetty容器监听的端口，可以随意修改

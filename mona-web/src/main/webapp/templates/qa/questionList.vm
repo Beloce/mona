@@ -24,7 +24,7 @@
             <div class="box-body no-padding">
                 <div class="mailbox-controls">
                     <!-- Check all button -->
-                    <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-plus"></i>
+                    <a href="/qa/addQuestion.htm" ><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-plus"></i></a>
                     </button>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
@@ -105,3 +105,4 @@
     <!-- /.row -->
 </section>
 </body>
+<script src="/static/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>

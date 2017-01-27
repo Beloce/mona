@@ -25,10 +25,16 @@ import java.io.File;
 public class ImgController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
-    @RequestMapping(value="/uploadImg.json",method = RequestMethod.POST)
+    /**
+     * 头像上传
+     * @param uplodHeadImgAjax
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/uploadHeadImg.json",method = RequestMethod.POST)
     @ResponseBody
-    public Object importPicFile(MultipartFile uplodHeadImgAjax, HttpServletRequest request, HttpServletResponse response) {
+    public Object uploadHeadImg(MultipartFile uplodHeadImgAjax, HttpServletRequest request, HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin","*");
         BizResult bizResult = new BizResult();
         if (uplodHeadImgAjax.isEmpty()) {
             bizResult.setSuccess(false);
@@ -37,8 +43,10 @@ public class ImgController {
             try{
                 String prefix=uplodHeadImgAjax.getOriginalFilename().substring(uplodHeadImgAjax.getOriginalFilename().lastIndexOf(".")+1);
                 String filename = MD5Util.MD5(TimeUtils.getCurrentTime("yyyyMMddHHmmss"))+"."+prefix;
-                String geneTempPicPath=request.getSession().getServletContext().getRealPath("/imgs/temp");
-                String genePicPath = request.getSession().getServletContext().getRealPath("/imgs");
+                String geneTempPicPath="/media/imgs/temp";
+                String genePicPath ="/media/imgs/headImg";
+//                String geneTempPicPath=request.getSession().getServletContext().getRealPath("/imgs/temp");
+//                String genePicPath = request.getSession().getServletContext().getRealPath("/imgs/headImg");
                 //将上传的图片放到/upload服务器下
                 File tempFile = new File(geneTempPicPath,filename);
                 FileUtils.copyInputStreamToFile(uplodHeadImgAjax.getInputStream(), tempFile);
@@ -49,7 +57,7 @@ public class ImgController {
                 if (ImgUtil.scaleImageWithParams(tempImgPath,ImgPath,200,200,false,prefix)){//压缩成功
                     FileUtils.deleteQuietly(tempFile);
                     bizResult.setSuccess(true);
-                    bizResult.setMsg("/imgs/"+filename);
+                    bizResult.setMsg("/imgs/headImg"+filename);
                 }
                 else{
                     bizResult.setSuccess(false);
@@ -57,9 +65,18 @@ public class ImgController {
             }catch(Exception e) {
                 bizResult.setSuccess(false);
                 bizResult.setMsg("服务器异常");
+
                 logger.error("上传服务器异常",e);
             }
         }
         return bizResult;
+    }
+    @RequestMapping(value="/uploadQuestionImg.json",method = RequestMethod.POST)
+    @ResponseBody
+    public Object uploadQuestionImg(MultipartFile uplodImgAjax, HttpServletRequest request){
+        BizResult bizResult = new BizResult();
+
+        return bizResult;
+
     }
 }

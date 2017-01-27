@@ -1,0 +1,13 @@
+$!{msg}
+<script>
+    function delayer() {
+        window.location = '$!{redirectUrl}';
+    }
+    $(document).ready(function () {
+        #if($!{redirectUrl} && $!{redirectUrl} != "")
+            // delayer();
+            setTimeout('delayer()', 3000);
+            //这里实现延迟5秒跳转
+        #end
+    });
+</script>

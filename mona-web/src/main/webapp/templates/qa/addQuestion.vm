@@ -1,3 +1,15 @@
-<body>
-hello world
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<section>
+
+</section>
+#foreach($questionLevel in $!{questionLevelList.keySet()})
+<tr>
+    <th>
+        $questionLevel
+    </th>
+    <th>
+        $!{questionLevelList.get($questionLevel)}
+    </th>
+</tr>
+#end
 </body>

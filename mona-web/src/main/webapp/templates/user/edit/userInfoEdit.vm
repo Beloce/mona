@@ -87,7 +87,7 @@
         if($("#uplodHeadImgAjax").val()!=''){
             $.ajaxFileUpload({
                 type: "POST",
-                url: "http://115.28.21.87:8080/img/uploadHeadImg.json",
+                url: "/img/uploadHeadImg.json",
                 secureuri : false,//是否启用安全提交，默认为false
                 fileElementId:'uplodHeadImgAjax',//文件选择框的id属性
                 dataType: 'Application/json',//服务器返回的格式

@@ -17,6 +17,7 @@
                 /imgs/**=anon
                 /static/**=anon
                 /templates/**=anon
+                /error/createError.htm*=anon
                 /**.json=anon
                 /verify/login.htm*=anon
                 /index.html*=anon

@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by peiji on 2017/1/25.
  */
 public enum QuestionLevelEnum {
-    Sticky(1,"置顶"),
+    Sticky(1,"首页置顶"),
     SectionSticky(2,"产品板块置顶"),
     Serious(3,"严重"),
     Important(4,"重要"),

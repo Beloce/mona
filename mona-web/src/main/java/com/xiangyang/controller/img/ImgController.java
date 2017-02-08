@@ -32,12 +32,12 @@ public class ImgController {
 
     final String HEAD_IMG_PATH ="/imgs/headImg/";
 
+    final String ERROR_IMG_PATH="/imgs/errorImg/";
+
     final String TEMP_IMG_PATH = "/imgs/temp/" ;
 
     @Autowired
     UserAO userAO;
-
-
 
     /**
      * 头像上传
@@ -95,6 +95,49 @@ public class ImgController {
         BizResult bizResult = new BizResult();
 
 
+        return bizResult;
+
+    }
+
+    /**
+     * 上传error的截图文件
+     * @param uploadErrorImgAjax
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value ="/uploadErrorImg.json",method = RequestMethod.POST)
+    @ResponseBody
+    public Object uploadErrorImg(MultipartFile uploadErrorImgAjax,HttpServletRequest request) throws Exception{
+        BizResult bizResult = new BizResult();
+        if (uploadErrorImgAjax.isEmpty()) {
+            bizResult.setSuccess(false);
+            bizResult.setMsg("图片数据为空");
+        }else {
+            try{
+                String prefix=uploadErrorImgAjax.getOriginalFilename().substring(uploadErrorImgAjax.getOriginalFilename().lastIndexOf(".")+1);
+                String filename = MD5Util.MD5(TimeUtils.getCurrentTime("yyyyMMddHHmmss")+System.currentTimeMillis())+"."+prefix;
+                String geneTempPicPath=request.getSession().getServletContext().getRealPath(TEMP_IMG_PATH);
+                String genePicPath = request.getSession().getServletContext().getRealPath(ERROR_IMG_PATH);
+                //将上传的图片放到/upload服务器下
+                File tempFile = new File(geneTempPicPath,filename);
+                FileUtils.copyInputStreamToFile(uploadErrorImgAjax.getInputStream(), tempFile);//将文件流转换成文件
+                String tempImgPath = geneTempPicPath+File.separatorChar+filename;//临时存储的源文件
+                String ImgPath = genePicPath+File.separatorChar+filename;//目的文件
+                if(new File(tempImgPath).length() > (2*1024*1024)){//如果上传的文件过于庞大，压缩
+                    ImgUtil.scaleImage(tempImgPath,ImgPath,0.2,prefix);
+                    FileUtils.deleteQuietly(new File(tempImgPath));
+                }else{
+                    FileUtils.moveFile(new File(tempImgPath),new File(ImgPath));
+                }
+                bizResult.setSuccess(true);
+                bizResult.setMsg(ERROR_IMG_PATH+filename);
+            }catch(Exception e) {
+                bizResult.setSuccess(false);
+                bizResult.setMsg("服务器异常");
+                logger.error("上传服务器异常",e);
+            }
+        }
         return bizResult;
 
     }

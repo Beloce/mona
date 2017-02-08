@@ -10,7 +10,7 @@
                     <div class="content-block" style="padding:0">
                         <div class="list-block">
                             <ul>
-                                <!-- Text inputs -->
+## 标题------------------------------------------------------------------------------
                                 <li>
                                     <div class="item-content">
                                         <div class="item-media"><i class="icon icon-form-name"></i></div>
@@ -22,6 +22,7 @@
                                         </div>
                                     </div>
                                 </li>
+ ## 紧急程度------------------------------------------------------------------------------
                                 <li>
                                     <div class="item-content">
                                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
@@ -38,6 +39,7 @@
                                         </div>
                                     </div>
                                 </li>
+## 问题产品------------------------------------------------------------------------------
                                 <li>
                                     <div class="item-content">
                                         <div class="item-media"><i class="icon icon-form-gender"></i></div>
@@ -54,6 +56,7 @@
                                         </div>
                                     </div>
                                 </li>
+## 问题描述------------------------------------------------------------------------------
                                 <li class="align-top">
                                     <div class="item-content">
                                         <div class="item-media"><i class="icon icon-form-comment"></i></div>
@@ -66,11 +69,42 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        ## 截图上传--------------------------------------------------------------------------------
+                            <div class="page__bd">
+                                <div class="weui-gallery" id="gallery">
+                                    <span class="weui-gallery__img" id="galleryImg"></span>
+                                    <div class="weui-gallery__opr">
+                                        <a href="javascript:" class="weui-gallery__del">
+                                            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="weui-cells weui-cells_form">
+                                    <div class="weui-cell">
+                                        <div class="weui-cell__bd">
+                                            <div class="weui-uploader">
+                                                <div class="weui-uploader__hd">
+                                                    <lable>问题图片上传 (选填)</lable>
+                                                </div>
+                                                <div class="weui-uploader__bd">
+                                                    <ul class="weui-uploader__files" id="uploaderFiles"></ul>
+                                                    <input id="screenshot" name="screenshot" type="hidden" value />
+                                                    <div class="weui-uploader__input-box">
+                                                        <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+##end---------------------------------------------------------------------------------------
+
                         <div class="content-block">
                             <div class="row">
                                 <div class="col-50"><a href="#" class="button button-big button-fill button-danger">取消</a></div>
-                                <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+                                <div class="col-50"><a href="#" id="submits" class="button button-big button-fill button-success">提交</a></div>
                             </div>
                         </div>
                     </div>
@@ -82,4 +116,5 @@
                 </div>
             </div>
         </div>
-    </div>
+
+

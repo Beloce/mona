@@ -18,6 +18,7 @@
                 /static/**=anon
                 /templates/**=anon
                 /error/createError.htm*=anon
+                /img/uploadErrorImg.json*=anon
                 /**.json=anon
                 /verify/login.htm*=anon
                 /index.html*=anon

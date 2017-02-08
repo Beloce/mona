@@ -1,3 +1,82 @@
-<body>
-hello world
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/wangEditor/css/wangEditor.min.css">
+    <style>
+        label{
+            color: green;
+        }
+    </style>
+</head>
+
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+    <section class="content" >
+        <div class="box box-primary">
+##box-header-------------------------
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-edit"></i>
+                    常见问题编辑栏
+                </h3>
+            </div>
+##box-body---------------------------
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <label>*产品名称</label>
+                            <select class="form-control">
+                                #foreach($product in $!{productList})
+                                <option value="$product.productId">$product.productName</option>
+                                #end
+                            </select>
+                        </div>
+                        <div class="col-xs-3">
+                            <label>*问题等级</label>
+                            <select class="form-control">
+                            #foreach($questionLevel in $!{questionLevelList.keySet()})
+                                <option vlaue="$questionLevel"> $!{questionLevelList.get($questionLevel)}</option>
+                            #end
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label>*问题标题</label>
+                            <input type="text" class="form-control" placeholder="请输入...">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>*问题简介</label>
+                    <input type="text" class="form-control" placeholder="请输入...">
+                </div>
+                ##编辑框
+                <div class="form-group">
+                    <label>*问题描述</label>
+                    <textarea id="textarea" style="height:400px;max-height:500px;width: auto">
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <submit type="button" class="btn btn-block btn-success">提交</submit>
+                        </div>
+                        <div class="col-xs-10">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+##end---------------------------
+<script type="text/javascript" src="/static/wangEditor/js/wangEditor.min.js"></script>
+<script>
+    var editor = new wangEditor('textarea');
+    editor.create();
+</script>
+
 </body>

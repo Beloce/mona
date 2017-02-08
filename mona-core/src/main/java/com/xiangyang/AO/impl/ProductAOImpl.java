@@ -8,12 +8,14 @@ import com.xiangyang.query.ProductQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by xiangyang on 17/1/18.
  */
+@Service
 public class ProductAOImpl implements ProductAO {
     @Autowired
     ProductManager productManager;

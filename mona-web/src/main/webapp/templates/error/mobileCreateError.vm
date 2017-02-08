@@ -17,7 +17,7 @@
                                         <div class="item-inner">
                                             <div class="item-title label">*标题</div>
                                             <div class="item-input">
-                                                <input type="text" placeholder="标题名称">
+                                                <input type="text" id="title" placeholder="标题名称">
                                             </div>
                                         </div>
                                     </div>
@@ -29,7 +29,7 @@
                                         <div class="item-inner">
                                             <div class="item-title label">*紧急程度</div>
                                             <div class="item-input">
-                                                <select>
+                                                <select id="errorType">
                                                     <option value="-1">请选择</option>
                                                 #foreach($errorType in $!{errorTypeMap.keySet()})
                                                     <option vlaue="$errorType"> $!{errorTypeMap.get($errorType)}</option>
@@ -46,7 +46,7 @@
                                         <div class="item-inner">
                                             <div class="item-title label">*问题产品</div>
                                             <div class="item-input">
-                                                <select>
+                                                <select id="productId">
                                                     <option value="-1">请选择</option>
                                                     #foreach($product in $!{productList})
                                                         <option value="$product.productId">$product.productName</option>
@@ -63,7 +63,7 @@
                                         <div class="item-inner">
                                             <div class="item-title label">*问题描述</div>
                                             <div class="item-input">
-                                                <textarea placeholder="请描述您遇到的问题"></textarea>
+                                                <textarea id="description" placeholder="请描述您遇到的问题"></textarea>
                                             </div>
                                         </div>
                                     </div>

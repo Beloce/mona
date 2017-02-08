@@ -1,0 +1,114 @@
+/**
+ * Created by peiji on 2017/2/2.
+ */
+var fileArray = new Array();//保存文件的数组
+//提交表单
+function submitForm(){
+    var errorType = $("#errorType").val(),
+     productId = $("#productId").val(),
+     title = $("#title").val(),
+     description =  $("#description").val();
+    if(errorType == -1 || productId == -1 || description =="" || title ==""){
+        $.alert('请将信息填写完毕！', '警告');
+        return;
+    }
+    var screenshot =  $("#screenshot").val();
+    var postData = {
+        title :   $("#title").val(),
+        errorType : errorType,
+        productId : productId,
+        description : $("#description").val(),
+        screenshot : screenshot
+    }
+    $.ajax({
+        type: "POST",
+        url: "/error/createError.json",
+        data: JSON.stringify(postData),
+        contentType:'application/json',
+        success:function (data) {
+            if(data.success){
+                $.alert("提交成功","成功");
+            }else{
+                $.alert("服务器错误，提交失败","错误");
+            }
+        },
+        error:function (data) {
+            $.alert("网络异常","错误");
+            return;
+        }
+    });
+
+}
+//异步上传图片
+function uploadImgSync() {
+    $.showPreloader("上传图片中请稍等");
+    for(var i = 0;i < fileArray.length ; i++){
+        var filedata = new FormData();
+        filedata.append("uploadErrorImgAjax",fileArray[i],fileArray[i].name);
+        $.ajax({
+            type:"POST",
+            contentType:false,
+            processData:false,
+            url:"/img/uploadErrorImg.json",
+            data:filedata,
+            dataType: 'json',
+            async:false,
+            success:function (data) {
+                if(data.success){
+                    if($("#screenshot").val() == ""){
+                        $("#screenshot").val(data.msg);
+                    }else{
+                        $("#screenshot").val($("#screenshot").val()+"#*#"+data.msg);
+                    }
+                }
+            },
+            error:function (data) {
+                console.log(data);
+                $("#screenshot").val("");//上传失败变全部刷新
+                return;
+            }
+        });
+    }
+    setTimeout(function () {
+        $.hidePreloader();
+    }, 300);
+}
+//初始化
+$(function(){
+    var tmpl = "<li class='weui-uploader__file' style='background-image:url(#url#)'></li>",
+        $gallery = $("#gallery"),
+        $galleryImg = $("#galleryImg"),
+        $uploaderInput = $("#uploaderInput"),
+        $uploaderFiles = $("#uploaderFiles")
+        ;
+    $uploaderInput.on("change", function(e){
+        var src,
+            url = window.URL || window.webkitURL || window.mozURL,
+            files = e.target.files;
+        for (var i = 0, len = files.length; i < len; ++i) {
+            var file = files[i];
+            if (url) {
+                src = url.createObjectURL(file);
+            } else {
+                src = e.target.result;
+            }
+            fileArray.push(file);
+            $uploaderFiles.append($(tmpl.replace('#url#', src)));
+        }
+
+    });
+    $uploaderFiles.on("tap", "li", function(){
+        $galleryImg.attr("style", this.getAttribute("style"));
+        $gallery.show(100);
+    });
+    $gallery.on("tap", function(){
+        $gallery.hide(100);
+    });
+    //点击提交按钮
+    $("#submits").on("tap",function(){
+        if(fileArray.length > 0){
+            uploadImgSync();//上传图片
+        }
+        submitForm();
+    });
+});

@@ -1,7 +1,7 @@
 package com.xiangyang.AO.impl;
 
 import com.xiangyang.AO.DepartmentAO;
-import com.xiangyang.enums.DepartmentLevelEnum;
+import com.xiangyang.enums.department.DepartmentLevelEnum;
 import com.xiangyang.form.DepartmentForm;
 import com.xiangyang.manager.DepartmentManager;
 import com.xiangyang.model.DepartmentDO;
@@ -60,4 +60,34 @@ public class DepartmentAOImpl implements DepartmentAO{
             return null;
         }
     }
+
+    @Override
+    public Integer queryDepartmentTypeById(Long departmentId) {
+        if(departmentId == null){
+            return null;
+        }
+        DepartmentDO departmentDO = this.queryTopLevelDepartmentDObyId(departmentId);
+        if(departmentDO!=null ){
+            return departmentDO.getDepartmentType();
+        }else {
+            return null;
+        }
+
+    }
+
+    @Override
+    public DepartmentDO queryTopLevelDepartmentDObyId(Long departmentId) {
+        if(departmentId == null){
+            return null;
+        }
+        DepartmentDO departmentDO = departmentManager.selectByPrimaryKey(departmentId);
+        if(departmentDO.getDepartmentLevel()!=null) {
+            Integer departmentLevel = departmentDO.getDepartmentLevel();
+            for (int i = 0; i < departmentLevel; i++) {
+                departmentDO = departmentManager.selectByPrimaryKey(departmentDO.getDepartmentFatherId());
+            }
+        }
+        return departmentDO;
+    }
+
 }

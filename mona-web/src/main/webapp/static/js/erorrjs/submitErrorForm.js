@@ -4,27 +4,28 @@
 var fileArray = new Array();//保存文件的数组
 //提交表单
 function submitForm(){
-    var errorType = $("#errorType").val(),
-     productId = $("#productId").val(),
-     title = $("#title").val(),
-     description =  $("#description").val();
+    var errorType = $("#errorType").val();
+    var productId = $("#productId").val();
+    var title = $("#title").val();
+    var description =  $("#description").val();
     if(errorType == -1 || productId == -1 || description =="" || title ==""){
         $.alert('请将信息填写完毕！', '警告');
         return;
     }
     var screenshot =  $("#screenshot").val();
     var postData = {
-        title :   $("#title").val(),
+        title :   title,
         errorType : errorType,
         productId : productId,
-        description : $("#description").val(),
+        description : description,
         screenshot : screenshot
     }
     $.ajax({
         type: "POST",
-        url: "/error/createError.json",
+        url: "/error/doAddError.json",
         data: JSON.stringify(postData),
         contentType:'application/json',
+        async: false,
         success:function (data) {
             if(data.success){
                 $.alert("提交成功","成功");
@@ -105,7 +106,7 @@ $(function(){
         $gallery.hide(100);
     });
     //点击提交按钮
-    $("#submits").on("tap",function(){
+    $("#submits").on("click",function(){
         if(fileArray.length > 0){
             uploadImgSync();//上传图片
         }

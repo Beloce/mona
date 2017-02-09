@@ -1,4 +1,4 @@
-package com.xiangyang.enums;
+package com.xiangyang.enums.department;
 
 /**
  * Created by xiangyang on 16/11/23.

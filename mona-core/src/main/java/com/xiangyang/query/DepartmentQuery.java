@@ -507,6 +507,76 @@ public class DepartmentQuery extends BaseQuery implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andDepartmentTypeIsNull() {
+            addCriterion("department_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeIsNotNull() {
+            addCriterion("department_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeEqualTo(Integer value) {
+            addCriterion("department_type =", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeNotEqualTo(Integer value) {
+            addCriterion("department_type <>", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeGreaterThan(Integer value) {
+            addCriterion("department_type >", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("department_type >=", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeLessThan(Integer value) {
+            addCriterion("department_type <", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("department_type <=", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeLike(Integer value) {
+            addCriterion("department_type like", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeNotLike(Integer value) {
+            addCriterion("department_type not like", value, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeIn(List<Integer> values) {
+            addCriterion("department_type in", values, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeNotIn(List<Integer> values) {
+            addCriterion("department_type not in", values, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeBetween(Integer value1, Integer value2) {
+            addCriterion("department_type between", value1, value2, "departmentType");
+            return (Criteria) this;
+        }
+
+        public Criteria andDepartmentTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("department_type not between", value1, value2, "departmentType");
+            return (Criteria) this;
+        }
+
     }
 
     /**

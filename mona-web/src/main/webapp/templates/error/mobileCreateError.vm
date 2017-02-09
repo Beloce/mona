@@ -32,7 +32,7 @@
                                                 <select id="errorType">
                                                     <option value="-1">请选择</option>
                                                 #foreach($errorType in $!{errorTypeMap.keySet()})
-                                                    <option vlaue="$errorType"> $!{errorTypeMap.get($errorType)}</option>
+                                                    <option value="$errorType"> $!{errorTypeMap.get($errorType)}</option>
                                                 #end
                                                 </select>
                                             </div>
@@ -69,7 +69,7 @@
                                     </div>
                                 </li>
                             </ul>
-                        ## 截图上传--------------------------------------------------------------------------------
+## 截图上传--------------------------------------------------------------------------------
                             <div class="page__bd">
                                 <div class="weui-gallery" id="gallery">
                                     <span class="weui-gallery__img" id="galleryImg"></span>

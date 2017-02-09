@@ -22,4 +22,20 @@ public interface DepartmentAO {
      * @return DepartmentDO
      */
     DepartmentDO selectDeparmentDOByDepartmentId(Long departmentId);
+
+
+    /**
+     * 根据部门id查询该部门的角色(详见枚举类DepartmentEnum)
+     * @param departmentId
+     * @return
+     */
+    Integer queryDepartmentTypeById(Long departmentId);
+
+    /**
+     * 通过id查询该部门对应的顶级部门
+     * @param departmentId
+     * @return
+     */
+    DepartmentDO queryTopLevelDepartmentDObyId(Long departmentId);
+
 }

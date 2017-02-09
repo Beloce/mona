@@ -1,5 +1,6 @@
 package com.xiangyang.form.error;
 
+import com.xiangyang.model.UserDO;
 import lombok.Data;
 
 /**
@@ -13,5 +14,6 @@ public class ErrorForm{
     private Long productId;
     private String description;
     private String screenshot;
+    private UserDO userDO;
 
 }

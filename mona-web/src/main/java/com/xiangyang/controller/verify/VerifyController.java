@@ -1,9 +1,13 @@
 package com.xiangyang.controller.verify;
 
+import com.xiangyang.AO.DepartmentAO;
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.AO.VerifyAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.enums.department.DepartmentTypeEnum;
 import com.xiangyang.form.*;
+import com.xiangyang.model.UserDO;
+import com.xiangyang.util.UserUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -32,12 +36,15 @@ public class VerifyController {
     @Autowired
     UserAO userAO;
 
+    @Autowired
+    DepartmentAO departmentAO;
+
     /**
      * 登录界面转跳
      * @return
      */
-    @RequestMapping("/login")
-    public String login(){
+    @RequestMapping("/login.htm")
+    public String login(HttpServletRequest request){
         return "/verify/login";
     }
 
@@ -46,7 +53,7 @@ public class VerifyController {
      * @param loginForm 登录表单对象
      * @return url
      */
-    @RequestMapping("/loginVerify")
+    @RequestMapping("/loginVerify.htm")
     public String loginVerify(LoginForm loginForm, ModelMap modelMap, HttpServletRequest request) {
         try {
             //利用shiro来进行登录认证
@@ -57,7 +64,27 @@ public class VerifyController {
             logger.error("登陆失败[userName=" + loginForm.getEmail() + "]", e);
             return "redirect:/verify/login.htm";
         }
-        return "redirect:/center.htm";
+        return "redirect:/verify/success.htm";
     }
+
+    /**
+     * 界面路由，区分部门的角色对应的页面
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/success.htm")
+    public String success(ModelMap modelMap){
+        UserDO userDO = UserUtil.getUser();
+        if(userDO == null || userDO.getDepartmentId() == null){
+            modelMap.addAttribute("msg","当前您没有权限，请联系管理员");
+        }
+        logger.info("|----------用户: " + userDO.getFlowerName()+ " 登录----------|");
+        if(departmentAO.queryDepartmentTypeById(userDO.getDepartmentId()).equals(DepartmentTypeEnum.Tech.getCode())){//技术岗的同学
+            return "redirect:/center.htm";
+        }else {//非技术岗同学
+            return "redirect:/error/createError.htm";
+        }
+    }
+
 
 }

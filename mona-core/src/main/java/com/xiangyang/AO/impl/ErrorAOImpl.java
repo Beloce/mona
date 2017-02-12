@@ -33,6 +33,7 @@ public class ErrorAOImpl implements ErrorAO {
         errorDO.setTitle(errorForm.getTitle());
         errorDO.setDescription(errorForm.getDescription());
         errorDO.setProductId(errorForm.getProductId());
+        errorDO.setProviderId(errorForm.getUserDO().getUserId());
         errorDO.setType(errorForm.getErrorType());
         errorDO.setScreenshot(errorForm.getScreenshot());
         errorDO.setSource(ErrorSourceEnum.Business.getCode());

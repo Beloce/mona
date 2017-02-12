@@ -224,6 +224,12 @@
             <artifactId>shiro-web</artifactId>
             <version>1.4.0-RC2</version>
         </dependency>
+        <!--    七牛云     -->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.3</version>
+        </dependency>
     </dependencies>
 
 

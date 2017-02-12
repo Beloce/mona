@@ -42,37 +42,35 @@ function submitForm(){
 }
 //异步上传图片
 function uploadImgSync() {
-    $.showPreloader("上传图片中请稍等");
     for(var i = 0;i < fileArray.length ; i++){
         var filedata = new FormData();
-        filedata.append("uploadErrorImgAjax",fileArray[i],fileArray[i].name);
+        filedata.append("uploadImgAjax",fileArray[i],fileArray[i].name);
         $.ajax({
             type:"POST",
             contentType:false,
             processData:false,
-            url:"/img/uploadErrorImg.json",
+            url:"/img/uploadImg.json",
             data:filedata,
             dataType: 'json',
             async:false,
             success:function (data) {
                 if(data.success){
                     if($("#screenshot").val() == ""){
-                        $("#screenshot").val(data.msg);
+                        $("#screenshot").val(data.result);
                     }else{
-                        $("#screenshot").val($("#screenshot").val()+"#*#"+data.msg);
+                        $("#screenshot").val($("#screenshot").val()+"#*#"+data.result);
                     }
                 }
             },
             error:function (data) {
-                console.log(data);
+                $.alert("服务器错误，上传图片失败","错误");
                 $("#screenshot").val("");//上传失败变全部刷新
-                return;
+                return false;
             }
         });
+
     }
-    setTimeout(function () {
-        $.hidePreloader();
-    }, 300);
+    return true;
 }
 //初始化
 $(function(){
@@ -107,9 +105,14 @@ $(function(){
     });
     //点击提交按钮
     $("#submits").on("click",function(){
+        var flag = true;
         if(fileArray.length > 0){
-            uploadImgSync();//上传图片
+            $.showPreloader("上传图片中请稍等");
+            flag = uploadImgSync();
+            $.hidePreloader();
         }
-        submitForm();
+        if(flag){
+            submitForm();
+        }
     });
 });

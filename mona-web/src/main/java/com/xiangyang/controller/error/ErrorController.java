@@ -54,7 +54,7 @@ public class ErrorController {
         bizResult = errorAO.addNewError(errorForm);
         bizResult.setSuccess(true);
 
-        logger.info("|--------------发布问题成功/r/n"+errorForm.toString()+"--------------|");
+        logger.info("|--------------发布问题成功\r\n"+errorForm.toString()+"--------------|");
         return bizResult;
     }
 

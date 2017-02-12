@@ -2,6 +2,7 @@ package com.xiangyang.controller.img;
 
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.manager.ImageManager;
 import com.xiangyang.model.UserDO;
 import com.xiangyang.util.ImgUtil;
 import com.xiangyang.util.MD5Util;
@@ -30,14 +31,17 @@ import java.io.File;
 public class ImgController {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    final String HEAD_IMG_PATH ="/imgs/headImg/";
+    final String HEAD_TMP_PATH = "/img/headImg";//头像图片压缩后的临时文件夹
 
-    final String ERROR_IMG_PATH="/imgs/errorImg/";
+    final String OTHER_TMP_PATH = "/img/other";
 
-    final String TEMP_IMG_PATH = "/imgs/temp/" ;
+    final String TEMP_IMG_PATH = "/img/tmp" ;//所有上传文件的临时文件夹
 
     @Autowired
     UserAO userAO;
+
+    @Autowired
+    ImageManager imageManager;
 
     /**
      * 头像上传
@@ -47,36 +51,39 @@ public class ImgController {
      */
     @RequestMapping(value="/uploadHeadImg.json",method = RequestMethod.POST)
     @ResponseBody
-    public Object uploadHeadImg(MultipartFile uplodHeadImgAjax, HttpServletRequest request, HttpServletResponse response) {
+    public Object uploadHeadImg(MultipartFile uplodHeadImgAjax, HttpServletRequest request, HttpServletResponse response) throws Exception{
         response.setHeader("Access-Control-Allow-Origin","*");
         BizResult bizResult = new BizResult();
+        BizResult upResult = new BizResult();
+        String geneTempPicPath=request.getSession().getServletContext().getRealPath(TEMP_IMG_PATH);//临时目录
+        String TempHeadPicPath=request.getSession().getServletContext().getRealPath(HEAD_TMP_PATH);//压缩后的临时目录
         if (uplodHeadImgAjax.isEmpty()) {
             bizResult.setSuccess(false);
             bizResult.setMsg("图片数据为空");
         }else {
             UserDO userDO = UserUtil.getUser();
-            if(StringUtils.isNotEmpty(userDO.getHeadImg())){
-                //删除原来的头像信息
-                org.apache.tools.ant.util.FileUtils.delete(new File(request.getSession().getServletContext().getRealPath(userDO.getHeadImg())));
-            }
             try{
                 String prefix=uplodHeadImgAjax.getOriginalFilename().substring(uplodHeadImgAjax.getOriginalFilename().lastIndexOf(".")+1);
-                String filename = MD5Util.MD5(TimeUtils.getCurrentTime("yyyyMMddHHmmss"))+"."+prefix;
-                String geneTempPicPath=request.getSession().getServletContext().getRealPath(TEMP_IMG_PATH);
-                String genePicPath = request.getSession().getServletContext().getRealPath(HEAD_IMG_PATH);
-                //将上传的图片放到/upload服务器下
+                String filename = uplodHeadImgAjax.getOriginalFilename();//上传文件的文件名
+
+                //将上传的图片放到/img/tmp服务器下
                 File tempFile = new File(geneTempPicPath,filename);
                 FileUtils.copyInputStreamToFile(uplodHeadImgAjax.getInputStream(), tempFile);
-
                 String tempImgPath = geneTempPicPath+File.separatorChar+filename;
-                String ImgPath = genePicPath+File.separatorChar+filename;
-
-                if (ImgUtil.scaleImageWithParams(tempImgPath,ImgPath,200,200,false,prefix)){//压缩成功
-                    FileUtils.deleteQuietly(tempFile);
-                    bizResult.setSuccess(true);
-                    bizResult.setMsg(HEAD_IMG_PATH+filename);
-                    userDO.setHeadImg(HEAD_IMG_PATH+filename);
-                    userAO.updateUserByUserDO(userDO);
+                String tempHeadImgPath = TempHeadPicPath+File.separatorChar+filename;
+                //头像图像压缩;
+                if (ImgUtil.scaleImageWithParams(tempImgPath,tempHeadImgPath,200,200,false,prefix)){//压缩成功
+                    FileUtils.deleteQuietly(tempFile);//删除源文件
+                    File headTempImg = new File(tempHeadImgPath);
+                    upResult = imageManager.upload(headTempImg);//上传至七牛云
+                    if(upResult.isSuccess()){//上传成功
+                        bizResult.setSuccess(true);
+                        userDO.setHeadImg((String)upResult.getResult());
+                        userAO.updateUserByUserDO(userDO);
+                    }else {
+                        bizResult.setSuccess(false);
+                    }
+                    FileUtils.deleteQuietly(headTempImg);//删除临时头像问价
                 }
                 else{
                     bizResult.setSuccess(false);
@@ -87,57 +94,62 @@ public class ImgController {
                 logger.error("上传服务器异常",e);
             }
         }
+        FileUtils.cleanDirectory(new File(geneTempPicPath));
+        FileUtils.cleanDirectory(new File(TempHeadPicPath));
         return bizResult;
-    }
-    @RequestMapping(value="/uploadQuestionImg.json",method = RequestMethod.POST)
-    @ResponseBody
-    public Object uploadQuestionImg(MultipartFile uplodQuestionShowImgAjax, HttpServletRequest request){
-        BizResult bizResult = new BizResult();
-
-
-        return bizResult;
-
     }
 
     /**
-     * 上传error的截图文件
-     * @param uploadErrorImgAjax
+     * 上传除头像外的其他文件
+     * @param uploadImgAjax
      * @param request
      * @return
      * @throws Exception
      */
-    @RequestMapping(value ="/uploadErrorImg.json",method = RequestMethod.POST)
+    @RequestMapping(value ="/uploadImg.json",method = RequestMethod.POST)
     @ResponseBody
-    public Object uploadErrorImg(MultipartFile uploadErrorImgAjax,HttpServletRequest request) throws Exception{
+    public Object uploadImg(MultipartFile uploadImgAjax,HttpServletRequest request) throws Exception{
         BizResult bizResult = new BizResult();
-        if (uploadErrorImgAjax.isEmpty()) {
+        BizResult upResupt = new BizResult();
+        String geneTempPicPath=request.getSession().getServletContext().getRealPath(TEMP_IMG_PATH);
+        String genePicPath = request.getSession().getServletContext().getRealPath(OTHER_TMP_PATH);
+        if (uploadImgAjax.isEmpty()) {
             bizResult.setSuccess(false);
             bizResult.setMsg("图片数据为空");
         }else {
             try{
-                String prefix=uploadErrorImgAjax.getOriginalFilename().substring(uploadErrorImgAjax.getOriginalFilename().lastIndexOf(".")+1);
-                String filename = MD5Util.MD5(TimeUtils.getCurrentTime("yyyyMMddHHmmss")+System.currentTimeMillis())+"."+prefix;
-                String geneTempPicPath=request.getSession().getServletContext().getRealPath(TEMP_IMG_PATH);
-                String genePicPath = request.getSession().getServletContext().getRealPath(ERROR_IMG_PATH);
-                //将上传的图片放到/upload服务器下
+                String prefix=uploadImgAjax.getOriginalFilename().substring(uploadImgAjax.getOriginalFilename().lastIndexOf(".")+1);
+                String filename = uploadImgAjax.getOriginalFilename();
+                //将上传的图片放到/img/tmp服务器下
                 File tempFile = new File(geneTempPicPath,filename);
-                FileUtils.copyInputStreamToFile(uploadErrorImgAjax.getInputStream(), tempFile);//将文件流转换成文件
+                FileUtils.copyInputStreamToFile(uploadImgAjax.getInputStream(), tempFile);//将文件流转换成文件
                 String tempImgPath = geneTempPicPath+File.separatorChar+filename;//临时存储的源文件
-                String ImgPath = genePicPath+File.separatorChar+filename;//目的文件
+                String ImgPath = genePicPath+File.separatorChar+filename;//压缩后的临时文件
                 if(new File(tempImgPath).length() > (2*1024*1024)){//如果上传的文件过于庞大，压缩
-                    ImgUtil.scaleImage(tempImgPath,ImgPath,0.2,prefix);
+                    ImgUtil.scaleImage(tempImgPath,ImgPath,0.4,prefix);
                     FileUtils.deleteQuietly(new File(tempImgPath));
                 }else{
                     FileUtils.moveFile(new File(tempImgPath),new File(ImgPath));
                 }
-                bizResult.setSuccess(true);
-                bizResult.setMsg(ERROR_IMG_PATH+filename);
+                File file = new File(ImgPath);
+                BizResult upResult = new BizResult();
+                upResult = imageManager.upload(file);
+                if(upResult.isSuccess()){
+                    bizResult.setSuccess(true);
+                    bizResult.setResult((String)upResult.getResult());
+                }else {
+                    bizResult.setSuccess(false);
+                }
+                FileUtils.deleteQuietly(file);
             }catch(Exception e) {
+
                 bizResult.setSuccess(false);
                 bizResult.setMsg("服务器异常");
                 logger.error("上传服务器异常",e);
             }
         }
+        FileUtils.cleanDirectory(new File(geneTempPicPath));
+        FileUtils.cleanDirectory(new File(genePicPath));
         return bizResult;
 
     }

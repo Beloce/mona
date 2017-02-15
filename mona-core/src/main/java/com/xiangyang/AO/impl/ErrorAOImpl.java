@@ -4,14 +4,20 @@ import com.xiangyang.AO.ErrorAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.enums.error.ErrorSourceEnum;
 import com.xiangyang.enums.error.ErrorStatusEnum;
+import com.xiangyang.enums.error.ErrorTypeEnum;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.manager.ErrorManager;
+import com.xiangyang.model.DepartmentDO;
 import com.xiangyang.model.ErrorDO;
+import com.xiangyang.model.UserDO;
+import com.xiangyang.query.ErrorQuery;
 import com.xiangyang.util.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xiangyang on 17/2/9.
@@ -43,5 +49,26 @@ public class ErrorAOImpl implements ErrorAO {
         errorManager.insertSelective(errorDO);
 
         return bizResult;
+    }
+
+    @Override
+    public List<ErrorDO> queryBussinessErrorListByUserDO(UserDO userDO) {
+        /*
+        获取当前用户名下的所有业务问题
+         */
+        List<ErrorDO> errorDOs = new ArrayList<ErrorDO>();
+        DepartmentDO departmentDO = new DepartmentDO();
+        if(departmentDO == null || departmentDO.getDepartmentId() == null){
+            return errorDOs;
+        }
+
+
+
+
+
+        ErrorQuery errorQuery = new ErrorQuery();
+        errorQuery.createCriteria().andSourceEqualTo(ErrorSourceEnum.Business.getCode());
+
+        return null;
     }
 }

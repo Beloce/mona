@@ -31,11 +31,6 @@ public class ProjectDO implements Serializable {
     private String projectName;
 
     /**
-     * This field corresponds to the database column mona_project.leader_user_id
-     */
-    private Long leaderUserId;
-
-    /**
      * This field corresponds to the database column mona_project.gmt_modified
      */
     private Date gmtModified;
@@ -75,14 +70,6 @@ public class ProjectDO implements Serializable {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
-	}
-
-	public Long getLeaderUserId() {
-		return leaderUserId;
-	}
-
-	public void setLeaderUserId(Long leaderUserId) {
-		this.leaderUserId = leaderUserId;
 	}
 
 	public Date getGmtModified() {

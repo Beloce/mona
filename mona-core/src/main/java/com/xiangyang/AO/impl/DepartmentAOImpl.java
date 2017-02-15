@@ -1,10 +1,12 @@
 package com.xiangyang.AO.impl;
 
 import com.xiangyang.AO.DepartmentAO;
+import com.xiangyang.AO.UserAO;
 import com.xiangyang.enums.department.DepartmentLevelEnum;
 import com.xiangyang.form.DepartmentForm;
 import com.xiangyang.manager.DepartmentManager;
 import com.xiangyang.model.DepartmentDO;
+import com.xiangyang.model.UserDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ import java.util.List;
 public class DepartmentAOImpl implements DepartmentAO{
     @Autowired
     DepartmentManager departmentManager;
+
+    @Autowired
+    UserAO userAO;
 
     public DepartmentForm selectDeparmentFormByDepartmentId(Long departmentId) {
         DepartmentForm departmentForm = new DepartmentForm();
@@ -88,6 +93,14 @@ public class DepartmentAOImpl implements DepartmentAO{
             }
         }
         return departmentDO;
+    }
+
+    @Override
+    public DepartmentDO queryDepartmentDOByUserDO(UserDO userDO){
+        if(userDO == null || userDO.getDepartmentId() == null){
+            return null;
+        }
+        return departmentManager.selectByPrimaryKey(userDO.getDepartmentId());
     }
 
 }

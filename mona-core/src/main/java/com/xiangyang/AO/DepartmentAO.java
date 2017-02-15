@@ -2,6 +2,7 @@ package com.xiangyang.AO;
 
 import com.xiangyang.form.DepartmentForm;
 import com.xiangyang.model.DepartmentDO;
+import com.xiangyang.model.UserDO;
 
 /**
  * Created by xiangyang on 17/1/5.
@@ -38,4 +39,10 @@ public interface DepartmentAO {
      */
     DepartmentDO queryTopLevelDepartmentDObyId(Long departmentId);
 
+    /**
+     * 通过userDO来查询该用户所在的最低级部门
+     * @param userDO
+     * @return
+     */
+    DepartmentDO queryDepartmentDOByUserDO(UserDO userDO);
 }

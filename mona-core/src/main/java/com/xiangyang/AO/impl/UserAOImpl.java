@@ -7,6 +7,7 @@ import com.xiangyang.dto.UserInfoDTO;
 import com.xiangyang.form.DepartmentForm;
 import com.xiangyang.form.UserInfoForm;
 import com.xiangyang.manager.UserManager;
+import com.xiangyang.model.DepartmentDO;
 import com.xiangyang.model.UserDO;
 import com.xiangyang.query.UserQuery;
 import org.slf4j.Logger;

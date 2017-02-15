@@ -2,8 +2,11 @@ package com.xiangyang.AO;
 
 import com.xiangyang.BizResult;
 import com.xiangyang.form.UserInfoForm;
+import com.xiangyang.model.DepartmentDO;
 import com.xiangyang.model.UserDO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by xiangyang on 16/11/10.

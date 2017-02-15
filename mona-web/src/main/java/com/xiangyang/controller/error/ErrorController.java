@@ -5,8 +5,10 @@ import com.xiangyang.AO.ProductAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.enums.error.ErrorTypeEnum;
 import com.xiangyang.form.error.ErrorForm;
+import com.xiangyang.model.ErrorDO;
 import com.xiangyang.model.UserDO;
 import com.xiangyang.util.UserUtil;
+import org.eclipse.jetty.server.Authentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by peiji on 2017/1/31.
@@ -33,7 +36,11 @@ public class ErrorController {
 
     final Logger logger  =  LoggerFactory.getLogger(this.getClass());
 
-
+    /**
+     * 业务人员创建问题界面路由
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/createError.htm")
     public String createError(ModelMap modelMap){
         modelMap.addAttribute("productList",productAO.queryAllProductList().getResult());
@@ -41,6 +48,11 @@ public class ErrorController {
         return "/error/mobileCreateError";
     }
 
+    /**
+     * 业务人员问题异步提交请求
+     * @param errorForm
+     * @return
+     */
     @RequestMapping("/doAddError.json")
     @ResponseBody
     public Object doAddError(@RequestBody ErrorForm errorForm){
@@ -56,6 +68,16 @@ public class ErrorController {
 
         logger.info("|--------------发布问题成功\r\n"+errorForm.toString()+"--------------|");
         return bizResult;
+    }
+
+    @RequestMapping("/businessErrorList.htm")
+    public String errorList(ModelMap modelMap){
+        UserDO userDO = UserUtil.getUser();
+        BizResult<List<ErrorDO>> bizResult = errorAO.queryBussinessErrorListByUserDO(userDO);
+        modelMap.addAttribute("errorList",bizResult.getResult());
+
+
+        return "/error/businessErrorList";
     }
 
 }

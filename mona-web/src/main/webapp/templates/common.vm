@@ -21,7 +21,11 @@
 </head>
 
 $screen_content
-
+##<script>
+##    if(window.top.$("#frames").attr("src") ==  "verify/login.htm"){
+##        alert("haha");
+##    }
+##</script>
 <script src="/static/js/jquery-ui.min.js"></script>
 ##<script>
 ##    $.widget.bridge('uibutton', $.ui.button);

@@ -73,8 +73,8 @@ public class ErrorController {
     @RequestMapping("/businessErrorList.htm")
     public String errorList(ModelMap modelMap){
         UserDO userDO = UserUtil.getUser();
-        BizResult<List<ErrorDO>> bizResult = errorAO.queryBussinessErrorListByUserDO(userDO);
-        modelMap.addAttribute("errorList",bizResult.getResult());
+        List<ErrorDO> errorDOList = errorAO.queryBussinessErrorListByUserDO(userDO);
+        modelMap.addAttribute("errorList",errorDOList);
 
 
         return "/error/businessErrorList";

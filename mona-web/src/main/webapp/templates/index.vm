@@ -62,5 +62,27 @@
                 </div>
             </div>
         </div>
+ <!------------------- 首页顶栏结束 ----------------------->
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="class="box box-primary"">
+                    <div class="box-header with-border">
+                       最新消息
+                    </div>
+                    <div class="box-body">
+                        <ul class="">
+
+                        </ul>
+                    </div>
+                    <div class="box-footer text-center">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </section>
 </body>

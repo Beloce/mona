@@ -41,5 +41,5 @@ $screen_content
 <script src="/static/AdminLTE/plugins/fastclick/fastclick.js"></script>
 <script src="/static/AdminLTE/dist/js/app.min.js"></script>
 ##<script src="/static/AdminLTE/dist/js/pages/dashboard.js"></script>
-<script src="/static/AdminLTE/dist/js/demo.js"></script>
+##<script src="/static/AdminLTE/dist/js/demo.js"></script>
 </html>

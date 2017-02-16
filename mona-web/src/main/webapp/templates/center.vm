@@ -1,13 +1,13 @@
-<body class="hold-transition skin-blue sidebar-mini" style="font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<body class="hold-transition skin-purple sidebar-mini" style="font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
 <div class="wrapper">
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="index.htm" target="frame" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>消防</b></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg">卖好车<b>消防</b>平台</span>
+            <span class="logo-lg"><i class="ion ion-ios-medkit"></i> 卖好车消防平台</span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -135,8 +135,8 @@
                         </ul>
                     </li>
                     <!-- User Account: style can be found in dropdown.less -->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <li class="dropdown user user-menu" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 50px">
                             #if(!$!{result.userInfoForm.headImg})##如果后台数据用户没有头像
                                     <img src="/static/img/default_head.jpg" class="user-image" alt="User Image">
                             #else
@@ -386,7 +386,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="height:16px">
-        <iframe src="about:blank"  style="display: bloc;height:100%;width:100%"  frameborder="no" border="0" scrolling="no" name="frame" ></iframe>
+        <iframe src="index.htm"  style="display: bloc;height:100%;width:100%"  frameborder="no" border="0" scrolling="no" name="frame" ></iframe>
     </div>
     </aside>
     <!-- /.control-sidebar -->

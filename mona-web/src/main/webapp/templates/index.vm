@@ -1,0 +1,66 @@
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+    <section class="content">
+        <div class="row">
+<!---------------------- 待我处理 ------------------------>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>150</h3>
+
+                        <p>待我处理</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-android-warning"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+<!---------------------- 我的消息 ------------------------>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>44</h3>
+
+                        <p>我的消息</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-android-notifications"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+<!---------------------- 我的团队 ------------------------>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-light-blue-gradient">
+                    <div class="inner">
+                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                        <p>我的团队</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-android-people"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+<!----------------------- 我的回复 ------------------------>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green-gradient">
+                    <div class="inner">
+                        <h3>65</h3>
+
+                        <p>我的回复</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-chatbox-working"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>

@@ -1,5 +1,6 @@
 package com.xiangyang.controller;
 
+import com.sun.javafx.sg.PGShape;
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.form.UserInfoForm;
@@ -7,6 +8,7 @@ import com.xiangyang.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,5 +43,10 @@ public class CenterController {
         bizResult = userAO.getUserInfoByEmail(UserUtil.getUser().getEmail());
         modelMap.addAttribute("result",bizResult.getResult());
         return "center";
+    }
+
+    @RequestMapping(value = "/index.htm")
+    public String index(ModelMap modelMap){
+        return "index";
     }
 }

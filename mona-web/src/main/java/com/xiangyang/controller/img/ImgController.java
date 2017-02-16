@@ -79,6 +79,7 @@ public class ImgController {
                     if(upResult.isSuccess()){//上传成功
                         bizResult.setSuccess(true);
                         userDO.setHeadImg((String)upResult.getResult());
+                        bizResult.setMsg((String)upResult.getResult());
                         userAO.updateUserByUserDO(userDO);
                     }else {
                         bizResult.setSuccess(false);
@@ -100,7 +101,7 @@ public class ImgController {
     }
 
     /**
-     * 上传除头像外的其他文件
+     * 上传除头像外的其他图片
      * @param uploadImgAjax
      * @param request
      * @return

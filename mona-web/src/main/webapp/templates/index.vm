@@ -2,7 +2,7 @@
     <section class="content">
         <div class="row">
 <!---------------------- 待我处理 ------------------------>
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-3 col-xs-3">
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
@@ -17,7 +17,7 @@
                 </div>
             </div>
 <!---------------------- 我的消息 ------------------------>
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-3 col-xs-3">
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
@@ -32,7 +32,7 @@
                 </div>
             </div>
 <!---------------------- 我的团队 ------------------------>
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-3 col-xs-3">
                 <!-- small box -->
                 <div class="small-box bg-light-blue-gradient">
                     <div class="inner">
@@ -47,7 +47,7 @@
                 </div>
             </div>
 <!----------------------- 我的回复 ------------------------>
-            <div class="col-lg-3 col-xs-6">
+            <div class="col-lg-3 col-xs-3">
                 <!-- small box -->
                 <div class="small-box bg-green-gradient">
                     <div class="inner">
@@ -63,17 +63,24 @@
             </div>
         </div>
  <!------------------- 首页顶栏结束 ----------------------->
-
-
         <div class="row">
             <div class="col-md-6">
-                <div class="class="box box-primary"">
+                <div class="box box-primary">
                     <div class="box-header with-border">
-                       最新消息
+                       <h3 class="box-title">最新消息</h3>
                     </div>
                     <div class="box-body">
-                        <ul class="">
+                        <ul class="products-list product-list-in-box">
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/static/img/default_head.jpg" alt="Product Image" />
+                                </div>
+                                <div class="product-info">
+                                    <span class="product-title">name</span>
+                                    <span class=""
+                                </div>
 
+                            </li>
                         </ul>
                     </div>
                     <div class="box-footer text-center">

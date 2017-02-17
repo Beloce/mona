@@ -77,14 +77,14 @@
                                 </div>
                                 <div class="product-info">
                                     <span class="product-title">name</span>
-                                    <span class=""
+                                    <span class="product-description">this is direction</span>
                                 </div>
 
                             </li>
                         </ul>
                     </div>
                     <div class="box-footer text-center">
-
+                        <a>查看全部</a>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,46 @@
+#set($layout="common-moblie.vm")
+<div  id="contents" style="padding:0">
+</div>
+<script>
+    function renderStrHtml(errorVO) {
+        var temp = '<div class="card">'
+                   +'     <div class="card-header">'+errorVO.title+'</div>'
+                   +'     <div class="card-content">'
+                   +'        <div class="card-content-inner">'+errorVO.description+'</div>'
+                   +'     </div>'
+                   +'     <div class="card-footer">修改时间:'+errorVO.relativeModified+'</div>'
+                   +'</div>'
+        return temp;
+    }
+    function loadErrorListCard(errorList) {
+        for(var i=0 ; i<errorList.length;i++){
+            var htmlStr = renderStrHtml(errorList[i]);
+            $("#contents").append(htmlStr);
+            $("#contents").append(htmlStr);
+            $("#contents").append(htmlStr);
+        }
+    }
+    $(function() {
+        var data = {
+            pageSize: 5,
+            pageNo: 1
+        }
+        $.ajax({
+            type: "POST",
+            url: "/mobileError/getErrorListAjax.json",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            async: false,
+            success: function (data) {
+                if (data.success) {
+                    loadErrorListCard(data.result);
+                }else {
+                    $.alert(data.msg,"警告");
+                }
+            },
+            error: function (data) {
+                return;
+            }
+        });
+    });
+</script>

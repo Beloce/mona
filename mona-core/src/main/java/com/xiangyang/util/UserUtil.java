@@ -18,8 +18,14 @@ public class UserUtil {
      * @return UserDO
      */
     public static UserDO getUser(){
-        Subject subject = SecurityUtils.getSubject();
-        Session session = subject.getSession();
-        return (UserDO) session.getAttribute(SessionContants.USER_DO_KEY);
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            Session session = subject.getSession();
+            return (UserDO) session.getAttribute(SessionContants.USER_DO_KEY);
+        }catch (Exception e){
+            return null;
+        }
+
+
     }
 }

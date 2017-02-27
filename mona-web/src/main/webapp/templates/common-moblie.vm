@@ -1,4 +1,17 @@
 #set($layout="")
+#set($class_1="")
+#set($class_2="")
+#set($class_3="")
+
+#set($page_no = $!{page})
+#if($page_no == 1)
+    #set($class_1 = "active")
+#elseif($page_no == 2)
+    #set($class_2 = "active")
+#elseif($page_no == 3)
+    #set($class_3 = "active")
+#end
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,43 +19,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>技术消防</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <link rel="shortcut icon" href="/favicon.ico">
+##    <link rel="shortcut icon" href="/favicon.ico">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
-    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <link rel="stylesheet" href="/static/css/sm.min.css">
+    <link rel="stylesheet" href="/static/css/sm.min.css">
     <link rel="stylesheet" href="/static/weui/weui.min.css">
-##    <script type='text/javascript' src='/static/js/jquery-2.2.3.min.js'></script>
-    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='/static/js/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='/static/sui/js/zepto-touch.js'></script>
+
 </head>
 <body>
-<div class="page-group">
-    <div class="page page-current">
-        <nav class="bar bar-tab">
-            <a class="tab-item active" href="#">
-                <span class="icon icon-edit"></span>
-                <span class="tab-label">问题发布</span>
-            </a>
-            <a class="tab-item" href="#">
-                <span class="icon icon-star"></span>
-                <span class="tab-label">常见问题</span>
-            </a>
-            <a class="tab-item" href="#">
-                <span class="icon icon-emoji"></span>
-                <span class="tab-label">意见反馈</span>
-            </a>
-        </nav>
-        <div class="content">
-            $screen_content
+
+
+    <div class="page-group">
+        <div class="page page-current">
+            <nav class="bar bar-tab">
+                <a class="tab-item external $class_1" href="/mobileError/mobileCreateError.htm">
+                    <span class="icon icon-edit"></span>
+                    <span class="tab-label">问题发布</span>
+                </a>
+                <a  class="tab-item external $class_2" href="/mobileError/mobileErrorList.htm">
+                    <span class="icon  icon-clock"></span>
+                    <span class="tab-label">我的问题</span>
+                </a>
+                <a  class="tab-item external $class_3" href="/mobileQuestion/mobileQuestionShowList.htm">
+                    <span class="icon icon-star"></span>
+                    <span class="tab-label">常见问题</span>
+                </a>
+            </nav>
+            <div class="content">
+                $screen_content
+            </div>
+            <div class="modal-overlay">
+            ##        提示框模板
+            </div>
+
         </div>
-        <div class="modal-overlay"></div>
-##        提示框模板
     </div>
-</div>
-<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
-<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
-<script type="text/javascript" src="/static/js/erorrjs/submitErrorForm.js" ></script>
 </body>
+<script type='text/javascript' src='/static/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/static/js/sm-extend.min.js' charset='utf-8'></script>
+<script type="text/javascript" src="/static/js/erorrjs/submitErrorForm.js" ></script>
+<script>$.init()</script>
 </html>

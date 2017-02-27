@@ -12,7 +12,6 @@ public class QuestionAnsController {
     @RequestMapping("/createQuestionAns")
     public String createQuestionAns(){
 
-
         return "/qa";
     }
 

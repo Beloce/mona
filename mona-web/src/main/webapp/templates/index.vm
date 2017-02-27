@@ -1,3 +1,4 @@
+##<script type="text/javascript" src="/static/js/echarts.min.js" ></script>
 <body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
     <section class="content">
         <div class="row">
@@ -52,7 +53,6 @@
                 <div class="small-box bg-green-gradient">
                     <div class="inner">
                         <h3>65</h3>
-
                         <p>我的回复</p>
                     </div>
                     <div class="icon">
@@ -88,8 +88,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6" >
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">异常简报</h3>
+                    </div>
+                    <div class="box-body" id="echart">
+
+                    </div>
+                </div>
+            </div>
         </div>
-
-
     </section>
 </body>

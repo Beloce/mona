@@ -243,7 +243,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-cloud"></i> 线上异常</a></li>
+                        <li><a href="/error/businessErrorList.htm" target="frame"><i class="fa fa-cloud"></i> 线上异常</a></li>
                         <li><a href="#"><i class="fa fa-times-circle"></i> 业务异常</a></li>
                     </ul>
                 </li>

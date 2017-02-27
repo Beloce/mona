@@ -61,7 +61,7 @@ public class VerifyController {
             subject.login(new UsernamePasswordToken(loginForm.getEmail(), loginForm.getPassword()));
 
         } catch (Exception e) {
-            logger.error("登陆失败[userName=" + loginForm.getEmail() + "]", e);
+            logger.error("登陆失败[userName=" + loginForm.getEmail() + "]");
             return "redirect:/verify/login.htm";
         }
         return "redirect:/verify/success.htm";
@@ -82,7 +82,7 @@ public class VerifyController {
         if(departmentAO.queryDepartmentTypeById(userDO.getDepartmentId()).equals(DepartmentTypeEnum.Tech.getCode())){//技术岗的同学
             return "redirect:/center.htm";
         }else {//非技术岗同学
-            return "redirect:/error/createError.htm";
+            return "redirect:/mobileError/mobileCreateError.htm";
         }
     }
 

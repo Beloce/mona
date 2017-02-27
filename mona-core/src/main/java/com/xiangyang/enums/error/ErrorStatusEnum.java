@@ -28,4 +28,13 @@ public enum ErrorStatusEnum {
     public String getDesc() {
         return desc;
     }
+
+    public static String getDescByCode(Integer code){
+        for (ErrorStatusEnum errorStatusEnum : ErrorStatusEnum.values()){
+            if(code.equals(errorStatusEnum.getCode())){
+                return errorStatusEnum.desc;
+            }
+        }
+        return "";
+    }
 }

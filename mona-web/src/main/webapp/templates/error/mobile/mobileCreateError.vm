@@ -1,0 +1,104 @@
+#set($layout="common-moblie.vm")
+<div class="content-block"  style="padding:0">
+    <div class="list-block">
+        <ul>
+    ## 标题------------------------------------------------------------------------------
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">*标题</div>
+                        <div class="item-input">
+                            <input type="text" id="title" placeholder="标题名称">
+                        </div>
+                    </div>
+                </div>
+            </li>
+    ## 紧急程度------------------------------------------------------------------------------
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">*紧急程度</div>
+                        <div class="item-input">
+                            <select id="errorType">
+                                <option value="-1">请选择</option>
+                            #foreach($errorType in $!{errorTypeMap.keySet()})
+                                <option value="$errorType"> $!{errorTypeMap.get($errorType)}</option>
+                            #end
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+    ## 问题产品------------------------------------------------------------------------------
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">*问题产品</div>
+                        <div class="item-input">
+                            <select id="productId">
+                                <option value="-1">请选择</option>
+                                #foreach($product in $!{productList})
+                                    <option value="$product.productId">$product.productName</option>
+                                #end
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+    ## 问题描述------------------------------------------------------------------------------
+            <li class="align-top">
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">*问题描述</div>
+                        <div class="item-input">
+                            <textarea id="description" placeholder="请描述您遇到的问题"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+## 截图上传--------------------------------------------------------------------------------
+        <div class="page__bd">
+            <div class="weui-gallery" id="gallery">
+                <span class="weui-gallery__img" id="galleryImg"></span>
+                <div class="weui-gallery__opr">
+                    <a href="javascript:" class="weui-gallery__del">
+                        <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <div class="weui-uploader">
+                            <div class="weui-uploader__hd">
+                                <lable>问题图片上传 (选填)</lable>
+                            </div>
+                            <div class="weui-uploader__bd">
+                                <ul class="weui-uploader__files" id="uploaderFiles"></ul>
+                                <input id="screenshot" name="screenshot" type="hidden" value />
+                                <div class="weui-uploader__input-box">
+                                    <input id="uploaderInput" class="weui-uploader__input" type="file" accept="image/*" multiple="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+##end---------------------------------------------------------------------------------------
+        <div class="content-block">
+            <div class="row">
+                <div class="col-50"><a href="#" class="button button-big button-fill button-danger">取消</a></div>
+                <div class="col-50"><a href="#" id="submits" class="button button-big button-fill button-success">提交</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

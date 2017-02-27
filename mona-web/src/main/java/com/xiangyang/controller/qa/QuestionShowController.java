@@ -3,6 +3,7 @@ package com.xiangyang.controller.qa;
 import com.xiangyang.AO.ProductAO;
 import com.xiangyang.AO.QuestionShowAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.contants.MobilePageContants;
 import com.xiangyang.enums.QuestionLevelEnum;
 import com.xiangyang.form.qa.QueryQuestionForm;
 import com.xiangyang.model.ProductDO;
@@ -30,6 +31,7 @@ public class QuestionShowController {
     @Autowired
     ProductAO productAO;
 
+
     /**
      * 显示常见问题列表
      * @param queryQuestionForm
@@ -43,6 +45,13 @@ public class QuestionShowController {
 
         return "/qa/questionList";
     }
+
+    /**
+     * 添加常见问题
+     * @param modelMap
+     * @param request
+     * @return
+     */
     @RequestMapping("/addQuestion.htm")
     public String addQuestion(ModelMap modelMap, HttpServletRequest request){
         BizResult<List<ProductDO>> productResult = productAO.queryAllProductList();
@@ -55,10 +64,15 @@ public class QuestionShowController {
         modelMap.addAttribute("questionLevelList", QuestionLevelEnum.getQuestionLevelList());
         return "/qa/addQuestion";
     }
+    /**
+     * 添加常见问题ajax请求
+     * @return
+     */
     @RequestMapping("/doAddQuestion.json")
     public Object doAddQuestion(){
-       BizResult bizResult = new BizResult();
+        BizResult bizResult = new BizResult();
 
         return bizResult;
     }
+
 }

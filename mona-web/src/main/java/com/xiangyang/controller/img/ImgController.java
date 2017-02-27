@@ -119,6 +119,7 @@ public class ImgController {
             bizResult.setMsg("图片数据为空");
         }else {
             try{
+                logger.info("|------开始上传图片-------|");
                 String prefix=uploadImgAjax.getOriginalFilename().substring(uploadImgAjax.getOriginalFilename().lastIndexOf(".")+1);
                 String filename = uploadImgAjax.getOriginalFilename();
                 //将上传的图片放到/img/tmp服务器下
@@ -146,8 +147,9 @@ public class ImgController {
 
                 bizResult.setSuccess(false);
                 bizResult.setMsg("服务器异常");
-                logger.error("上传服务器异常",e);
+                logger.error("|----上传服务器异常------|",e);
             }
+            logger.info("|--------上传图片成功-------|");
         }
         FileUtils.cleanDirectory(new File(geneTempPicPath));
         FileUtils.cleanDirectory(new File(genePicPath));

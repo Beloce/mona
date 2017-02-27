@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiangyang.dao.ext.ErrorExtMapper">
+    <resultMap id="BaseResultMap" type="com.xiangyang.model.ErrorDO">
+        <id column="error_id" jdbcType="BIGINT" property="errorId" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+        <result column="product_id" jdbcType="BIGINT" property="productId" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="screenshot" jdbcType="VARCHAR" property="screenshot" />
+        <result column="source" jdbcType="TINYINT" property="source" />
+        <result column="type" jdbcType="TINYINT" property="type" />
+        <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="provider_id" jdbcType="BIGINT" property="providerId" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        error_id,gmt_create,gmt_modified,product_id,title,description,screenshot,source,type,status,provider_id
+    </sql>
+
+
 
 </mapper>

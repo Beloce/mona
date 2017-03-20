@@ -29,6 +29,7 @@ function submitForm(){
         success:function (data) {
             if(data.success){
                 $.alert("提交成功","成功");
+                self.location("/")
             }else{
                 $.alert("服务器错误，提交失败","错误");
             }

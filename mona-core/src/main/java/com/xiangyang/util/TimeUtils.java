@@ -84,7 +84,7 @@ public class TimeUtils {
         long minutes = l%(1000*60*60*24)%(60*60*1000)/(1000*60);
 
         if(day > 10){//大于10天
-            return TimeUtils.DateToStr(dateFromDB,"yyyy-MM-dd HH:mm:ss");
+            return TimeUtils.DateToStr(dateFromDB,"yyyy-MM-dd");
         }
         else if(day > 1){//大于3天小于10天
             return day+"天前";

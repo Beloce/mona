@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProjectQuery extends BaseQuery implements Serializable {
+public class TeamQuery extends BaseQuery implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public ProjectQuery() {
+    public TeamQuery() {
         super();
     }
 
@@ -39,7 +39,7 @@ public class ProjectQuery extends BaseQuery implements Serializable {
     }
 
     /**
-     * This class corresponds to the database table mona_project
+     * This class corresponds to the database table mona_team
      */
          protected abstract static class GeneratedCriteria extends BaseCriteria {
 
@@ -47,63 +47,63 @@ public class ProjectQuery extends BaseQuery implements Serializable {
             super();
         }
 
-        public Criteria andProjectIdIsNull() {
-            addCriterion("project_id is null");
+        public Criteria andTeamIdIsNull() {
+            addCriterion("team_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIsNotNull() {
-            addCriterion("project_id is not null");
+        public Criteria andTeamIdIsNotNull() {
+            addCriterion("team_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdEqualTo(Long value) {
-            addCriterion("project_id =", value, "id");
+        public Criteria andTeamIdEqualTo(Long value) {
+            addCriterion("team_id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotEqualTo(Long value) {
-            addCriterion("project_id <>", value, "id");
+        public Criteria andTeamIdNotEqualTo(Long value) {
+            addCriterion("team_id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria anProjectIdGreaterThan(Long value) {
-            addCriterion("project_id >", value, "id");
+        public Criteria anTeamIdGreaterThan(Long value) {
+            addCriterion("team_id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("project_id >=", value, "id");
+        public Criteria andTeamIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("team_id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLessThan(Long value) {
-            addCriterion("project_id <", value, "id");
+        public Criteria andTeamIdLessThan(Long value) {
+            addCriterion("team_id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdLessThanOrEqualTo(Long value) {
-            addCriterion("project_id <=", value, "id");
+        public Criteria andTeamIdLessThanOrEqualTo(Long value) {
+            addCriterion("team_id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdIn(List<Long> values) {
-            addCriterion("project_id in", values, "id");
+        public Criteria andTeamIdIn(List<Long> values) {
+            addCriterion("team_id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotIn(List<Long> values) {
-            addCriterion("project_id not in", values, "id");
+        public Criteria andTeamIdNotIn(List<Long> values) {
+            addCriterion("team_id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdBetween(Long value1, Long value2) {
-            addCriterion("project_id between", value1, value2, "id");
+        public Criteria andTeamIdBetween(Long value1, Long value2) {
+            addCriterion("team_id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIdNotBetween(Long value1, Long value2) {
-            addCriterion("project_id not between", value1, value2, "id");
+        public Criteria andTeamIdNotBetween(Long value1, Long value2) {
+            addCriterion("team_id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
@@ -227,220 +227,220 @@ public class ProjectQuery extends BaseQuery implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdIsNull() {
-            addCriterion("father_project_id is null");
+        public Criteria andTeamNameIsNull() {
+            addCriterion("team_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdIsNotNull() {
-            addCriterion("father_project_id is not null");
+        public Criteria andTeamNameIsNotNull() {
+            addCriterion("team_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdEqualTo(String value) {
-            addCriterion("father_project_id =", value, "fatherProjectId");
+        public Criteria andTeamNameEqualTo(String value) {
+            addCriterion("team_name =", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdNotEqualTo(String value) {
-            addCriterion("father_project_id <>", value, "fatherProjectId");
+        public Criteria andTeamNameNotEqualTo(String value) {
+            addCriterion("team_name <>", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdGreaterThan(String value) {
-            addCriterion("father_project_id >", value, "fatherProjectId");
+        public Criteria andTeamNameGreaterThan(String value) {
+            addCriterion("team_name >", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdGreaterThanOrEqualTo(String value) {
-            addCriterion("father_project_id >=", value, "fatherProjectId");
+        public Criteria andTeamNameGreaterThanOrEqualTo(String value) {
+            addCriterion("team_name >=", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdLessThan(String value) {
-            addCriterion("father_project_id <", value, "fatherProjectId");
+        public Criteria andTeamNameLessThan(String value) {
+            addCriterion("team_name <", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdLessThanOrEqualTo(String value) {
-            addCriterion("father_project_id <=", value, "fatherProjectId");
+        public Criteria andTeamNameLessThanOrEqualTo(String value) {
+            addCriterion("team_name <=", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdLike(String value) {
-            addCriterion("father_project_id like", value, "fatherProjectId");
+        public Criteria andTeamNameLike(String value) {
+            addCriterion("team_name like", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdNotLike(String value) {
-            addCriterion("father_project_id not like", value, "fatherProjectId");
+        public Criteria andTeamNameNotLike(String value) {
+            addCriterion("team_name not like", value, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdIn(List<String> values) {
-            addCriterion("father_project_id in", values, "fatherProjectId");
+        public Criteria andTeamNameIn(List<String> values) {
+            addCriterion("team_name in", values, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdNotIn(List<String> values) {
-            addCriterion("father_project_id not in", values, "fatherProjectId");
+        public Criteria andTeamNameNotIn(List<String> values) {
+            addCriterion("team_name not in", values, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdBetween(String value1, String value2) {
-            addCriterion("father_project_id between", value1, value2, "fatherProjectId");
+        public Criteria andTeamNameBetween(String value1, String value2) {
+            addCriterion("team_name between", value1, value2, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andFatherProjectIdNotBetween(String value1, String value2) {
-            addCriterion("father_project_id not between", value1, value2, "fatherProjectId");
+        public Criteria andTeamNameNotBetween(String value1, String value2) {
+            addCriterion("team_name not between", value1, value2, "teamName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelIsNull() {
-            addCriterion("project_level is null");
+        public Criteria andTeamDecIsNull() {
+            addCriterion("team_dec is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelIsNotNull() {
-            addCriterion("project_level is not null");
+        public Criteria andTeamDecIsNotNull() {
+            addCriterion("team_dec is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelEqualTo(Integer value) {
-            addCriterion("project_level =", value, "projectLevel");
+        public Criteria andTeamDecEqualTo(String value) {
+            addCriterion("team_dec =", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelNotEqualTo(Integer value) {
-            addCriterion("project_level <>", value, "projectLevel");
+        public Criteria andTeamDecNotEqualTo(String value) {
+            addCriterion("team_dec <>", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelGreaterThan(Integer value) {
-            addCriterion("project_level >", value, "projectLevel");
+        public Criteria andTeamDecGreaterThan(String value) {
+            addCriterion("team_dec >", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelGreaterThanOrEqualTo(Integer value) {
-            addCriterion("project_level >=", value, "projectLevel");
+        public Criteria andTeamDecGreaterThanOrEqualTo(String value) {
+            addCriterion("team_dec >=", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelLessThan(Integer value) {
-            addCriterion("project_level <", value, "projectLevel");
+        public Criteria andTeamDecLessThan(String value) {
+            addCriterion("team_dec <", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelLessThanOrEqualTo(Integer value) {
-            addCriterion("project_level <=", value, "projectLevel");
+        public Criteria andTeamDecLessThanOrEqualTo(String value) {
+            addCriterion("team_dec <=", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelLike(Integer value) {
-            addCriterion("project_level like", value, "projectLevel");
+        public Criteria andTeamDecLike(String value) {
+            addCriterion("team_dec like", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelNotLike(Integer value) {
-            addCriterion("project_level not like", value, "projectLevel");
+        public Criteria andTeamDecNotLike(String value) {
+            addCriterion("team_dec not like", value, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelIn(List<Integer> values) {
-            addCriterion("project_level in", values, "projectLevel");
+        public Criteria andTeamDecIn(List<String> values) {
+            addCriterion("team_dec in", values, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelNotIn(List<Integer> values) {
-            addCriterion("project_level not in", values, "projectLevel");
+        public Criteria andTeamDecNotIn(List<String> values) {
+            addCriterion("team_dec not in", values, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelBetween(Integer value1, Integer value2) {
-            addCriterion("project_level between", value1, value2, "projectLevel");
+        public Criteria andTeamDecBetween(String value1, String value2) {
+            addCriterion("team_dec between", value1, value2, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectLevelNotBetween(Integer value1, Integer value2) {
-            addCriterion("project_level not between", value1, value2, "projectLevel");
+        public Criteria andTeamDecNotBetween(String value1, String value2) {
+            addCriterion("team_dec not between", value1, value2, "teamDec");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameIsNull() {
-            addCriterion("project_name is null");
+        public Criteria andLeaderIdIsNull() {
+            addCriterion("leader_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameIsNotNull() {
-            addCriterion("project_name is not null");
+        public Criteria andLeaderIdIsNotNull() {
+            addCriterion("leader_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameEqualTo(String value) {
-            addCriterion("project_name =", value, "projectName");
+        public Criteria andLeaderIdEqualTo(Long value) {
+            addCriterion("leader_id =", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameNotEqualTo(String value) {
-            addCriterion("project_name <>", value, "projectName");
+        public Criteria andLeaderIdNotEqualTo(Long value) {
+            addCriterion("leader_id <>", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameGreaterThan(String value) {
-            addCriterion("project_name >", value, "projectName");
+        public Criteria andLeaderIdGreaterThan(Long value) {
+            addCriterion("leader_id >", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameGreaterThanOrEqualTo(String value) {
-            addCriterion("project_name >=", value, "projectName");
+        public Criteria andLeaderIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("leader_id >=", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameLessThan(String value) {
-            addCriterion("project_name <", value, "projectName");
+        public Criteria andLeaderIdLessThan(Long value) {
+            addCriterion("leader_id <", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameLessThanOrEqualTo(String value) {
-            addCriterion("project_name <=", value, "projectName");
+        public Criteria andLeaderIdLessThanOrEqualTo(Long value) {
+            addCriterion("leader_id <=", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameLike(String value) {
-            addCriterion("project_name like", value, "projectName");
+        public Criteria andLeaderIdLike(Long value) {
+            addCriterion("leader_id like", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameNotLike(String value) {
-            addCriterion("project_name not like", value, "projectName");
+        public Criteria andLeaderIdNotLike(Long value) {
+            addCriterion("leader_id not like", value, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameIn(List<String> values) {
-            addCriterion("project_name in", values, "projectName");
+        public Criteria andLeaderIdIn(List<Long> values) {
+            addCriterion("leader_id in", values, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameNotIn(List<String> values) {
-            addCriterion("project_name not in", values, "projectName");
+        public Criteria andLeaderIdNotIn(List<Long> values) {
+            addCriterion("leader_id not in", values, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameBetween(String value1, String value2) {
-            addCriterion("project_name between", value1, value2, "projectName");
+        public Criteria andLeaderIdBetween(Long value1, Long value2) {
+            addCriterion("leader_id between", value1, value2, "leaderId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectNameNotBetween(String value1, String value2) {
-            addCriterion("project_name not between", value1, value2, "projectName");
+        public Criteria andLeaderIdNotBetween(Long value1, Long value2) {
+            addCriterion("leader_id not between", value1, value2, "leaderId");
             return (Criteria) this;
         }
 
     }
 
     /**
-     * This class corresponds to the database table mona_project
+     * This class corresponds to the database table mona_team
     */
     public  static class Criteria extends GeneratedCriteria{
         protected Criteria() {

@@ -8,7 +8,6 @@
     <name>mona-all</name>
 
     <modules>
-        <!--<module>mona-mybatisgen</module>-->
         <module>mona-mybatisgen</module>
         <module>mona-core</module>
         <module>mona-web</module>

@@ -7,9 +7,13 @@ import com.xiangyang.form.DepartmentForm;
 import com.xiangyang.manager.DepartmentManager;
 import com.xiangyang.model.DepartmentDO;
 import com.xiangyang.model.UserDO;
+import com.xiangyang.query.DepartmentQuery;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,6 +22,7 @@ import java.util.List;
  */
 @Service
 public class DepartmentAOImpl implements DepartmentAO{
+    final Logger logger  =  LoggerFactory.getLogger(this.getClass());
     @Autowired
     DepartmentManager departmentManager;
 
@@ -103,4 +108,25 @@ public class DepartmentAOImpl implements DepartmentAO{
         return departmentManager.selectByPrimaryKey(userDO.getDepartmentId());
     }
 
+    @Override
+    public List<DepartmentDO> querySonDepartmentListById(Long departmentId){
+        List<DepartmentDO> departmentDOs = new ArrayList<DepartmentDO>();
+        if(departmentId == null){
+            return departmentDOs;
+        }
+        DepartmentQuery departmentQuery = new DepartmentQuery();
+        departmentQuery.createCriteria().andDepartmentFatherIdEqualTo(departmentId);
+        List<DepartmentDO> sonDepartmentDOs = departmentManager.selectByQuery(departmentQuery);
+        departmentDOs.addAll(sonDepartmentDOs);
+        for(DepartmentDO departmentDO : sonDepartmentDOs){
+            List<DepartmentDO> recursiveDOs = querySonDepartmentListById(departmentDO.getDepartmentId());
+            if(recursiveDOs.size() == 0)
+            {
+                continue;
+            }else{
+                departmentDOs.addAll(recursiveDOs);
+            }
+        }
+        return departmentDOs;
+    }
 }

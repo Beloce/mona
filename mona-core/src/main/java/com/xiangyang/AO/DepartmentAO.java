@@ -4,13 +4,15 @@ import com.xiangyang.form.DepartmentForm;
 import com.xiangyang.model.DepartmentDO;
 import com.xiangyang.model.UserDO;
 
+import java.util.List;
+
 /**
  * Created by xiangyang on 17/1/5.
  */
 public interface DepartmentAO {
 
     /**
-     * 通过departmentId获取部门层级列表（关系）
+     * 通过departmentId获取部门层级列表（关系）,向上取值
      * @param departmentId
      * @return DeparmentForm
      */
@@ -45,4 +47,11 @@ public interface DepartmentAO {
      * @return
      */
     DepartmentDO queryDepartmentDOByUserDO(UserDO userDO);
+
+    /**
+     * 根据父类的departmentId来获取来该父部门下所有的子部门
+     * @param departmentId
+     * @return
+     */
+    List<DepartmentDO> querySonDepartmentListById(Long departmentId);
 }

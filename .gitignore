@@ -7,7 +7,7 @@
 *.iws
 *.log
 /mona-mybatisgen/src/main/resources/db.config
-/mona-web/src/main/resources/properties/
+/mona-core/src/main/resources/properties/
 /mona-web/target/
 /mona-core/target/
 /mona-mybatisgen/target/

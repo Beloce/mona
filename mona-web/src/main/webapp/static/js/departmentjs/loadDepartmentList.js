@@ -1,20 +1,27 @@
-var departmentTree;
-//一般直接写在一个js文件中
-$(function() {
-    layer.open({
-        content: '测试回调',
-        yes: function(index, layero){
-            //do something
-            layer.close(index); //如果设定了yes回调，需进行手工关闭
-        }
-    });
+function getDepartmentList() {
+    var departmentTree;
+    var deparmentData ={
+        departmentId:12
+    };
     $.ajax({
         type:"GET",
+        data:deparmentData,
+        contentType:"application/json",
         url:"/department/getDepartmentListAjax.json",
         async:false,
         success:function (data) {
             if(data.success){
                 departmentTree = data.result;
+            }else{
+                layer.open({
+                    title:"加载失败，请刷新重试",
+                    type:false,
+                    content: '测试回调',
+                    yes: function(index, layero){
+                        //do something
+                        layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    }
+                });
             }
         },
         error:function (data) {
@@ -22,4 +29,5 @@ $(function() {
             return false;
         }
     });
-});
+    return departmentTree;
+}

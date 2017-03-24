@@ -32,9 +32,9 @@ public class DepartmentController {
      */
     @RequestMapping("/departmentList.htm")
     public String departmentList(ModelMap modelMap){
-        Long techDepartTopId = 12l;//暂时写死
-        List<DepartmentDO> departmentDOs = departmentAO.querySonDepartmentListById(techDepartTopId);
-        modelMap.addAttribute("departmentTreeList",departmentDOs);
+        //       Long techDepartTopId = 12l;//暂时写死
+//        List<DepartmentDO> departmentDOs = departmentAO.querySonDepartmentListById(techDepartTopId);
+//        modelMap.addAttribute("departmentTreeList",departmentDOs);
         return "/department/departmentList";
     }
 
@@ -45,7 +45,7 @@ public class DepartmentController {
      */
     @RequestMapping(value = "/getDepartmentListAjax.json",method = RequestMethod.GET)
     @ResponseBody
-    public Object getDepartmentListAjax(@RequestBody Long departmentId){
+    public Object getDepartmentListAjax(Long departmentId){
         BizResult bizResult = new BizResult();
         if(departmentId == null){
             bizResult.setSuccess(false);

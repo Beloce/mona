@@ -39,3 +39,10 @@
 </section>
 </body>
 <script src="/static/js/departmentjs/loadDepartmentList.js"></script>
+<script src="/static/js/departmentjs/loadTree.js"></script>
+<script>
+    $(function () {
+        loadDepartmentTree(getDepartmentList());//初始化页面
+    });
+</script>
+<script src="/static/js/departmentjs/init.js"></script>

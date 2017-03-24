@@ -289,7 +289,7 @@
                     <ul class="treeview-menu">
                         <li><a href="/product/list.htm" target="frame"><i class="fa  fa-product-hunt"></i>产品编辑</a></li>
                         <li><a href="/department/departmentList.htm" target="frame"><i class="fa fa-user-o"></i>部门/人员管理</a></li>
-                        <li><a href="#"><i class="fa fa-group"></i>团队管理</a></li>
+                        <li><a href="/team/teamList.htm" target="frame"><i class="fa fa-group"></i>团队管理</a></li>
                     </ul>
                 </li>
             </ul>

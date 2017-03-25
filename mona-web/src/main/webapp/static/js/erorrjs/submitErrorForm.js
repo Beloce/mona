@@ -81,7 +81,7 @@ $(function(){
         $uploaderInput = $("#uploaderInput"),
         $uploaderFiles = $("#uploaderFiles")
         ;
-    $uploaderInput.on("change", function(e){
+    $uploaderInput.on(" ", function(e){
         var src,
             url = window.URL || window.webkitURL || window.mozURL,
             files = e.target.files;

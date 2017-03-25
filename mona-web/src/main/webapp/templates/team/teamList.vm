@@ -7,7 +7,7 @@
                     <h3 class="box-title">
                         团队信息编辑
                     </h3>
-                    <button class="pull-right btn btn-success btn-sm"><i class="fa  fa-plus"></i> 添加团队</button>
+                    <a href="/team/addTeam.htm"><button class="pull-right btn btn-success btn-sm"><i class="fa  fa-plus"></i> 添加团队</button></a>
                 </div>
                 <div class="box-body">
                     <table class="table table-condensed">

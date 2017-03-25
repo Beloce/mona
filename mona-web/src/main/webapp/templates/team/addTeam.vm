@@ -1,0 +1,88 @@
+<head>
+    <link rel="stylesheet" href="/static/dtree/dtree.css" />
+</head>
+<script src="/static/dtree/dtree.js"></script>
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+
+                <div class="box-header">
+                    <h3 class="box-title">
+                        团队编辑
+                    </h3>
+                </div>
+
+                <div class="box-body">
+                    <div class="content">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <label>团队名称</label>
+                                    <input type="text" class="form-control" placeholder="请输入..."/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <label>团队描述</label>
+                                    <input type="textarea" class="form-control" placeholder="请输入..."/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row"><br></div>
+                        </div>
+                            <div class="row">
+                                <table class="table table-condensed " style="table-layout:fixed">
+                            <tbody>
+                            <tr>
+                                <th width="30%" >部门结构</th>
+                                <th width="30%" >人员</th>
+                                <th width="40%">已选中</th>
+                            </tr>
+                            <tr>
+                                <td id="depatmentTree">
+                                    <div class="dtree">
+                                    ##<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>
+                                        <script type="text/javascript">
+                                            d = new dTree('d');
+                                            d.add(12,-1,'产品技术部','','','');
+                                                #foreach($department in $departmentTreeList)
+                                                d.add($department.departmentId,$department.departmentFatherId,'$department.departmentName','javascript:openD($department.departmentId)','');
+                                                #end
+                                            document.write(d);
+                                        </script>
+                                    </div>
+                                </td>
+                                <td>
+                                    <ul id="memberList">
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul id="selected">
+                                    </ul>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="box-footer clearfix">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <li>
+                            <a href="#">1</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="/static/js/departmentjs/loadDepartmentMember.js"></script>
+<script src="/static/js/team/selectmem.js"></script>

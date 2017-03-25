@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -127,4 +129,13 @@ public class UserAOImpl implements UserAO {
         return bizResult;
     }
 
+    @Override
+    public List<UserDO> queryUserDOsByDepartmentId(Long departmentId) {
+        if(departmentId == null){
+            return new ArrayList<>();
+        }
+        UserQuery userQuery = new UserQuery();
+        userQuery.createCriteria().andDepartmentIdEqualTo(departmentId);
+        return userManager.selectByQuery(userQuery);
+    }
 }

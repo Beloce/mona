@@ -1,6 +1,7 @@
 <head>
-    <link rel="stylesheet" href="/static/layui/css/layui.css" />
+    <link rel="stylesheet" href="/static/dtree/dtree.css" />
 </head>
+<script src="/static/dtree/dtree.js"></script>
 <body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
 <section class="content">
     <div class="row">
@@ -20,8 +21,23 @@
                             <th width="70%">人员</th>
                         </tr>
                         <tr>
-                            <td id="depatmentTree"></td>
-                            <td id="memberStru"></td>
+                            <td id="depatmentTree">
+                                <div class="dtree">
+                                ##<p><a href="javascript: d.openAll();">open all</a> | <a href="javascript: d.closeAll();">close all</a></p>
+                                    <script type="text/javascript">
+                                        d = new dTree('d');
+                                        d.add(12,-1,'产品技术部','','','');
+                                            #foreach($department in $departmentTreeList)
+                                            d.add($department.departmentId,$department.departmentFatherId,'$department.departmentName','javascript:openD($department.departmentId)','');
+                                            #end
+                                        document.write(d);
+                                    </script>
+                                </div>
+                            </td>
+                            <td id="memberList">
+                                <ul>
+                                </ul>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -38,11 +54,4 @@
     </div>
 </section>
 </body>
-<script src="/static/js/departmentjs/loadDepartmentList.js"></script>
-<script src="/static/js/departmentjs/loadTree.js"></script>
-<script>
-    $(function () {
-        loadDepartmentTree(getDepartmentList());//初始化页面
-    });
-</script>
-<script src="/static/js/departmentjs/init.js"></script>
+<script src="/static/js/departmentjs/loadDepartmentMember.js"></script>

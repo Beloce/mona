@@ -1,8 +1,10 @@
 package com.xiangyang.controller.department;
 
 import com.xiangyang.AO.DepartmentAO;
+import com.xiangyang.AO.UserAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.model.DepartmentDO;
+import com.xiangyang.model.UserDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class DepartmentController {
     @Autowired
     DepartmentAO departmentAO;
 
+    @Autowired
+    UserAO userAO;
+
     final Logger logger  =  LoggerFactory.getLogger(this.getClass());
     /**
      * 获取技术部门下的子部门情况，广度遍历
@@ -32,12 +37,18 @@ public class DepartmentController {
      */
     @RequestMapping("/departmentList.htm")
     public String departmentList(ModelMap modelMap){
-        //       Long techDepartTopId = 12l;//暂时写死
-//        List<DepartmentDO> departmentDOs = departmentAO.querySonDepartmentListById(techDepartTopId);
-//        modelMap.addAttribute("departmentTreeList",departmentDOs);
+        Long techDepartTopId = 12l;//暂时写死
+        List<DepartmentDO> departmentDOs = departmentAO.querySonDepartmentListById(techDepartTopId);
+        Integer maxLevelValue = Integer.MAX_VALUE;
+        for(DepartmentDO departmentDO : departmentDOs){
+            if(departmentDO.getDepartmentLevel() < maxLevelValue){
+                maxLevelValue = departmentDO.getDepartmentLevel();
+            }
+        }
+        modelMap.addAttribute("maxLevelValue",maxLevelValue);
+        modelMap.addAttribute("departmentTreeList",departmentDOs);
         return "/department/departmentList";
     }
-
     /**
      * 异步获取某部门下的所有子部门情况，广度遍历
      * @param departmentId
@@ -56,6 +67,25 @@ public class DepartmentController {
         bizResult.setSuccess(true);
         logger.info("【查询部门列表】");
         bizResult.setResult(departmentDOs);
+        return bizResult;
+    }
+
+    /**
+     * 异步获取某部门下的所有成员，广度遍历
+     * @param departmentId
+     * @return
+     */
+    @RequestMapping(value = "/getDepartmentMemberAjax.json",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getDepartmentMemberAjax(Long departmentId){
+        BizResult bizResult = new BizResult();
+        if(departmentId == null){
+            bizResult.setSuccess(false);
+            bizResult.setMsg("参数为空");
+            return bizResult;
+        }
+        bizResult.setResult(userAO.queryUserDOsByDepartmentId(departmentId));
+        bizResult.setSuccess(true);
         return bizResult;
     }
 }

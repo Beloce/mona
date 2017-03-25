@@ -47,4 +47,11 @@ public interface UserAO {
      * @return
      */
     BizResult queryUserDOByEmail(String email);
+
+    /**
+     * 根据部门编号来获取用户
+     * @param departmentId
+     * @return
+     */
+    List<UserDO> queryUserDOsByDepartmentId(Long departmentId);
 }

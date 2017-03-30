@@ -18,8 +18,6 @@ public class CenterController {
     @Autowired
     UserAO userAO;
 
-
-
     /**
      * 首页转跳
      * @return

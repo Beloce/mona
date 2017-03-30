@@ -25,7 +25,7 @@
             <property name="numTestsPerEvictionRun" value="30" />
         </bean>
 
-        <!--   配置sqlSessionFactory -->
+    <!--   配置sqlSessionFactory -->
         <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
             <!-- 数据源  -->
             <property name="dataSource" ref="dataSource" />

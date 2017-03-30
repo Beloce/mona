@@ -1,3 +1,11 @@
+<head>
+    <style>
+        a:link {color: blue; text-decoration:none;}
+        a:active:{color: red; }
+        a:visited {color:blue;text-decoration:none;}
+        a:hover {color: blue; text-decoration:underline; cursor: hand}
+</style>
+</head>
 <body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
 <section class="content">
     <div class="row">
@@ -23,11 +31,16 @@
                             #set($count = 1)
                             #foreach($team in $!{teamList})
                             <tr>
+                                <td>$count</td>
                                 <td>$!team.teamName</td>
                                 <td>$!team.teamDec</td>
-                                <td>null</td>
+                                <td>暂无</td>
                                 <td>$!team.leaderName</td>
-                                <td>修改 删除</td>
+                                <td>
+                                    <a href="#">查看</a>
+                                    <a href="#">编辑</a>
+                                    <a href="#">删除</a>
+                                </td>
                                 #set($count = $count+1)
                             </tr>
                             #end

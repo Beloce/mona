@@ -2,6 +2,7 @@ package com.xiangyang.AO;
 
 import com.xiangyang.BizResult;
 import com.xiangyang.VO.TeamVO;
+import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.form.team.QueryTeamForm;
 import com.xiangyang.model.TeamDO;
 
@@ -17,6 +18,8 @@ public interface TeamAO {
      * @return
      */
     BizResult<List<TeamVO>> getTeamListInPage(QueryTeamForm queryTeamForm);
+
+    BizResult addTeamByForm(AddTeamForm addTeamForm);
 
 
 }

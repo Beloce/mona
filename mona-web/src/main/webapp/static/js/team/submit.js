@@ -9,6 +9,9 @@ $("#submitbtn").on("click",function(){
     var UserLength = $("#selected li").size();
     for(var i = 0 ; i < UserLength ; i++){
         teamUserList.push($("#selected li").eq(i).attr('id'));
+        if($("#selected li").eq(i).children('input').is(':checked')){
+            leaderList.push($("#selected li").eq(i).attr('id'));
+        }
     }
     if(teamName == "" || teamDesc == "" || teamUserList.length == 0){
         layer.open({
@@ -22,7 +25,7 @@ $("#submitbtn").on("click",function(){
         });
         return;
     }
-    var dataForm = {
+var dataForm = {
         teamName:teamName,
         teamDesc:teamDesc,
         teamUserIds:teamUserList,

@@ -1,6 +1,7 @@
 package com.xiangyang.AO.impl;
 
 import com.xiangyang.AO.TeamAO;
+import com.xiangyang.AO.TeamUserAO;
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.VO.TeamVO;
@@ -38,6 +39,9 @@ public class TeamAOImpl implements TeamAO {
 
     @Autowired
     TeamUserManager teamUserManager;
+
+    @Autowired
+    TeamUserAO teamUserAO;
 
     @Override
     public BizResult<List<TeamVO>> getTeamListInPage(QueryTeamForm queryTeamForm) {
@@ -86,8 +90,10 @@ public class TeamAOImpl implements TeamAO {
                 teamUserDO.setUserId(userId);
                 teamUserManager.insertSelective(teamUserDO);
             }
+            teamUserAO.addTeamLeader(addTeamForm.getLeaderIds(),teamId);//设置团队leader
             bizResult.setSuccess(true);
             bizResult.setMsg("添加成功");
+
         }catch (Exception e){
             logger.error(e.getMessage());
             bizResult.setSuccess(false);

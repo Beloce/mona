@@ -28,7 +28,7 @@ public class TeamUserDO implements Serializable {
     /**
      * This field corresponds to the database column mona_team_user.role
      */
-    private String role;
+    private Integer role;
 
     /**
      * This field corresponds to the database column mona_team_user.memo
@@ -69,11 +69,11 @@ public class TeamUserDO implements Serializable {
 		this.teamId = teamId;
 	}
 
-	public String getRole() {
+	public Integer getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Integer role) {
 		this.role = role;
 	}
 

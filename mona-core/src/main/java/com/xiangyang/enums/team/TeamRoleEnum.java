@@ -5,7 +5,7 @@ package com.xiangyang.enums.team;
  */
 public enum  TeamRoleEnum {
     Leader(1,"负责人"),
-    normal(0,"普通人");
+    normal(2,"普通成员");
 
 
     private int code;

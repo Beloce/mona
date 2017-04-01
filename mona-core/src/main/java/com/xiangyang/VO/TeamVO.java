@@ -4,6 +4,7 @@ import com.xiangyang.model.UserDO;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by peiji on 2017/3/20.
@@ -23,11 +24,6 @@ public class TeamVO {
     private String teamDec;
 
     /**
-     * This field corresponds to the database column mona_team.leader_id
-     */
-    private Long leaderId;
-
-    /**
      * This field corresponds to the database column mona_team.gmt_modified
      */
     private Date gmtModified;
@@ -40,8 +36,9 @@ public class TeamVO {
 
     private String gmtCreateStr;
 
+    private List<UserDO> teamUsers;//团队用户名称列表
 
-    private String leaderName;
+    private List<UserDO> teamLeaders;//团队负责人名称列表
 
 
 }

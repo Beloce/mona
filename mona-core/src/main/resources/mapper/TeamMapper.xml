@@ -8,7 +8,6 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
         <result column="team_name" jdbcType="VARCHAR" property="teamName" />
         <result column="team_dec" jdbcType="VARCHAR" property="teamDec" />
-        <result column="leader_id" jdbcType="BIGINT" property="leaderId" />
     </resultMap>
 
     <sql id="Query_Where_Clause">
@@ -72,7 +71,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        team_id,gmt_create,gmt_modified,team_name,team_dec,leader_id
+        team_id,gmt_create,gmt_modified,team_name,team_dec
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.TeamQuery" resultMap="BaseResultMap">
@@ -119,9 +118,6 @@
             <if test="teamDec != null">
                 team_dec,
             </if>
-            <if test="leaderId != null">
-                leader_id,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             now(),now(),
@@ -130,9 +126,6 @@
             </if>
             <if test="teamDec != null">
                 #{teamDec,jdbcType=VARCHAR},
-            </if>
-            <if test="leaderId != null">
-                #{leaderId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -154,9 +147,6 @@
             <if test="record.teamDec != null">
                 team_dec = #{record.teamDec,jdbcType=VARCHAR},
             </if>
-            <if test="record.leaderId != null">
-                leader_id = #{record.leaderId,jdbcType=BIGINT},
-            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -167,7 +157,6 @@
         update mona_team
         team_name = #{record.teamName,jdbcType=VARCHAR},
         team_dec = #{record.teamDec,jdbcType=VARCHAR},
-        leader_id = #{record.leaderId,jdbcType=BIGINT},
         gmt_modified = now()
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -183,9 +172,6 @@
             </if>
             <if test="teamDec != null">
                 team_dec = #{teamDec,jdbcType=VARCHAR},
-            </if>
-            <if test="leaderId != null">
-                leader_id = #{leaderId,jdbcType=BIGINT},
             </if>
         </set>
         where team_id = #{teamId,jdbcType=BIGINT}

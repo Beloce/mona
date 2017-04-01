@@ -37,7 +37,7 @@
                                 <td>暂无</td>
                                 <td>$!team.leaderName</td>
                                 <td>
-                                    <a href="#">查看</a>
+                                    <a href="javascript:showTeamDetail($team.teamId)">查看</a>
                                     <a href="#">编辑</a>
                                     <a href="#">删除</a>
                                 </td>
@@ -59,3 +59,4 @@
     </div>
 </section>
 </body>
+<script src="/static/js/team/detail.js"></script>

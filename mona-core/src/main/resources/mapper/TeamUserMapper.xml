@@ -8,7 +8,7 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
         <result column="user_id" jdbcType="BIGINT" property="userId" />
         <result column="team_id" jdbcType="BIGINT" property="teamId" />
-        <result column="role" jdbcType="VARCHAR" property="role" />
+        <result column="role" jdbcType="TINYINT" property="role" />
         <result column="memo" jdbcType="VARCHAR" property="memo" />
     </resultMap>
 
@@ -136,7 +136,7 @@
                 #{teamId,jdbcType=BIGINT},
             </if>
             <if test="role != null">
-                #{role,jdbcType=VARCHAR},
+                #{role,jdbcType=TINYINT},
             </if>
             <if test="memo != null">
                 #{memo,jdbcType=VARCHAR},
@@ -162,7 +162,7 @@
                 team_id = #{record.teamId,jdbcType=BIGINT},
             </if>
             <if test="record.role != null">
-                role = #{record.role,jdbcType=VARCHAR},
+                role = #{record.role,jdbcType=TINYINT},
             </if>
             <if test="record.memo != null">
                 memo = #{record.memo,jdbcType=VARCHAR},
@@ -177,7 +177,7 @@
         update mona_team_user
         user_id = #{record.userId,jdbcType=BIGINT},
         team_id = #{record.teamId,jdbcType=BIGINT},
-        role = #{record.role,jdbcType=VARCHAR},
+        role = #{record.role,jdbcType=TINYINT},
         memo = #{record.memo,jdbcType=VARCHAR},
         gmt_modified = now()
         <if test="_parameter != null">
@@ -196,7 +196,7 @@
                 team_id = #{teamId,jdbcType=BIGINT},
             </if>
             <if test="role != null">
-                role = #{role,jdbcType=VARCHAR},
+                role = #{role,jdbcType=TINYINT},
             </if>
             <if test="memo != null">
                 memo = #{memo,jdbcType=VARCHAR},

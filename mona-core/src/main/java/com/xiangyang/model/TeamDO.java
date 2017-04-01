@@ -26,11 +26,6 @@ public class TeamDO implements Serializable {
     private String teamDec;
 
     /**
-     * This field corresponds to the database column mona_team.leader_id
-     */
-    private Long leaderId;
-
-    /**
      * This field corresponds to the database column mona_team.gmt_modified
      */
     private Date gmtModified;
@@ -62,14 +57,6 @@ public class TeamDO implements Serializable {
 
 	public void setTeamDec(String teamDec) {
 		this.teamDec = teamDec;
-	}
-
-	public Long getLeaderId() {
-		return leaderId;
-	}
-
-	public void setLeaderId(Long leaderId) {
-		this.leaderId = leaderId;
 	}
 
 	public Date getGmtModified() {

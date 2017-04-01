@@ -4,6 +4,7 @@ import com.xiangyang.AO.TeamAO;
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.VO.TeamVO;
+import com.xiangyang.enums.team.TeamRoleEnum;
 import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.form.team.QueryTeamForm;
 import com.xiangyang.manager.TeamManager;
@@ -13,6 +14,9 @@ import com.xiangyang.model.TeamDO;
 import com.xiangyang.model.TeamUserDO;
 import com.xiangyang.model.UserDO;
 import com.xiangyang.query.TeamQuery;
+import com.xiangyang.query.TeamUserQuery;
+import com.xiangyang.query.UserQuery;
+import com.xiangyang.util.TimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +43,7 @@ public class TeamAOImpl implements TeamAO {
     @Autowired
     TeamUserManager teamUserManager;
 
+    final Logger logger  =  LoggerFactory.getLogger(this.getClass());
     @Override
     public BizResult<List<TeamVO>> getTeamListInPage(QueryTeamForm queryTeamForm) {
         BizResult<List<TeamVO>> bizResult = new BizResult<List<TeamVO>>();
@@ -51,11 +56,6 @@ public class TeamAOImpl implements TeamAO {
         for(TeamDO teamDO : teamDOs){
             TeamVO teamVO = new TeamVO();
             BeanUtils.copyProperties(teamDO,teamVO);
-            if(teamVO.getLeaderId() != null)
-            {
-                UserDO userDO = userManager.selectByPrimaryKey(teamVO.getLeaderId());
-                teamVO.setLeaderName(userDO.getFlowerName());
-            }
             teamVOs.add(teamVO);
         }
         bizResult.setSuccess(true);
@@ -92,6 +92,54 @@ public class TeamAOImpl implements TeamAO {
             logger.error(e.getMessage());
             bizResult.setSuccess(false);
             bizResult.setMsg("服务器异常");
+        }
+        return bizResult;
+    }
+
+    @Override
+    public BizResult<TeamVO> queryTeamVOById(Long teamId) {
+        BizResult<TeamVO> bizResult = new BizResult<>();
+        if(teamId == null){
+            bizResult.setSuccess(false);
+            bizResult.setMsg("参数为空");
+            return bizResult;
+        }
+        TeamDO teamDO = teamManager.selectByPrimaryKey(teamId);
+        if(teamDO.getTeamId() == null){
+            bizResult.setSuccess(false);
+            bizResult.setMsg("队伍不存在");
+            return bizResult;
+        }
+        try{
+            TeamVO teamVO = new TeamVO();
+            BeanUtils.copyProperties(teamDO,teamVO);
+            TeamUserQuery teamUserQuery = new TeamUserQuery();
+            teamUserQuery.createCriteria().andTeamIdEqualTo(teamId);
+            List<TeamUserDO> teamUserDOs = teamUserManager.selectByQuery(teamUserQuery);
+            List<Long> leaderIds = new ArrayList<>();
+            List<Long> userIds = new ArrayList<>();
+            for(TeamUserDO teamUserDO : teamUserDOs){
+                userIds.add(teamUserDO.getUserId());
+                if(TeamRoleEnum.Leader.getCode().equals(teamUserDO.getRole())){
+                    leaderIds.add(teamUserDO.getUserId());
+                }
+            }
+            UserQuery normalUserQuery = new UserQuery();
+            normalUserQuery.createCriteria().andUserIdIn(userIds);//普通队员
+            List<UserDO> normalUserDOs = userManager.selectByQuery(normalUserQuery);
+
+            UserQuery leaderUserQuery = new UserQuery();
+            leaderUserQuery.createCriteria().andUserIdIn(leaderIds);//普通队员
+            List<UserDO> leaderUserDOs = userManager.selectByQuery(leaderUserQuery);
+            teamVO.setTeamUsers(normalUserDOs);
+            teamVO.setTeamLeaders(leaderUserDOs);
+            teamVO.setGmtCreateStr(TimeUtils.DateToStr(teamVO.getGmtCreate(),TimeUtils.YYYY_MM_DD));
+            bizResult.setResult(teamVO);
+            bizResult.setSuccess(true);
+        }catch (Exception e){
+            bizResult.setMsg("查询异常");
+            bizResult.setSuccess(false);
+            logger.error(e.getMessage());
         }
         return bizResult;
     }

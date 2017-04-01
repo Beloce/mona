@@ -19,7 +19,19 @@ public interface TeamAO {
      */
     BizResult<List<TeamVO>> getTeamListInPage(QueryTeamForm queryTeamForm);
 
+    /**
+     * 添加团队
+     * @param addTeamForm
+     * @return
+     */
     BizResult addTeamByForm(AddTeamForm addTeamForm);
+
+    /**
+     * 根据teamId获取TeamVO
+     * @param teamId
+     * @return
+     */
+    BizResult<TeamVO> queryTeamVOById(Long teamId);
 
 
 }

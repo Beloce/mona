@@ -4,8 +4,8 @@ package com.xiangyang.enums.team;
  * Created by peiji on 2017/3/30.
  */
 public enum  TeamRoleEnum {
-    Exit(1,"存在"),
-    Deleted(2,"已删除"),;
+    Leader(1,"负责人"),
+    normal(2,"普通成员");
 
 
     private int code;

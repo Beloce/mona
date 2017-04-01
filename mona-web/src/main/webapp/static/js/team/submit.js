@@ -51,7 +51,7 @@ $("#submitbtn").on("click",function(){
                 layer.open({
                     title:"失败",
                     content: data.msg,
-                    icon:2,
+                    icon:3,
                     yes: function(index, layero){
                         layer.close(index);
                     }
@@ -63,7 +63,7 @@ $("#submitbtn").on("click",function(){
             layer.open({
                 title:"失败",
                 content: '网络错误',
-                icon:2,
+                icon:3,
                 yes: function(index, layero){
                     layer.close(index);
                 }

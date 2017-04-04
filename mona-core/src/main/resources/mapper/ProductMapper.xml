@@ -8,7 +8,6 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
         <result column="product_name" jdbcType="VARCHAR" property="productName" />
         <result column="product_comment" jdbcType="VARCHAR" property="productComment" />
-        <result column="project_id" jdbcType="BIGINT" property="projectId" />
     </resultMap>
 
     <sql id="Query_Where_Clause">
@@ -72,7 +71,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        product_id,gmt_create,gmt_modified,product_name,product_comment,project_id
+        product_id,gmt_create,gmt_modified,product_name,product_comment
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.ProductQuery" resultMap="BaseResultMap">
@@ -119,9 +118,6 @@
             <if test="productComment != null">
                 product_comment,
             </if>
-            <if test="projectId != null">
-                project_id,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             now(),now(),
@@ -130,9 +126,6 @@
             </if>
             <if test="productComment != null">
                 #{productComment,jdbcType=VARCHAR},
-            </if>
-            <if test="projectId != null">
-                #{projectId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -154,9 +147,6 @@
             <if test="record.productComment != null">
                 product_comment = #{record.productComment,jdbcType=VARCHAR},
             </if>
-            <if test="record.projectId != null">
-                project_id = #{record.projectId,jdbcType=BIGINT},
-            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -167,7 +157,6 @@
         update mona_product
         product_name = #{record.productName,jdbcType=VARCHAR},
         product_comment = #{record.productComment,jdbcType=VARCHAR},
-        project_id = #{record.projectId,jdbcType=BIGINT},
         gmt_modified = now()
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -183,9 +172,6 @@
             </if>
             <if test="productComment != null">
                 product_comment = #{productComment,jdbcType=VARCHAR},
-            </if>
-            <if test="projectId != null">
-                project_id = #{projectId,jdbcType=BIGINT},
             </if>
         </set>
         where product_id = #{productId,jdbcType=BIGINT}

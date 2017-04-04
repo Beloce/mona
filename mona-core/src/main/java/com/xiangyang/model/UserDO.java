@@ -51,6 +51,11 @@ public class UserDO implements Serializable {
     private String mobile;
 
     /**
+     * This field corresponds to the database column mona_user.role
+     */
+    private Integer role;
+
+    /**
      * This field corresponds to the database column mona_user.job_number
      */
     private Integer jobNumber;
@@ -127,6 +132,14 @@ public class UserDO implements Serializable {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public Integer getRole() {
+		return role;
+	}
+
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 
 	public Integer getJobNumber() {

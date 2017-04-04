@@ -3,10 +3,17 @@ package com.xiangyang.controller;
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.util.UserUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -31,8 +38,9 @@ public class CenterController {
      * 进入中心控制平台
      * @return
      */
+    @RequiresRoles("admin")
     @RequestMapping(value = "/center")
-    public String center(ModelMap modelMap){
+    public String center(ModelMap modelMap, HttpServletRequest request){
         BizResult bizResult = new BizResult();
         bizResult = userAO.getUserInfoByEmail(UserUtil.getUser().getEmail());
         modelMap.addAttribute("result",bizResult.getResult());

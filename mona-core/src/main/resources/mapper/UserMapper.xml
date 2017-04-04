@@ -13,6 +13,7 @@
         <result column="department_id" jdbcType="BIGINT" property="departmentId" />
         <result column="head_img" jdbcType="VARCHAR" property="headImg" />
         <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="role" jdbcType="TINYINT" property="role" />
         <result column="job_number" jdbcType="INTEGER" property="jobNumber" />
     </resultMap>
 
@@ -77,7 +78,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        user_id,gmt_create,gmt_modified,email,password,real_name,flower_name,department_id,head_img,mobile,job_number
+        user_id,gmt_create,gmt_modified,email,password,real_name,flower_name,department_id,head_img,mobile,role,job_number
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.UserQuery" resultMap="BaseResultMap">
@@ -139,6 +140,9 @@
             <if test="mobile != null">
                 mobile,
             </if>
+            <if test="role != null">
+                role,
+            </if>
             <if test="jobNumber != null">
                 job_number,
             </if>
@@ -165,6 +169,9 @@
             </if>
             <if test="mobile != null">
                 #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=TINYINT},
             </if>
             <if test="jobNumber != null">
                 #{jobNumber,jdbcType=INTEGER},
@@ -204,6 +211,9 @@
             <if test="record.mobile != null">
                 mobile = #{record.mobile,jdbcType=VARCHAR},
             </if>
+            <if test="record.role != null">
+                role = #{record.role,jdbcType=TINYINT},
+            </if>
             <if test="record.jobNumber != null">
                 job_number = #{record.jobNumber,jdbcType=INTEGER},
             </if>
@@ -222,6 +232,7 @@
         department_id = #{record.departmentId,jdbcType=BIGINT},
         head_img = #{record.headImg,jdbcType=VARCHAR},
         mobile = #{record.mobile,jdbcType=VARCHAR},
+        role = #{record.role,jdbcType=TINYINT},
         job_number = #{record.jobNumber,jdbcType=INTEGER},
         gmt_modified = now()
         <if test="_parameter != null">
@@ -253,6 +264,9 @@
             </if>
             <if test="mobile != null">
                 mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=TINYINT},
             </if>
             <if test="jobNumber != null">
                 job_number = #{jobNumber,jdbcType=INTEGER},

@@ -26,11 +26,6 @@ public class ProductDO implements Serializable {
     private String productComment;
 
     /**
-     * This field corresponds to the database column mona_product.project_id
-     */
-    private Long projectId;
-
-    /**
      * This field corresponds to the database column mona_product.gmt_create
      */
     private Date gmtCreate;
@@ -62,14 +57,6 @@ public class ProductDO implements Serializable {
 
 	public void setProductComment(String productComment) {
 		this.productComment = productComment;
-	}
-
-	public Long getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
 	}
 
 	public Date getGmtCreate() {

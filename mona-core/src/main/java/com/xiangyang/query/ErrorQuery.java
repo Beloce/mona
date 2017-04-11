@@ -717,6 +717,216 @@ public class ErrorQuery extends BaseQuery implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andReasonIsNull() {
+            addCriterion("reason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonIsNotNull() {
+            addCriterion("reason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonEqualTo(String value) {
+            addCriterion("reason =", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonNotEqualTo(String value) {
+            addCriterion("reason <>", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonGreaterThan(String value) {
+            addCriterion("reason >", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("reason >=", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonLessThan(String value) {
+            addCriterion("reason <", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonLessThanOrEqualTo(String value) {
+            addCriterion("reason <=", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonLike(String value) {
+            addCriterion("reason like", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonNotLike(String value) {
+            addCriterion("reason not like", value, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonIn(List<String> values) {
+            addCriterion("reason in", values, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonNotIn(List<String> values) {
+            addCriterion("reason not in", values, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonBetween(String value1, String value2) {
+            addCriterion("reason between", value1, value2, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andReasonNotBetween(String value1, String value2) {
+            addCriterion("reason not between", value1, value2, "reason");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityIsNull() {
+            addCriterion("responsibility is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityIsNotNull() {
+            addCriterion("responsibility is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityEqualTo(Integer value) {
+            addCriterion("responsibility =", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityNotEqualTo(Integer value) {
+            addCriterion("responsibility <>", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityGreaterThan(Integer value) {
+            addCriterion("responsibility >", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityGreaterThanOrEqualTo(Integer value) {
+            addCriterion("responsibility >=", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityLessThan(Integer value) {
+            addCriterion("responsibility <", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityLessThanOrEqualTo(Integer value) {
+            addCriterion("responsibility <=", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityLike(Integer value) {
+            addCriterion("responsibility like", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityNotLike(Integer value) {
+            addCriterion("responsibility not like", value, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityIn(List<Integer> values) {
+            addCriterion("responsibility in", values, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityNotIn(List<Integer> values) {
+            addCriterion("responsibility not in", values, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityBetween(Integer value1, Integer value2) {
+            addCriterion("responsibility between", value1, value2, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResponsibilityNotBetween(Integer value1, Integer value2) {
+            addCriterion("responsibility not between", value1, value2, "responsibility");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeIsNull() {
+            addCriterion("resolve_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeIsNotNull() {
+            addCriterion("resolve_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeEqualTo(Integer value) {
+            addCriterion("resolve_type =", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeNotEqualTo(Integer value) {
+            addCriterion("resolve_type <>", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeGreaterThan(Integer value) {
+            addCriterion("resolve_type >", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("resolve_type >=", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeLessThan(Integer value) {
+            addCriterion("resolve_type <", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeLessThanOrEqualTo(Integer value) {
+            addCriterion("resolve_type <=", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeLike(Integer value) {
+            addCriterion("resolve_type like", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeNotLike(Integer value) {
+            addCriterion("resolve_type not like", value, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeIn(List<Integer> values) {
+            addCriterion("resolve_type in", values, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeNotIn(List<Integer> values) {
+            addCriterion("resolve_type not in", values, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeBetween(Integer value1, Integer value2) {
+            addCriterion("resolve_type between", value1, value2, "resolveType");
+            return (Criteria) this;
+        }
+
+        public Criteria andResolveTypeNotBetween(Integer value1, Integer value2) {
+            addCriterion("resolve_type not between", value1, value2, "resolveType");
+            return (Criteria) this;
+        }
+
         public Criteria andProviderIdIsNull() {
             addCriterion("provider_id is null");
             return (Criteria) this;
@@ -784,6 +994,76 @@ public class ErrorQuery extends BaseQuery implements Serializable {
 
         public Criteria andProviderIdNotBetween(Long value1, Long value2) {
             addCriterion("provider_id not between", value1, value2, "providerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelIsNull() {
+            addCriterion("appraise_level is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelIsNotNull() {
+            addCriterion("appraise_level is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelEqualTo(Integer value) {
+            addCriterion("appraise_level =", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelNotEqualTo(Integer value) {
+            addCriterion("appraise_level <>", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelGreaterThan(Integer value) {
+            addCriterion("appraise_level >", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelGreaterThanOrEqualTo(Integer value) {
+            addCriterion("appraise_level >=", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelLessThan(Integer value) {
+            addCriterion("appraise_level <", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelLessThanOrEqualTo(Integer value) {
+            addCriterion("appraise_level <=", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelLike(Integer value) {
+            addCriterion("appraise_level like", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelNotLike(Integer value) {
+            addCriterion("appraise_level not like", value, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelIn(List<Integer> values) {
+            addCriterion("appraise_level in", values, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelNotIn(List<Integer> values) {
+            addCriterion("appraise_level not in", values, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelBetween(Integer value1, Integer value2) {
+            addCriterion("appraise_level between", value1, value2, "appraiseLevel");
+            return (Criteria) this;
+        }
+
+        public Criteria andAppraiseLevelNotBetween(Integer value1, Integer value2) {
+            addCriterion("appraise_level not between", value1, value2, "appraiseLevel");
             return (Criteria) this;
         }
 

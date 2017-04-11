@@ -51,6 +51,21 @@ public class ErrorDO implements Serializable {
     private Integer status;
 
     /**
+     * This field corresponds to the database column mona_error.reason
+     */
+    private String reason;
+
+    /**
+     * This field corresponds to the database column mona_error.responsibility
+     */
+    private Integer responsibility;
+
+    /**
+     * This field corresponds to the database column mona_error.resolve_type
+     */
+    private Integer resolveType;
+
+    /**
      * This field corresponds to the database column mona_error.provider_id
      */
     private Long providerId;
@@ -64,6 +79,11 @@ public class ErrorDO implements Serializable {
      * This field corresponds to the database column mona_error.gmt_create
      */
     private Date gmtCreate;
+
+    /**
+     * This field corresponds to the database column mona_error.appraise_level
+     */
+    private Integer appraiseLevel;
 
 	public Long getErrorId() {
 		return errorId;
@@ -129,6 +149,30 @@ public class ErrorDO implements Serializable {
 		this.status = status;
 	}
 
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public Integer getResponsibility() {
+		return responsibility;
+	}
+
+	public void setResponsibility(Integer responsibility) {
+		this.responsibility = responsibility;
+	}
+
+	public Integer getResolveType() {
+		return resolveType;
+	}
+
+	public void setResolveType(Integer resolveType) {
+		this.resolveType = resolveType;
+	}
+
 	public Long getProviderId() {
 		return providerId;
 	}
@@ -151,6 +195,14 @@ public class ErrorDO implements Serializable {
 
 	public void setGmtCreate(Date gmtCreate) {
 		this.gmtCreate = gmtCreate;
+	}
+
+	public Integer getAppraiseLevel() {
+		return appraiseLevel;
+	}
+
+	public void setAppraiseLevel(Integer appraiseLevel) {
+		this.appraiseLevel = appraiseLevel;
 	}
 
 

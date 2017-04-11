@@ -9,8 +9,6 @@
         <result column="department_father_id" jdbcType="BIGINT" property="departmentFatherId" />
         <result column="department_level" jdbcType="INTEGER" property="departmentLevel" />
         <result column="department_name" jdbcType="VARCHAR" property="departmentName" />
-        <result column="department_leader_id" jdbcType="INTEGER" property="departmentLeaderId" />
-        <result column="department_type" jdbcType="TINYINT" property="departmentType" />
     </resultMap>
 
     <sql id="Query_Where_Clause">
@@ -74,7 +72,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        department_id,gmt_create,gmt_modified,department_father_id,department_level,department_name,department_leader_id,department_type
+        department_id,gmt_create,gmt_modified,department_father_id,department_level,department_name
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.DepartmentQuery" resultMap="BaseResultMap">
@@ -124,12 +122,6 @@
             <if test="departmentName != null">
                 department_name,
             </if>
-            <if test="departmentLeaderId != null">
-                department_leader_id,
-            </if>
-            <if test="departmentType != null">
-                department_type,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             now(),now(),
@@ -141,12 +133,6 @@
             </if>
             <if test="departmentName != null">
                 #{departmentName,jdbcType=VARCHAR},
-            </if>
-            <if test="departmentLeaderId != null">
-                #{departmentLeaderId,jdbcType=INTEGER},
-            </if>
-            <if test="departmentType != null">
-                #{departmentType,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -171,12 +157,6 @@
             <if test="record.departmentName != null">
                 department_name = #{record.departmentName,jdbcType=VARCHAR},
             </if>
-            <if test="record.departmentLeaderId != null">
-                department_leader_id = #{record.departmentLeaderId,jdbcType=INTEGER},
-            </if>
-            <if test="record.departmentType != null">
-                department_type = #{record.departmentType,jdbcType=TINYINT},
-            </if>
         </set>
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -188,8 +168,6 @@
         department_father_id = #{record.departmentFatherId,jdbcType=BIGINT},
         department_level = #{record.departmentLevel,jdbcType=INTEGER},
         department_name = #{record.departmentName,jdbcType=VARCHAR},
-        department_leader_id = #{record.departmentLeaderId,jdbcType=INTEGER},
-        department_type = #{record.departmentType,jdbcType=TINYINT},
         gmt_modified = now()
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -208,12 +186,6 @@
             </if>
             <if test="departmentName != null">
                 department_name = #{departmentName,jdbcType=VARCHAR},
-            </if>
-            <if test="departmentLeaderId != null">
-                department_leader_id = #{departmentLeaderId,jdbcType=INTEGER},
-            </if>
-            <if test="departmentType != null">
-                department_type = #{departmentType,jdbcType=TINYINT},
             </if>
         </set>
         where department_id = #{departmentId,jdbcType=BIGINT}

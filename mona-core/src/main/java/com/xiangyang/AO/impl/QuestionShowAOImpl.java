@@ -3,6 +3,7 @@ package com.xiangyang.AO.impl;
 import com.xiangyang.AO.QuestionShowAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.enums.IsDeletedEnum;
+import com.xiangyang.enums.questionshow.QsStatusEnum;
 import com.xiangyang.form.qa.QueryQuestionForm;
 import com.xiangyang.manager.QuestionShowManager;
 import com.xiangyang.model.QuestionShowDO;
@@ -24,7 +25,7 @@ public class QuestionShowAOImpl implements QuestionShowAO {
     @Override
     public List<QuestionShowDO> queryQuestionList(QueryQuestionForm queryQuestionForm) {
         QuestionShowQuery questionShowQuery = new QuestionShowQuery();
-        questionShowQuery.createCriteria().andIsDeletedEqualTo(IsDeletedEnum.Exit.getCode());
+        questionShowQuery.createCriteria().andStatusEqualTo(QsStatusEnum.Deleted.getCode());
         return questionShowManager.selectByQuery(questionShowQuery);
     }
 }

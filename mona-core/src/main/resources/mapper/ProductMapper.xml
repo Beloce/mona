@@ -7,7 +7,8 @@
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
         <result column="product_name" jdbcType="VARCHAR" property="productName" />
-        <result column="product_comment" jdbcType="VARCHAR" property="productComment" />
+        <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
+        <result column="team_id" jdbcType="BIGINT" property="teamId" />
     </resultMap>
 
     <sql id="Query_Where_Clause">
@@ -71,7 +72,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        product_id,gmt_create,gmt_modified,product_name,product_comment
+        product_id,gmt_create,gmt_modified,product_name,product_desc,team_id
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.ProductQuery" resultMap="BaseResultMap">
@@ -115,8 +116,11 @@
             <if test="productName != null">
                 product_name,
             </if>
-            <if test="productComment != null">
-                product_comment,
+            <if test="productDesc != null">
+                product_desc,
+            </if>
+            <if test="teamId != null">
+                team_id,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -124,8 +128,11 @@
             <if test="productName != null">
                 #{productName,jdbcType=VARCHAR},
             </if>
-            <if test="productComment != null">
-                #{productComment,jdbcType=VARCHAR},
+            <if test="productDesc != null">
+                #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                #{teamId,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -144,8 +151,11 @@
             <if test="record.productName != null">
                 product_name = #{record.productName,jdbcType=VARCHAR},
             </if>
-            <if test="record.productComment != null">
-                product_comment = #{record.productComment,jdbcType=VARCHAR},
+            <if test="record.productDesc != null">
+                product_desc = #{record.productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="record.teamId != null">
+                team_id = #{record.teamId,jdbcType=BIGINT},
             </if>
         </set>
         <if test="_parameter != null">
@@ -156,7 +166,8 @@
     <update id="updateByQuery" parameterType="map">
         update mona_product
         product_name = #{record.productName,jdbcType=VARCHAR},
-        product_comment = #{record.productComment,jdbcType=VARCHAR},
+        product_desc = #{record.productDesc,jdbcType=VARCHAR},
+        team_id = #{record.teamId,jdbcType=BIGINT},
         gmt_modified = now()
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -170,8 +181,11 @@
             <if test="productName != null">
                 product_name = #{productName,jdbcType=VARCHAR},
             </if>
-            <if test="productComment != null">
-                product_comment = #{productComment,jdbcType=VARCHAR},
+            <if test="productDesc != null">
+                product_desc = #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=BIGINT},
             </if>
         </set>
         where product_id = #{productId,jdbcType=BIGINT}

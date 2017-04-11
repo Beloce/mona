@@ -31,11 +31,6 @@ public class DepartmentDO implements Serializable {
     private String departmentName;
 
     /**
-     * This field corresponds to the database column mona_department.department_leader_id
-     */
-    private Integer departmentLeaderId;
-
-    /**
      * This field corresponds to the database column mona_department.gmt_create
      */
     private Date gmtCreate;
@@ -44,11 +39,6 @@ public class DepartmentDO implements Serializable {
      * This field corresponds to the database column mona_department.gmt_modified
      */
     private Date gmtModified;
-
-    /**
-     * This field corresponds to the database column mona_department.department_type
-     */
-    private Integer departmentType;
 
 	public Long getDepartmentId() {
 		return departmentId;
@@ -82,14 +72,6 @@ public class DepartmentDO implements Serializable {
 		this.departmentName = departmentName;
 	}
 
-	public Integer getDepartmentLeaderId() {
-		return departmentLeaderId;
-	}
-
-	public void setDepartmentLeaderId(Integer departmentLeaderId) {
-		this.departmentLeaderId = departmentLeaderId;
-	}
-
 	public Date getGmtCreate() {
 		return gmtCreate;
 	}
@@ -104,14 +86,6 @@ public class DepartmentDO implements Serializable {
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
-	}
-
-	public Integer getDepartmentType() {
-		return departmentType;
-	}
-
-	public void setDepartmentType(Integer departmentType) {
-		this.departmentType = departmentType;
 	}
 
 

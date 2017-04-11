@@ -297,73 +297,143 @@ public class ProductQuery extends BaseQuery implements Serializable {
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentIsNull() {
-            addCriterion("product_comment is null");
+        public Criteria andProductDescIsNull() {
+            addCriterion("product_desc is null");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentIsNotNull() {
-            addCriterion("product_comment is not null");
+        public Criteria andProductDescIsNotNull() {
+            addCriterion("product_desc is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentEqualTo(String value) {
-            addCriterion("product_comment =", value, "productComment");
+        public Criteria andProductDescEqualTo(String value) {
+            addCriterion("product_desc =", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentNotEqualTo(String value) {
-            addCriterion("product_comment <>", value, "productComment");
+        public Criteria andProductDescNotEqualTo(String value) {
+            addCriterion("product_desc <>", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentGreaterThan(String value) {
-            addCriterion("product_comment >", value, "productComment");
+        public Criteria andProductDescGreaterThan(String value) {
+            addCriterion("product_desc >", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentGreaterThanOrEqualTo(String value) {
-            addCriterion("product_comment >=", value, "productComment");
+        public Criteria andProductDescGreaterThanOrEqualTo(String value) {
+            addCriterion("product_desc >=", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentLessThan(String value) {
-            addCriterion("product_comment <", value, "productComment");
+        public Criteria andProductDescLessThan(String value) {
+            addCriterion("product_desc <", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentLessThanOrEqualTo(String value) {
-            addCriterion("product_comment <=", value, "productComment");
+        public Criteria andProductDescLessThanOrEqualTo(String value) {
+            addCriterion("product_desc <=", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentLike(String value) {
-            addCriterion("product_comment like", value, "productComment");
+        public Criteria andProductDescLike(String value) {
+            addCriterion("product_desc like", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentNotLike(String value) {
-            addCriterion("product_comment not like", value, "productComment");
+        public Criteria andProductDescNotLike(String value) {
+            addCriterion("product_desc not like", value, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentIn(List<String> values) {
-            addCriterion("product_comment in", values, "productComment");
+        public Criteria andProductDescIn(List<String> values) {
+            addCriterion("product_desc in", values, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentNotIn(List<String> values) {
-            addCriterion("product_comment not in", values, "productComment");
+        public Criteria andProductDescNotIn(List<String> values) {
+            addCriterion("product_desc not in", values, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentBetween(String value1, String value2) {
-            addCriterion("product_comment between", value1, value2, "productComment");
+        public Criteria andProductDescBetween(String value1, String value2) {
+            addCriterion("product_desc between", value1, value2, "productDesc");
             return (Criteria) this;
         }
 
-        public Criteria andProductCommentNotBetween(String value1, String value2) {
-            addCriterion("product_comment not between", value1, value2, "productComment");
+        public Criteria andProductDescNotBetween(String value1, String value2) {
+            addCriterion("product_desc not between", value1, value2, "productDesc");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIsNull() {
+            addCriterion("team_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIsNotNull() {
+            addCriterion("team_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdEqualTo(Long value) {
+            addCriterion("team_id =", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotEqualTo(Long value) {
+            addCriterion("team_id <>", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdGreaterThan(Long value) {
+            addCriterion("team_id >", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("team_id >=", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLessThan(Long value) {
+            addCriterion("team_id <", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLessThanOrEqualTo(Long value) {
+            addCriterion("team_id <=", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLike(Long value) {
+            addCriterion("team_id like", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotLike(Long value) {
+            addCriterion("team_id not like", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIn(List<Long> values) {
+            addCriterion("team_id in", values, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotIn(List<Long> values) {
+            addCriterion("team_id not in", values, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdBetween(Long value1, Long value2) {
+            addCriterion("team_id between", value1, value2, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotBetween(Long value1, Long value2) {
+            addCriterion("team_id not between", value1, value2, "teamId");
             return (Criteria) this;
         }
 

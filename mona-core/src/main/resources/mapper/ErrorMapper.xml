@@ -13,7 +13,11 @@
         <result column="source" jdbcType="TINYINT" property="source" />
         <result column="type" jdbcType="TINYINT" property="type" />
         <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="reason" jdbcType="VARCHAR" property="reason" />
+        <result column="responsibility" jdbcType="TINYINT" property="responsibility" />
+        <result column="resolve_type" jdbcType="TINYINT" property="resolveType" />
         <result column="provider_id" jdbcType="BIGINT" property="providerId" />
+        <result column="appraise_level" jdbcType="TINYINT" property="appraiseLevel" />
     </resultMap>
 
     <sql id="Query_Where_Clause">
@@ -77,7 +81,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        error_id,gmt_create,gmt_modified,product_id,title,description,screenshot,source,type,status,provider_id
+        error_id,gmt_create,gmt_modified,product_id,title,description,screenshot,source,type,status,reason,responsibility,resolve_type,provider_id,appraise_level
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.ErrorQuery" resultMap="BaseResultMap">
@@ -139,8 +143,20 @@
             <if test="status != null">
                 status,
             </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="responsibility != null">
+                responsibility,
+            </if>
+            <if test="resolveType != null">
+                resolve_type,
+            </if>
             <if test="providerId != null">
                 provider_id,
+            </if>
+            <if test="appraiseLevel != null">
+                appraise_level,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -166,8 +182,20 @@
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
             </if>
+            <if test="reason != null">
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="responsibility != null">
+                #{responsibility,jdbcType=TINYINT},
+            </if>
+            <if test="resolveType != null">
+                #{resolveType,jdbcType=TINYINT},
+            </if>
             <if test="providerId != null">
                 #{providerId,jdbcType=BIGINT},
+            </if>
+            <if test="appraiseLevel != null">
+                #{appraiseLevel,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -204,8 +232,20 @@
             <if test="record.status != null">
                 status = #{record.status,jdbcType=TINYINT},
             </if>
+            <if test="record.reason != null">
+                reason = #{record.reason,jdbcType=VARCHAR},
+            </if>
+            <if test="record.responsibility != null">
+                responsibility = #{record.responsibility,jdbcType=TINYINT},
+            </if>
+            <if test="record.resolveType != null">
+                resolve_type = #{record.resolveType,jdbcType=TINYINT},
+            </if>
             <if test="record.providerId != null">
                 provider_id = #{record.providerId,jdbcType=BIGINT},
+            </if>
+            <if test="record.appraiseLevel != null">
+                appraise_level = #{record.appraiseLevel,jdbcType=TINYINT},
             </if>
         </set>
         <if test="_parameter != null">
@@ -222,7 +262,11 @@
         source = #{record.source,jdbcType=TINYINT},
         type = #{record.type,jdbcType=TINYINT},
         status = #{record.status,jdbcType=TINYINT},
+        reason = #{record.reason,jdbcType=VARCHAR},
+        responsibility = #{record.responsibility,jdbcType=TINYINT},
+        resolve_type = #{record.resolveType,jdbcType=TINYINT},
         provider_id = #{record.providerId,jdbcType=BIGINT},
+        appraise_level = #{record.appraiseLevel,jdbcType=TINYINT},
         gmt_modified = now()
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
@@ -254,8 +298,20 @@
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
             </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="responsibility != null">
+                responsibility = #{responsibility,jdbcType=TINYINT},
+            </if>
+            <if test="resolveType != null">
+                resolve_type = #{resolveType,jdbcType=TINYINT},
+            </if>
             <if test="providerId != null">
                 provider_id = #{providerId,jdbcType=BIGINT},
+            </if>
+            <if test="appraiseLevel != null">
+                appraise_level = #{appraiseLevel,jdbcType=TINYINT},
             </if>
         </set>
         where error_id = #{errorId,jdbcType=BIGINT}

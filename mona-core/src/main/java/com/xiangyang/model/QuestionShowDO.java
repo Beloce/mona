@@ -16,19 +16,19 @@ public class QuestionShowDO implements Serializable {
     private Long questionId;
 
     /**
-     * This field corresponds to the database column mona_question_show.question_title
+     * This field corresponds to the database column mona_question_show.title
      */
-    private String questionTitle;
+    private String title;
 
     /**
-     * This field corresponds to the database column mona_question_show.question_author_id
+     * This field corresponds to the database column mona_question_show.author_id
      */
-    private Long questionAuthorId;
+    private Long authorId;
 
     /**
-     * This field corresponds to the database column mona_question_show.question_description
+     * This field corresponds to the database column mona_question_show.description
      */
-    private String questionDescription;
+    private String description;
 
     /**
      * This field corresponds to the database column mona_question_show.product_id
@@ -36,9 +36,9 @@ public class QuestionShowDO implements Serializable {
     private Long productId;
 
     /**
-     * This field corresponds to the database column mona_question_show.question_level
+     * This field corresponds to the database column mona_question_show.status
      */
-    private Integer questionLevel;
+    private Integer status;
 
     /**
      * This field corresponds to the database column mona_question_show.gmt_create
@@ -50,11 +50,6 @@ public class QuestionShowDO implements Serializable {
      */
     private Date gmtModified;
 
-    /**
-     * This field corresponds to the database column mona_question_show.is_deleted
-     */
-    private Integer isDeleted;
-
 	public Long getQuestionId() {
 		return questionId;
 	}
@@ -63,28 +58,28 @@ public class QuestionShowDO implements Serializable {
 		this.questionId = questionId;
 	}
 
-	public String getQuestionTitle() {
-		return questionTitle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setQuestionTitle(String questionTitle) {
-		this.questionTitle = questionTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Long getQuestionAuthorId() {
-		return questionAuthorId;
+	public Long getAuthorId() {
+		return authorId;
 	}
 
-	public void setQuestionAuthorId(Long questionAuthorId) {
-		this.questionAuthorId = questionAuthorId;
+	public void setAuthorId(Long authorId) {
+		this.authorId = authorId;
 	}
 
-	public String getQuestionDescription() {
-		return questionDescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setQuestionDescription(String questionDescription) {
-		this.questionDescription = questionDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getProductId() {
@@ -95,12 +90,12 @@ public class QuestionShowDO implements Serializable {
 		this.productId = productId;
 	}
 
-	public Integer getQuestionLevel() {
-		return questionLevel;
+	public Integer getStatus() {
+		return status;
 	}
 
-	public void setQuestionLevel(Integer questionLevel) {
-		this.questionLevel = questionLevel;
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public Date getGmtCreate() {
@@ -117,14 +112,6 @@ public class QuestionShowDO implements Serializable {
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
-	}
-
-	public Integer getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(Integer isDeleted) {
-		this.isDeleted = isDeleted;
 	}
 
 

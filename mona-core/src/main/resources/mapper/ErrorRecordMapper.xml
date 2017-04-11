@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiangyang.dao.QuestionShowMapper">
+<mapper namespace="com.xiangyang.dao.ErrorRecordMapper">
 
-    <resultMap id="BaseResultMap" type="com.xiangyang.model.QuestionShowDO">
-        <id column="question_id" jdbcType="BIGINT" property="questionId" />
+    <resultMap id="BaseResultMap" type="com.xiangyang.model.ErrorRecordDO">
+        <id column="record_id" jdbcType="BIGINT" property="recordId" />
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-        <result column="title" jdbcType="VARCHAR" property="title" />
-        <result column="author_id" jdbcType="BIGINT" property="authorId" />
-        <result column="description" jdbcType="VARCHAR" property="description" />
-        <result column="product_id" jdbcType="BIGINT" property="productId" />
+        <result column="error_id" jdbcType="BIGINT" property="errorId" />
+        <result column="operation_type" jdbcType="TINYINT" property="operationType" />
+        <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
+        <result column="replacement_id" jdbcType="BIGINT" property="replacementId" />
         <result column="status" jdbcType="TINYINT" property="status" />
+        <result column="memo" jdbcType="VARCHAR" property="memo" />
     </resultMap>
 
     <sql id="Query_Where_Clause">
@@ -74,16 +75,16 @@
     </sql>
 
     <sql id="Base_Column_List">
-        question_id,gmt_create,gmt_modified,title,author_id,description,product_id,status
+        record_id,gmt_create,gmt_modified,error_id,operation_type,operator_id,replacement_id,status,memo
     </sql>
 
-    <select id="selectByQuery" parameterType="com.xiangyang.query.QuestionShowQuery" resultMap="BaseResultMap">
+    <select id="selectByQuery" parameterType="com.xiangyang.query.ErrorRecordQuery" resultMap="BaseResultMap">
         select
         <if test="distinct">
             distinct
         </if>
         <include refid="Base_Column_List" />
-            from mona_question_show
+            from mona_error_record
         <if test="_parameter != null">
             <include refid="Query_Where_Clause" />
         </if>
@@ -94,88 +95,97 @@
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from mona_question_show where question_id = #{questionId,jdbcType=BIGINT}
+        select <include refid="Base_Column_List" /> from mona_error_record where record_id = #{recordId,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        delete from mona_question_show where question_id = #{questionId,jdbcType=BIGINT}
+        delete from mona_error_record where record_id = #{recordId,jdbcType=BIGINT}
     </delete>
 
-    <delete id="deleteByQuery" parameterType="com.xiangyang.query.QuestionShowQuery">
-        delete from mona_question_show
+    <delete id="deleteByQuery" parameterType="com.xiangyang.query.ErrorRecordQuery">
+        delete from mona_error_record
         <if test="_parameter != null">
             <include refid="Query_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insertSelective" parameterType="com.xiangyang.model.QuestionShowDO">
-        <selectKey keyProperty="questionId" order="AFTER" resultType="java.lang.Long">
+    <insert id="insertSelective" parameterType="com.xiangyang.model.ErrorRecordDO">
+        <selectKey keyProperty="recordId" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into mona_question_show
+        insert into mona_error_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             gmt_create,gmt_modified,
-            <if test="title != null">
-                title,
+            <if test="errorId != null">
+                error_id,
             </if>
-            <if test="authorId != null">
-                author_id,
+            <if test="operationType != null">
+                operation_type,
             </if>
-            <if test="description != null">
-                description,
+            <if test="operatorId != null">
+                operator_id,
             </if>
-            <if test="productId != null">
-                product_id,
+            <if test="replacementId != null">
+                replacement_id,
             </if>
             <if test="status != null">
                 status,
             </if>
+            <if test="memo != null">
+                memo,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             now(),now(),
-            <if test="title != null">
-                #{title,jdbcType=VARCHAR},
+            <if test="errorId != null">
+                #{errorId,jdbcType=BIGINT},
             </if>
-            <if test="authorId != null">
-                #{authorId,jdbcType=BIGINT},
+            <if test="operationType != null">
+                #{operationType,jdbcType=TINYINT},
             </if>
-            <if test="description != null">
-                #{description,jdbcType=VARCHAR},
+            <if test="operatorId != null">
+                #{operatorId,jdbcType=BIGINT},
             </if>
-            <if test="productId != null">
-                #{productId,jdbcType=BIGINT},
+            <if test="replacementId != null">
+                #{replacementId,jdbcType=BIGINT},
             </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
             </if>
+            <if test="memo != null">
+                #{memo,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
 
-    <select id="countByQuery" parameterType="com.xiangyang.query.QuestionShowQuery" resultType="java.lang.Integer">
-        select count(*) from mona_question_show
+    <select id="countByQuery" parameterType="com.xiangyang.query.ErrorRecordQuery" resultType="java.lang.Integer">
+        select count(*) from mona_error_record
         <if test="_parameter != null">
             <include refid="Query_Where_Clause" />
         </if>
     </select>
 
     <update id="updateByQuerySelective" parameterType="map">
-        update mona_question_show
+        update mona_error_record
         <set>
             gmt_modified=now(),
-            <if test="record.title != null">
-                title = #{record.title,jdbcType=VARCHAR},
+            <if test="record.errorId != null">
+                error_id = #{record.errorId,jdbcType=BIGINT},
             </if>
-            <if test="record.authorId != null">
-                author_id = #{record.authorId,jdbcType=BIGINT},
+            <if test="record.operationType != null">
+                operation_type = #{record.operationType,jdbcType=TINYINT},
             </if>
-            <if test="record.description != null">
-                description = #{record.description,jdbcType=VARCHAR},
+            <if test="record.operatorId != null">
+                operator_id = #{record.operatorId,jdbcType=BIGINT},
             </if>
-            <if test="record.productId != null">
-                product_id = #{record.productId,jdbcType=BIGINT},
+            <if test="record.replacementId != null">
+                replacement_id = #{record.replacementId,jdbcType=BIGINT},
             </if>
             <if test="record.status != null">
                 status = #{record.status,jdbcType=TINYINT},
+            </if>
+            <if test="record.memo != null">
+                memo = #{record.memo,jdbcType=VARCHAR},
             </if>
         </set>
         <if test="_parameter != null">
@@ -184,39 +194,43 @@
     </update>
 
     <update id="updateByQuery" parameterType="map">
-        update mona_question_show
-        title = #{record.title,jdbcType=VARCHAR},
-        author_id = #{record.authorId,jdbcType=BIGINT},
-        description = #{record.description,jdbcType=VARCHAR},
-        product_id = #{record.productId,jdbcType=BIGINT},
+        update mona_error_record
+        error_id = #{record.errorId,jdbcType=BIGINT},
+        operation_type = #{record.operationType,jdbcType=TINYINT},
+        operator_id = #{record.operatorId,jdbcType=BIGINT},
+        replacement_id = #{record.replacementId,jdbcType=BIGINT},
         status = #{record.status,jdbcType=TINYINT},
+        memo = #{record.memo,jdbcType=VARCHAR},
         gmt_modified = now()
         <if test="_parameter != null">
             <include refid="Update_By_Query_Where_Clause" />
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.xiangyang.model.QuestionShowDO">
-        update mona_question_show
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiangyang.model.ErrorRecordDO">
+        update mona_error_record
         <set>
             gmt_modified=now(),
-            <if test="title != null">
-                title = #{title,jdbcType=VARCHAR},
+            <if test="errorId != null">
+                error_id = #{errorId,jdbcType=BIGINT},
             </if>
-            <if test="authorId != null">
-                author_id = #{authorId,jdbcType=BIGINT},
+            <if test="operationType != null">
+                operation_type = #{operationType,jdbcType=TINYINT},
             </if>
-            <if test="description != null">
-                description = #{description,jdbcType=VARCHAR},
+            <if test="operatorId != null">
+                operator_id = #{operatorId,jdbcType=BIGINT},
             </if>
-            <if test="productId != null">
-                product_id = #{productId,jdbcType=BIGINT},
+            <if test="replacementId != null">
+                replacement_id = #{replacementId,jdbcType=BIGINT},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},
             </if>
+            <if test="memo != null">
+                memo = #{memo,jdbcType=VARCHAR},
+            </if>
         </set>
-        where question_id = #{questionId,jdbcType=BIGINT}
+        where record_id = #{recordId,jdbcType=BIGINT}
     </update>
 
     <sql id="MysqlDialectSuffix">

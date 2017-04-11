@@ -21,9 +21,9 @@ public class ProductDO implements Serializable {
     private String productName;
 
     /**
-     * This field corresponds to the database column mona_product.product_comment
+     * This field corresponds to the database column mona_product.product_desc
      */
-    private String productComment;
+    private String productDesc;
 
     /**
      * This field corresponds to the database column mona_product.gmt_create
@@ -34,6 +34,11 @@ public class ProductDO implements Serializable {
      * This field corresponds to the database column mona_product.gmt_modified
      */
     private Date gmtModified;
+
+    /**
+     * This field corresponds to the database column mona_product.team_id
+     */
+    private Long teamId;
 
 	public Long getProductId() {
 		return productId;
@@ -51,12 +56,12 @@ public class ProductDO implements Serializable {
 		this.productName = productName;
 	}
 
-	public String getProductComment() {
-		return productComment;
+	public String getProductDesc() {
+		return productDesc;
 	}
 
-	public void setProductComment(String productComment) {
-		this.productComment = productComment;
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
 
 	public Date getGmtCreate() {
@@ -73,6 +78,14 @@ public class ProductDO implements Serializable {
 
 	public void setGmtModified(Date gmtModified) {
 		this.gmtModified = gmtModified;
+	}
+
+	public Long getTeamId() {
+		return teamId;
+	}
+
+	public void setTeamId(Long teamId) {
+		this.teamId = teamId;
 	}
 
 

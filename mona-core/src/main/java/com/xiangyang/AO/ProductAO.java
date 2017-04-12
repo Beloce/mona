@@ -1,6 +1,9 @@
 package com.xiangyang.AO;
 
 import com.xiangyang.BizResult;
+import com.xiangyang.VO.ProductVO;
+import com.xiangyang.form.product.CreateProductForm;
+import com.xiangyang.form.product.UpdateProductForm;
 import com.xiangyang.model.ProductDO;
 
 import java.util.List;
@@ -15,4 +18,12 @@ public interface ProductAO {
      * @return
      */
     BizResult<List<ProductDO>>  queryAllProductList();
+
+    BizResult<List<ProductVO>>  queryAllProductVOList();
+
+    BizResult<ProductDO> queryProductDOById(Long productId);
+
+    boolean updateProductDO(UpdateProductForm updateProductForm);
+
+    BizResult<ProductDO> addProduct(CreateProductForm createProductForm);
 }

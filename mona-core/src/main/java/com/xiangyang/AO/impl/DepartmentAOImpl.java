@@ -71,19 +71,6 @@ public class DepartmentAOImpl implements DepartmentAO{
         }
     }
 
-    @Override
-    public Integer queryDepartmentTypeById(Long departmentId) {
-        if(departmentId == null){
-            return null;
-        }
-        DepartmentDO departmentDO = this.queryTopLevelDepartmentDObyId(departmentId);
-        if(departmentDO!=null ){
-            return departmentDO.getDepartmentType();
-        }else {
-            return null;
-        }
-
-    }
 
     @Override
     public DepartmentDO queryTopLevelDepartmentDObyId(Long departmentId) {

@@ -8,6 +8,7 @@
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
         <result column="product_name" jdbcType="VARCHAR" property="productName" />
         <result column="product_desc" jdbcType="VARCHAR" property="productDesc" />
+        <result column="status" jdbcType="TINYINT" property="status" />
         <result column="team_id" jdbcType="BIGINT" property="teamId" />
     </resultMap>
 
@@ -72,7 +73,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        product_id,gmt_create,gmt_modified,product_name,product_desc,team_id
+        product_id,gmt_create,gmt_modified,product_name,product_desc,status,team_id
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.ProductQuery" resultMap="BaseResultMap">
@@ -119,6 +120,9 @@
             <if test="productDesc != null">
                 product_desc,
             </if>
+            <if test="status != null">
+                status,
+            </if>
             <if test="teamId != null">
                 team_id,
             </if>
@@ -130,6 +134,9 @@
             </if>
             <if test="productDesc != null">
                 #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
             </if>
             <if test="teamId != null">
                 #{teamId,jdbcType=BIGINT},
@@ -154,6 +161,9 @@
             <if test="record.productDesc != null">
                 product_desc = #{record.productDesc,jdbcType=VARCHAR},
             </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
             <if test="record.teamId != null">
                 team_id = #{record.teamId,jdbcType=BIGINT},
             </if>
@@ -167,6 +177,7 @@
         update mona_product
         product_name = #{record.productName,jdbcType=VARCHAR},
         product_desc = #{record.productDesc,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=TINYINT},
         team_id = #{record.teamId,jdbcType=BIGINT},
         gmt_modified = now()
         <if test="_parameter != null">
@@ -183,6 +194,9 @@
             </if>
             <if test="productDesc != null">
                 product_desc = #{productDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
             </if>
             <if test="teamId != null">
                 team_id = #{teamId,jdbcType=BIGINT},

@@ -26,6 +26,11 @@ public class ProductDO implements Serializable {
     private String productDesc;
 
     /**
+     * This field corresponds to the database column mona_product.status
+     */
+    private Integer status;
+
+    /**
      * This field corresponds to the database column mona_product.gmt_create
      */
     private Date gmtCreate;
@@ -62,6 +67,14 @@ public class ProductDO implements Serializable {
 
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public Date getGmtCreate() {

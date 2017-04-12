@@ -4,6 +4,7 @@ import com.xiangyang.AO.DepartmentAO;
 import com.xiangyang.AO.UserAO;
 import com.xiangyang.AO.VerifyAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.enums.RoleEnum;
 import com.xiangyang.enums.department.DepartmentTypeEnum;
 import com.xiangyang.form.*;
 import com.xiangyang.model.UserDO;
@@ -75,16 +76,24 @@ public class VerifyController {
     @RequestMapping("/success.htm")
     public String success(ModelMap modelMap){
         UserDO userDO = UserUtil.getUser();
-        if(userDO == null || userDO.getDepartmentId() == null){
-            modelMap.addAttribute("msg","当前您没有权限，请联系管理员");
-        }
         logger.info("|----------用户: " + userDO.getFlowerName()+ " 登录----------|");
-        if(departmentAO.queryDepartmentTypeById(userDO.getDepartmentId()).equals(DepartmentTypeEnum.Tech.getCode())){//技术岗的同学
-            return "redirect:/center.htm";
-        }else {//非技术岗同学
+        if(userDO.getRole() == null){//技术岗or管理员的同学
+            modelMap.addAttribute("msg","您当前没有权限访问,请联系管理员开通权限");
+            return "redirect:/error.htm";
+        }else if(userDO.getRole().equals(RoleEnum.clerk.getCode())){//非技术岗同学
             return "redirect:/mobileError/mobileCreateError.htm";
+        }else if(userDO.getRole().equals(RoleEnum.admin.getCode()) || userDO.getRole().equals(RoleEnum.developer.getCode())){//技术人员或者管理员
+            return "redirect:/center.htm";
+        }else{
+            modelMap.addAttribute("msg","您当前没有权限访问,请联系管理员开通权限");
+            return "redirect:/error.htm";
         }
     }
 
+    @RequestMapping("/nopermission.htm")
+    public String nopermission(ModelMap modelMap){
+        modelMap.addAttribute("msg","无权限，请联系管理员");
+        return "/nopermission";
+    }
 
 }

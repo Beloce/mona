@@ -38,7 +38,6 @@ public class CenterController {
      * 进入中心控制平台
      * @return
      */
-    @RequiresRoles("admin")
     @RequestMapping(value = "/center")
     public String center(ModelMap modelMap, HttpServletRequest request){
         BizResult bizResult = new BizResult();

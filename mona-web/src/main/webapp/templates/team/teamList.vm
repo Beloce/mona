@@ -4,12 +4,12 @@
         a:active:{color: red; }
         a:visited {color:blue;text-decoration:none;}
         a:hover {color: blue; text-decoration:underline; cursor: hand}
-</style>
+    </style>
 </head>
 <body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
 <section class="content">
     <div class="row">
-        <div class="col-xs-12">
+        <div  >
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">

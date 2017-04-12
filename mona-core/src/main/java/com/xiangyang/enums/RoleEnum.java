@@ -6,8 +6,8 @@ package com.xiangyang.enums;
  */
 public enum RoleEnum {
     admin(1,"admin"),
-    clerk(2,"clerk"),
-    developer(3,"developer"),;
+    developer(2,"developer"),
+    clerk(3,"clerk");
 
     private int code;
     private String desc;

@@ -1,0 +1,62 @@
+<head>
+    <style>
+        .layui-form-label{
+            width: auto;
+        }
+    </style>
+</head>
+<body >
+    <form class="layui-form" action="">
+        <input type="hidden" value="$!teamVO.teamId" id ="teamId" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">团队名称:</label>
+            <div class="layui-input-block">
+                <input type="text" name="teamName" value="$!teamVO.teamName"  required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">团队描述:</label>
+            <div class="layui-input-block">
+                <input type="text" name="teamDesc" value="$!teamVO.teamDec" required  lay-verify="required" placeholder="请输入描述" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>leader</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    #foreach($teamLeader in $!teamVO.teamLeaders)
+                        <tr>
+                            <td>$teamLeader.flowerName</td>
+                        </tr>
+                    #end
+                </tbody>
+            </table>
+            <table class="layui-table">
+                <colgroup>
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>成员</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($teamUser in $!teamVO.teamUsers)
+                    <tr>
+                        <td>$teamUser.flowerName</td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+        </div>
+    </form>
+</body>

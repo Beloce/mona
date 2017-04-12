@@ -90,7 +90,7 @@
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="org.apache.shiro.authz.UnauthorizedException">/static/403.html</prop>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/verify/nopermission.htm</prop>
             </props>
         </property>
     </bean>

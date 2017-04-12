@@ -7,6 +7,7 @@ import com.xiangyang.VO.TeamVO;
 import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.form.team.QueryTeamForm;
 import com.xiangyang.model.DepartmentDO;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +34,18 @@ public class TeamController {
      * 获取team信息
      * @param modelMap
      */
+    @RequiresRoles("admin")
     @RequestMapping("teamList.htm")
     public String getTeamList(ModelMap modelMap){
         QueryTeamForm queryTeamForm = new QueryTeamForm();
         queryTeamForm.setPageSize(20);
         queryTeamForm.setPageNo(1);
-        BizResult<List<TeamVO>> bizResult = new BizResult();
-        bizResult = teamAO.getTeamListInPage(queryTeamForm);
+        BizResult<List<TeamVO>> bizResult = teamAO.getTeamListInPage(queryTeamForm);
         modelMap.addAttribute("teamList",bizResult.getResult());
         return "/team/teamList";
     }
 
+    @RequiresRoles("admin")
     @RequestMapping("addTeam.htm")
     public String addTeamList(ModelMap modelMap){
         Long techDepartTopId = 12l;//暂时写死
@@ -52,24 +54,32 @@ public class TeamController {
         return "/team/addTeam";
     }
 
+    @RequiresRoles("admin")
     @RequestMapping(value = "doAddTeam",method = RequestMethod.POST)
     @ResponseBody
     public Object doAddTeam(@RequestBody AddTeamForm addTeamForm){
-        BizResult bizResult = new BizResult();
-        bizResult = teamAO.addTeamByForm(addTeamForm);
+        BizResult bizResult = teamAO.addTeamByForm(addTeamForm);
         return bizResult;
     }
-
     /**
      * 查询团队详情
      * @param teamId
      * @return
      */
+    @RequiresRoles("admin")
     @RequestMapping(value = "detail.json",method = RequestMethod.GET)
     @ResponseBody
-    public Object detail(@RequestParam("teamId") Long teamId){
-        BizResult bizResult = new BizResult();
-        bizResult = teamAO.queryTeamVOById(teamId);
+    public Object getDetail(@RequestParam("teamId") Long teamId){
+        BizResult bizResult = teamAO.queryTeamVOById(teamId);
         return bizResult;
+    }
+
+    @RequiresRoles("admin")
+    @RequestMapping(value = "detail.htm")
+    public String detail(@RequestParam("teamId") Long teamId,ModelMap modelMap){
+        BizResult bizResult = teamAO.queryTeamVOById(teamId);
+        TeamVO teamVO = (TeamVO)bizResult.getResult();
+        modelMap.addAttribute("teamVO",teamVO);
+        return "team/detail";
     }
 }

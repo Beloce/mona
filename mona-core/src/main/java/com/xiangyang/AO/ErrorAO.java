@@ -37,6 +37,14 @@ public interface ErrorAO {
      */
     List<ErrorVO> queryUserBussinessErrorList(UserDO userDO, QueryErrorForm queryErrorForm);
 
+
+    /**
+     * 通过产品Id获取该产品名下的所有的问题
+     * @param productId
+     * @return
+     */
+    List<ErrorVO> queryBussinessErrorListByProductId(Long productId);
+
     /**
      * 通过条件分类筛选，非精确检索
      * @param queryErrorForm

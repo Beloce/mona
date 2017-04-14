@@ -9,7 +9,7 @@ function  showTeamDetail(teamId) {
         // area: ['500px', '300px'],
         shadeClose: true,//点击遮罩关闭层
         shade: 0.6,
-        area: ['40%', '40%'],
+        area: ['50%', '70%'],
         content: '/team/detail.htm?teamId='+teamId
     });
 }

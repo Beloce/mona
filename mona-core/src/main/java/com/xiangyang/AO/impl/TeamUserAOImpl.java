@@ -2,6 +2,7 @@ package com.xiangyang.AO.impl;
 
 import com.xiangyang.AO.TeamUserAO;
 import com.xiangyang.enums.team.TeamRoleEnum;
+import com.xiangyang.manager.TeamManager;
 import com.xiangyang.manager.TeamUserManager;
 import com.xiangyang.model.TeamUserDO;
 import com.xiangyang.query.TeamUserQuery;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,5 +43,17 @@ public class TeamUserAOImpl implements TeamUserAO{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<Long> findTeamIdsByUserId(Long UserId) {
+        List<Long> userIds = new ArrayList<>();
+        TeamUserQuery query = new TeamUserQuery();
+        query.createCriteria().andUserIdEqualTo(UserId);
+        List<TeamUserDO> teamUserDOs = teamUserManager.selectByQuery(query);
+        for(TeamUserDO teamUserDO : teamUserDOs){
+            userIds.add(teamUserDO.getUserId());
+        }
+        return userIds;
     }
 }

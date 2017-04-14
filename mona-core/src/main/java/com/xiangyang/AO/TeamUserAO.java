@@ -8,4 +8,7 @@ import java.util.List;
 public interface TeamUserAO {
 
     boolean addTeamLeader(List<Long> userIds,Long teamId);
+
+    List<Long> findTeamIdsByUserId(Long UserId);
+
 }

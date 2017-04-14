@@ -26,4 +26,6 @@ public interface ProductAO {
     boolean updateProductDO(UpdateProductForm updateProductForm);
 
     BizResult<ProductDO> addProduct(CreateProductForm createProductForm);
+
+//    List<Long> findProductIdsByTeamId
 }

@@ -95,22 +95,32 @@ public class ErrorAOImpl implements ErrorAO {
             errorQuery.setPageSize(queryErrorForm.getPageSize());
             errorQuery.setPageNo(queryErrorForm.getPageNo());
             errorQuery.createCriteria().andProviderIdEqualTo(userDO.getUserId());
-            List<ErrorDO> errorDOs= errorManager.selectByQuery(errorQuery);
-            List<ErrorVO> errorVOs = new ArrayList<ErrorVO>();
-            for(ErrorDO errorDO : errorDOs){
-                ErrorVO errorVO = new ErrorVO();
-                BeanUtils.copyProperties(errorDO,errorVO);
-                errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
-                errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
-                errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
-                errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
-                errorVOs.add(errorVO);
-            }
+            List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+            List<ErrorVO> errorVOs = ErrorVOs2DOs(errorDOs);
             return errorVOs;
         }catch (Exception e){
             logger.error(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public List<ErrorVO> queryBussinessErrorListByProductId(Long productId) {
+        List<ErrorVO> errorVOs = new ArrayList<>();
+        if(productId == null){
+            return errorVOs;
+        }
+        ErrorQuery errorQuery = new ErrorQuery();
+
+        List<Integer> statusList = new ArrayList<>();
+        statusList.add(ErrorStatusEnum.Close.getCode());
+        statusList.add(ErrorStatusEnum.Over.getCode());
+
+        errorQuery.createCriteria().andStatusNotIn(statusList);
+        List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+        errorVOs =  ErrorVOs2DOs(errorDOs);
+        return errorVOs;
+
     }
 
     @Override
@@ -151,5 +161,19 @@ public class ErrorAOImpl implements ErrorAO {
         }
         bizResult.setResult(errorInfoDTOs);
         return bizResult;
+    }
+
+    private List<ErrorVO>  ErrorVOs2DOs(List<ErrorDO> errorDOs){
+        List<ErrorVO> errorVOs = new ArrayList<>();
+        for(ErrorDO errorDO : errorDOs){
+            ErrorVO errorVO = new ErrorVO();
+            BeanUtils.copyProperties(errorDO,errorVO);
+            errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
+            errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
+            errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
+            errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
+            errorVOs.add(errorVO);
+        }
+        return errorVOs;
     }
 }

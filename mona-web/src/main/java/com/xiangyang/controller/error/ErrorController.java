@@ -75,7 +75,7 @@ public class ErrorController {
         modelMap.addAttribute("myErrorList",myErrorDOList);
         modelMap.addAttribute("allErrorList",allErrorResult.getResult());
         modelMap.addAttribute("allErrorForm",queryErrorForm);
-        modelMap.addAttribute ("TimeUtils",new TimeUtils());
+        modelMap.addAttribute("TimeUtils",new TimeUtils());
         modelMap.addAttribute("productList",productAO.queryAllProductList().getResult());
         return "/error/businessErrorList";
     }

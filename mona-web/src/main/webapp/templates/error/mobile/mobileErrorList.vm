@@ -4,19 +4,18 @@
 <script>
     function renderStrHtml(errorVO) {
         var temp = '<div class="card">'
-                   +'     <div class="card-header">'+errorVO.title+'</div>'
+                   +'     <div class="card-header">标题：'+errorVO.title+'</div>'
                    +'     <div class="card-content">'
                    +'        <div class="card-content-inner">'+errorVO.description+'</div>'
                    +'     </div>'
-                   +'     <div class="card-footer">修改时间:'+errorVO.relativeModified+'</div>'
+                   +'     <div class="card-footer">修改时间：'+errorVO.relativeModified'
+                   +'     <div class="pull-right">当前状态</div>'+'</div>'
                    +'</div>'
         return temp;
     }
     function loadErrorListCard(errorList) {
         for(var i=0 ; i<errorList.length;i++){
             var htmlStr = renderStrHtml(errorList[i]);
-            $("#contents").append(htmlStr);
-            $("#contents").append(htmlStr);
             $("#contents").append(htmlStr);
         }
     }

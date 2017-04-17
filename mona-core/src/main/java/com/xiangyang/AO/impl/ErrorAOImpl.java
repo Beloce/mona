@@ -16,6 +16,7 @@ import com.xiangyang.manager.ErrorManager;
 import com.xiangyang.manager.UserManager;
 import com.xiangyang.model.*;
 import com.xiangyang.query.ErrorQuery;
+import com.xiangyang.util.ImgUrlUtil;
 import com.xiangyang.util.TimeUtils;
 import com.xiangyang.util.query.support.PageResult;
 import org.slf4j.Logger;
@@ -83,10 +84,6 @@ public class ErrorAOImpl implements ErrorAO {
             List<Long> teamIds = teamUserAO.findTeamIdsByUserId(userDO.getUserId());
             List<Long> productIds = productAO.findProductIdsByTeamIds(teamIds);
             errorVOs = this.queryWaitBussErrorsByProductIds(productIds);
-            for(ErrorVO errorVO : errorVOs){
-                errorVO.setProviderFlowerName(userDO.getFlowerName());
-                errorVO.setProviderRealName(userDO.getRealName());
-            }
         }catch (Exception e){
             logger.error("|===用户："+userDO.getFlowerName()+" 正在查询问题业务，异常==|"+e.getMessage());
         }
@@ -154,14 +151,7 @@ public class ErrorAOImpl implements ErrorAO {
 
             PageResult<ErrorDO> errorDOs = errorManager.selectByQueryWithPage(errorQuery);
             //循环获取errorDO
-            for(ErrorDO errorDO : errorDOs.getResult()){
-
-                ErrorVO errorVO = new ErrorVO();
-                BeanUtils.copyProperties(errorDO,errorVO);//拷贝DO到VO
-                errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
-                errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
-                errorVOs.add(errorVO);
-            }
+            errorVOs = ErrorDOs2VOs(errorDOs.getResult());
             bizResult.setSuccess(true);
             bizResult.setResult(errorVOs);
         }catch (Exception e){
@@ -197,6 +187,7 @@ public class ErrorAOImpl implements ErrorAO {
             errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
             errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
             errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
+            errorVO.setPics(ImgUrlUtil.parseList(errorDO.getScreenshot()));
             errorVOs.add(errorVO);
         }
         return errorVOs;
@@ -212,6 +203,7 @@ public class ErrorAOImpl implements ErrorAO {
         errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
         errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
         errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
+        errorVO.setPics(ImgUrlUtil.parseList(errorDO.getScreenshot()));
         return errorVO;
     }
 }

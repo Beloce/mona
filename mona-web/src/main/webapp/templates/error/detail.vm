@@ -18,9 +18,18 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">异常问题详情</h3>
                 </div>
-                <div class="box-body table-responsive no-padding">
-                    
-
+                <div class="box-body no-padding">
+                        <h3>$!{errorVO.title}</h3>
+                        <h5>
+                            发起人：$!{errorVO.providerRealName}($!{errorVO.providerFlowerName})
+                            <span class="mailbox-read-time pull-right">创建时间：$!{errorVO.relativeCreate}</span>
+                        </h5>
+                        $!{errorVO.description}
+                        #foreach($pic in $!errorVO.pics)
+                            <li>
+                                <img src="$pic">
+                            </li>
+                        #end
                 </div>
             </div>
         </div>

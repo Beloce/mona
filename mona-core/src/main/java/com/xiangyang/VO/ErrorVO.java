@@ -2,6 +2,7 @@ package com.xiangyang.VO;
 
 import lombok.Data;
 
+import java.util.List;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -35,6 +36,8 @@ public class ErrorVO implements Serializable {
      * This field corresponds to the database column mona_error.screenshot
      */
     private String screenshot;
+
+    private List<String> pics;
 
     /**
      * This field corresponds to the database column mona_error.source

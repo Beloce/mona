@@ -151,4 +151,19 @@ public class ProductAOImpl implements ProductAO {
         }
         return bizResult;
     }
+
+    @Override
+    public List<Long> findProductIdsByTeamIds(List<Long> teamIds) {
+        List<Long> productIds = new ArrayList<>();
+        if(teamIds == null || teamIds.size() == 0){
+            return productIds;
+        }
+        ProductQuery query = new ProductQuery();
+        query.createCriteria().andTeamIdIn(teamIds);
+        List<ProductDO> productDOs = productManager.selectByQuery(query);
+        for(ProductDO productDO : productDOs){
+            productIds.add(productDO.getProductId());
+        }
+        return productIds;
+    }
 }

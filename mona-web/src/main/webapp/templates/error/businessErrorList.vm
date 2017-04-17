@@ -3,6 +3,10 @@
         .label{
             font-weight: 500;
         }
+        a:link {color: blue; text-decoration:none;}
+        a:active:{color: red; }
+        a:visited {color:blue;text-decoration:none;}
+        a:hover {color: blue; text-decoration:underline; cursor: hand}
     </style>
 </head>
 
@@ -12,22 +16,54 @@
             <div class="col-xs-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">我的异常</h3>
+                        <h3 class="box-title">我的待解决</h3>
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
                             <tr>
                                 <th>反馈者</th>
-                                <th>时间</th>
-                                <th>状态</th>
+                                <th>产品</th>
+                                <th>标题</th>
                                 <th>描述</th>
+                                <th>状态</th>
+                                <th>类型</th>
+                                <th>最后操作时间</th>
+                                <th>操作</th>
                             </tr>
-                            <tr>
-                                <td>John Doe</td>
-                                <td>11-7-2014</td>
-                                <td><span class="label label-success">已解决</span></td>
-                                <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                            </tr>
+                            #foreach($myError in $!{myErrorList})
+                                <tr>
+                                ##反馈者 真名+花名
+                                    <td>$!{myError.providerRealName}($!{myError.providerFlowerName})</td>
+                                ## 产品
+                                    <td></td>
+                                ## 标题
+                                    <td>$!{myError.title}</td>
+                                ##描述
+                                    <td>$!{myError.description}</td>
+
+                                ##异常目前的类型
+                                    <td>
+                                        #if($!{myError.type} == 1)##紧急状态
+                                        <span class="label label-danger">
+                                        #elseif($!{myError.type} == 2)
+                                        <span class="label label-warning">
+                                        #elseif($!{myError.type} == 3)
+                                        <span class="label label-primary">
+                                        #elseif($!{myError.type} == 4)
+                                        <span class="label label-success">
+                                        #end
+                                        $!{myError.typeDesc}
+                                    </span>
+                                    </td>
+                                ##操作时间
+                                    <td style="color: red">$!{myError.statusDesc}</td>
+                                ##最后修改时间
+                                    <td>$!{TimeUtils.formatRelativeTime($!{myError.gmtModified})}</td>
+                                    <td>
+                                        <a href="/error/detail.htm?errorId=${myError.errorId}">详情</a>
+                                    </td>
+                                </tr>
+                            #end
                         </table>
                     </div>
                 </div>
@@ -49,37 +85,41 @@
                                 <th>状态</th>
                                 <th>类型</th>
                                 <th>最后操作时间</th>
+                                <th>操作</th>
                             </tr>
                             #foreach($allError in $!{allErrorList})
                                 <tr>
                                     ##反馈者 真名+花名
-                                    <td>$!{allError.userDO.realName}($!{allError.userDO.flowerName})</td>
+                                    <td>$!{allError.providerRealName}($!{allError.providerFlowerName})</td>
                                     ## 产品
                                     <td></td>
                                     ## 标题
-                                    <td>$!{allError.errorVO.title}</td>
+                                    <td>$!{allError.title}</td>
                                     ##描述
-                                    <td>$!{allError.errorVO.description}</td>
+                                    <td>$!{allError.description}</td>
 
                                     ##异常目前的类型
                                     <td>
-                                        #if($!{allError.errorVO.type} == 1)##紧急状态
+                                        #if($!{allError.type} == 1)##紧急状态
                                             <span class="label label-danger">
-                                        #elseif($!{allError.errorVO.type} == 2)
+                                        #elseif($!{allError.type} == 2)
                                             <span class="label label-warning">
-                                        #elseif($!{allError.errorVO.type} == 3)
+                                        #elseif($!{allError.type} == 3)
                                             <span class="label label-primary">
-                                        #elseif($!{allError.errorVO.type} == 4)
+                                        #elseif($!{allError.type} == 4)
                                             <span class="label label-success">
                                         #end
-                                            $!{allError.errorVO.typeDesc}
+                                            $!{allError.typeDesc}
                                             </span>
                                     </td>
 
                                     ##操作时间
-                                    <td style="color: red">$!{allError.errorVO.statusDesc}</td>
+                                    <td style="color: red">$!{allError.statusDesc}</td>
                                     ##最后修改时间
-                                    <td>$!{TimeUtils.formatRelativeTime($!{allError.errorVO.gmtModified})}</td>
+                                    <td>$!{TimeUtils.formatRelativeTime($!{allError.gmtModified})}</td>
+                                    <td>
+                                        <a href="/error/detail.htm?errorId=${allError.errorId}">详情</a>
+                                    </td>
                                 </tr>
                             #end
                         </table>

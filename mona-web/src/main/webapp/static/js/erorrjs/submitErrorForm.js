@@ -22,14 +22,14 @@ function submitForm(){
     }
     $.ajax({
         type: "POST",
-        url: "/error/doAddError.json",
+        url: "/mobileError/doAddError.json",
         data: JSON.stringify(postData),
         contentType:'application/json',
         async: false,
         success:function (data) {
             if(data.success){
                 $.alert("提交成功","成功");
-                self.location("/")
+                self.location("/mobileError/mobileErrorList.htm")
             }else{
                 $.alert("服务器错误，提交失败","错误");
             }

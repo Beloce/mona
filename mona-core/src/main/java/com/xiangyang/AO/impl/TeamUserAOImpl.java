@@ -52,7 +52,7 @@ public class TeamUserAOImpl implements TeamUserAO{
         query.createCriteria().andUserIdEqualTo(UserId);
         List<TeamUserDO> teamUserDOs = teamUserManager.selectByQuery(query);
         for(TeamUserDO teamUserDO : teamUserDOs){
-            userIds.add(teamUserDO.getUserId());
+            userIds.add(teamUserDO.getTeamId());
         }
         return userIds;
     }

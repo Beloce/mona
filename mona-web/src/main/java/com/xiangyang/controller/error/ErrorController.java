@@ -3,6 +3,7 @@ package com.xiangyang.controller.error;
 import com.xiangyang.AO.ErrorAO;
 import com.xiangyang.AO.ProductAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.contants.MobilePageContants;
 import com.xiangyang.dto.ErrorInfoDTO;
 import com.xiangyang.enums.error.ErrorSourceEnum;
@@ -22,10 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -60,23 +58,38 @@ public class ErrorController {
          */
         queryErrorForm.setErrorSource(ErrorSourceEnum.Business.getCode());
         List<Integer> errorStatusList = new ArrayList<Integer>();
-        errorStatusList.add(ErrorStatusEnum.Create.getCode());
-        errorStatusList.add(ErrorStatusEnum.Confirm.getCode());
-        errorStatusList.add(ErrorStatusEnum.Evaluate.getCode());
-        errorStatusList.add(ErrorStatusEnum.Processed.getCode());
+        errorStatusList.add(ErrorStatusEnum.CREATED.getCode());
+        errorStatusList.add(ErrorStatusEnum.CONFIRMED.getCode());
+        errorStatusList.add(ErrorStatusEnum.EVALUATED.getCode());
+        errorStatusList.add(ErrorStatusEnum.PROCESSED.getCode());
+        errorStatusList.add(ErrorStatusEnum.VALIDATED.getCode());
         queryErrorForm.setStatus(errorStatusList);
         //查詢操作
-        List<ErrorDO> myErrorDOList = errorAO.queryBussinessErrorListByUserDO(userDO);
-        BizResult<List<ErrorInfoDTO>> allErrorResult = errorAO.queryBussinessErrorList(queryErrorForm);
+        List<ErrorVO> myErrorDOList = errorAO.queryBussinessErrorListByUserDO(userDO);
+        BizResult<List<ErrorVO>> allErrorResult = errorAO.queryBussinessErrorList(queryErrorForm);
         if(!allErrorResult.isSuccess()){
             modelMap.addAttribute("msg","系统异常");
             modelMap.addAttribute("redirectUrl", WebUtil.getLastUrlFromReferer(request));
             return "error";
         }
+        modelMap.addAttribute("myErrorList",myErrorDOList);
         modelMap.addAttribute("allErrorList",allErrorResult.getResult());
         modelMap.addAttribute("allErrorForm",queryErrorForm);
         modelMap.addAttribute ("TimeUtils",new TimeUtils());
         modelMap.addAttribute("productList",productAO.queryAllProductList().getResult());
         return "/error/businessErrorList";
     }
+    @RequestMapping("/detail.htm")
+    public String detail(@RequestParam Long errorId, ModelMap modelMap){
+        if(errorId == null){
+            return "/error";
+        }
+        ErrorVO errorVO=errorAO.findErrorVOById(errorId);
+        modelMap.addAttribute("errorVO",errorVO);
+
+        return "/error/detail";
+
+    }
+
+
 }

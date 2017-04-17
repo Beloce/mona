@@ -27,5 +27,5 @@ public interface ProductAO {
 
     BizResult<ProductDO> addProduct(CreateProductForm createProductForm);
 
-//    List<Long> findProductIdsByTeamId
+    List<Long> findProductIdsByTeamIds(List<Long> teamIds);
 }

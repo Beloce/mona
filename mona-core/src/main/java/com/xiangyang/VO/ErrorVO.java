@@ -60,6 +60,9 @@ public class ErrorVO implements Serializable {
      */
     private Long providerId;
 
+    private String providerFlowerName;
+
+    private String providerRealName;
     /**
      * This field corresponds to the database column mona_error.gmt_modified
      */

@@ -1,6 +1,9 @@
 package com.xiangyang.AO.impl;
 
 import com.xiangyang.AO.ErrorAO;
+import com.xiangyang.AO.ProductAO;
+import com.xiangyang.AO.TeamAO;
+import com.xiangyang.AO.TeamUserAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.dto.ErrorInfoDTO;
@@ -11,9 +14,7 @@ import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.manager.ErrorManager;
 import com.xiangyang.manager.UserManager;
-import com.xiangyang.model.DepartmentDO;
-import com.xiangyang.model.ErrorDO;
-import com.xiangyang.model.UserDO;
+import com.xiangyang.model.*;
 import com.xiangyang.query.ErrorQuery;
 import com.xiangyang.util.TimeUtils;
 import com.xiangyang.util.query.support.PageResult;
@@ -41,6 +42,12 @@ public class ErrorAOImpl implements ErrorAO {
     @Autowired
     UserManager userManager;
 
+    @Autowired
+    TeamUserAO teamUserAO;
+
+    @Autowired
+    ProductAO productAO;
+
     @Override
     public BizResult addNewError(ErrorForm errorForm) {
         BizResult bizResult = new BizResult();
@@ -57,7 +64,7 @@ public class ErrorAOImpl implements ErrorAO {
         errorDO.setType(errorForm.getErrorType());
         errorDO.setScreenshot(errorForm.getScreenshot());
         errorDO.setSource(ErrorSourceEnum.Business.getCode());
-        errorDO.setStatus(ErrorStatusEnum.Create.getCode());
+        errorDO.setStatus(ErrorStatusEnum.CREATED.getCode());
         errorDO.setGmtCreate(nowData);
         errorDO.setGmtModified(nowData);
         errorManager.insertSelective(errorDO);
@@ -66,19 +73,24 @@ public class ErrorAOImpl implements ErrorAO {
     }
 
     @Override
-    public List<ErrorDO> queryBussinessErrorListByUserDO(UserDO userDO) {
-        /*
-        获取当前用户名下的所有业务问题
-         */
-        List<ErrorDO> errorDOs = new ArrayList<ErrorDO>();
-        DepartmentDO departmentDO = new DepartmentDO();
-        if(departmentDO == null || departmentDO.getDepartmentId() == null){
-            return errorDOs;
-        }
-        ErrorQuery errorQuery = new ErrorQuery();
-        errorQuery.createCriteria().andSourceEqualTo(ErrorSourceEnum.Business.getCode());
+    public List<ErrorVO> queryBussinessErrorListByUserDO(UserDO userDO) {
+        List<ErrorVO> errorVOs = new ArrayList<>();
 
-        return null;
+        if(userDO == null){
+            return errorVOs;
+        }
+        try {
+            List<Long> teamIds = teamUserAO.findTeamIdsByUserId(userDO.getUserId());
+            List<Long> productIds = productAO.findProductIdsByTeamIds(teamIds);
+            errorVOs = this.queryWaitBussErrorsByProductIds(productIds);
+            for(ErrorVO errorVO : errorVOs){
+                errorVO.setProviderFlowerName(userDO.getFlowerName());
+                errorVO.setProviderRealName(userDO.getRealName());
+            }
+        }catch (Exception e){
+            logger.error("|===用户："+userDO.getFlowerName()+" 正在查询问题业务，异常==|"+e.getMessage());
+        }
+        return errorVOs;
     }
 
     @Override
@@ -96,7 +108,7 @@ public class ErrorAOImpl implements ErrorAO {
             errorQuery.setPageNo(queryErrorForm.getPageNo());
             errorQuery.createCriteria().andProviderIdEqualTo(userDO.getUserId());
             List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
-            List<ErrorVO> errorVOs = ErrorVOs2DOs(errorDOs);
+            List<ErrorVO> errorVOs = ErrorDOs2VOs(errorDOs);
             return errorVOs;
         }catch (Exception e){
             logger.error(e.getMessage());
@@ -105,31 +117,30 @@ public class ErrorAOImpl implements ErrorAO {
     }
 
     @Override
-    public List<ErrorVO> queryBussinessErrorListByProductId(Long productId) {
+    public List<ErrorVO> queryWaitBussErrorsByProductIds(List<Long> productIds) {
         List<ErrorVO> errorVOs = new ArrayList<>();
-        if(productId == null){
+        if(productIds == null || productIds.size() == 0){
             return errorVOs;
         }
         ErrorQuery errorQuery = new ErrorQuery();
 
         List<Integer> statusList = new ArrayList<>();
-        statusList.add(ErrorStatusEnum.Close.getCode());
-        statusList.add(ErrorStatusEnum.Over.getCode());
-
-        errorQuery.createCriteria().andStatusNotIn(statusList);
+        statusList.add(ErrorStatusEnum.CLOSED.getCode());
+        statusList.add(ErrorStatusEnum.OVER.getCode());//关闭和完结的问题不被查询到
+        errorQuery.createCriteria().andStatusNotIn(statusList).andProductIdIn(productIds);
         List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
-        errorVOs =  ErrorVOs2DOs(errorDOs);
+        errorVOs =  ErrorDOs2VOs(errorDOs);
         return errorVOs;
 
     }
 
     @Override
-    public BizResult<List<ErrorInfoDTO>> queryBussinessErrorList(QueryErrorForm queryErrorForm) {
+    public BizResult<List<ErrorVO>> queryBussinessErrorList(QueryErrorForm queryErrorForm) {
+        BizResult<List<ErrorVO>> bizResult = new BizResult<List<ErrorVO>>();
+        List<ErrorVO> errorVOs = new ArrayList<ErrorVO>();
         if(queryErrorForm == null){
-            return null;
+            return bizResult;
         }
-        BizResult<List<ErrorInfoDTO>> bizResult = new BizResult<List<ErrorInfoDTO>>();
-        List<ErrorInfoDTO> errorInfoDTOs = new ArrayList<ErrorInfoDTO>();
         try {
             ErrorQuery errorQuery = new ErrorQuery();
             //设置分页的大小和页数
@@ -144,30 +155,44 @@ public class ErrorAOImpl implements ErrorAO {
             PageResult<ErrorDO> errorDOs = errorManager.selectByQueryWithPage(errorQuery);
             //循环获取errorDO
             for(ErrorDO errorDO : errorDOs.getResult()){
-                UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
-                ErrorInfoDTO errorInfoDTO = new ErrorInfoDTO();
+
                 ErrorVO errorVO = new ErrorVO();
                 BeanUtils.copyProperties(errorDO,errorVO);//拷贝DO到VO
                 errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
                 errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
-                errorInfoDTO.setErrorVO(errorVO);//问题的model
-                errorInfoDTO.setUserDO(providerDO);//提问者的model
-                errorInfoDTOs.add(errorInfoDTO);
+                errorVOs.add(errorVO);
             }
             bizResult.setSuccess(true);
+            bizResult.setResult(errorVOs);
         }catch (Exception e){
             logger.error(e.getMessage());
             bizResult.setSuccess(false);
         }
-        bizResult.setResult(errorInfoDTOs);
+        bizResult.setResult(errorVOs);
         return bizResult;
     }
 
-    private List<ErrorVO>  ErrorVOs2DOs(List<ErrorDO> errorDOs){
+    @Override
+    public ErrorVO findErrorVOById(Long errorId) {
+        ErrorVO errorVO = new ErrorVO();
+        try {
+            ErrorDO errorDO = errorManager.selectByPrimaryKey(errorId);
+            errorVO = ErrorVO2DO(errorDO);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+        }
+
+        return errorVO;
+    }
+
+    private List<ErrorVO>  ErrorDOs2VOs(List<ErrorDO> errorDOs){
         List<ErrorVO> errorVOs = new ArrayList<>();
         for(ErrorDO errorDO : errorDOs){
             ErrorVO errorVO = new ErrorVO();
             BeanUtils.copyProperties(errorDO,errorVO);
+            UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
+            errorVO.setProviderFlowerName(providerDO.getFlowerName());
+            errorVO.setProviderRealName(providerDO.getRealName());
             errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
             errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
             errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
@@ -175,5 +200,18 @@ public class ErrorAOImpl implements ErrorAO {
             errorVOs.add(errorVO);
         }
         return errorVOs;
+    }
+
+    private ErrorVO ErrorVO2DO(ErrorDO errorDO){
+        ErrorVO errorVO = new ErrorVO();
+        BeanUtils.copyProperties(errorDO,errorVO);
+        UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
+        errorVO.setProviderFlowerName(providerDO.getFlowerName());
+        errorVO.setProviderRealName(providerDO.getRealName());
+        errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
+        errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
+        errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
+        errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
+        return errorVO;
     }
 }

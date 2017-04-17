@@ -28,7 +28,7 @@ public interface ErrorAO {
      * @param userDO
      * @return
      */
-    List<ErrorDO> queryBussinessErrorListByUserDO(UserDO userDO);
+    List<ErrorVO> queryBussinessErrorListByUserDO(UserDO userDO);
 
     /**
      * 获取当前业务人员的所有业务问题
@@ -39,18 +39,21 @@ public interface ErrorAO {
 
 
     /**
-     * 通过产品Id获取该产品名下的所有的问题
-     * @param productId
+     * 通过产品Id获取该产品所有待处理的所有的问题
+     * @param productIds
      * @return
      */
-    List<ErrorVO> queryBussinessErrorListByProductId(Long productId);
+    List<ErrorVO> queryWaitBussErrorsByProductIds(List<Long> productIds);
 
     /**
      * 通过条件分类筛选，非精确检索
      * @param queryErrorForm
      * @return
      */
-    BizResult<List<ErrorInfoDTO>> queryBussinessErrorList(QueryErrorForm queryErrorForm);
+    BizResult<List<ErrorVO>> queryBussinessErrorList(QueryErrorForm queryErrorForm);
+
+
+    ErrorVO findErrorVOById(Long errorId);
 
 
 

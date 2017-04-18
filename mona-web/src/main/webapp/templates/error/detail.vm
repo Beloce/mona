@@ -1,4 +1,5 @@
 <head>
+    <link rel="stylesheet" href="/static/css/zoom.css" />
     <style>
         .label{
             font-weight: 500;
@@ -7,6 +8,12 @@
         a:active:{color: red; }
         a:visited {color:blue;text-decoration:none;}
         a:hover {color: blue; text-decoration:underline; cursor: hand}
+        span.title{
+            color: red;
+        }
+        span.desc{
+            color: darkgreen;
+        }
     </style>
 </head>
 
@@ -19,20 +26,64 @@
                     <h3 class="box-title">异常问题详情</h3>
                 </div>
                 <div class="box-body no-padding">
-                        <h3>$!{errorVO.title}</h3>
-                        <h5>
-                            发起人：$!{errorVO.providerRealName}($!{errorVO.providerFlowerName})
+                    <div class="mailbox-read-info">
+                        <h3>
+                            <small><b>问题标题：</b></small>
+                            <span class="title"><u>$!{errorVO.title}</u></span>
+                        </h3>
+                        <br>
+                        <h3>
+                            <small><b>问题发起人：</b></small>
+                            $!{errorVO.providerRealName}($!{errorVO.providerFlowerName})</h3>
                             <span class="mailbox-read-time pull-right">创建时间：$!{errorVO.relativeCreate}</span>
-                        </h5>
-                        $!{errorVO.description}
+                    </div>
+                    <div class="mailbox-read-info">
+                        <h3>
+                            <small><b>问题描述：</b></small>
+                        </h3>
+                        </br>
+                        <h3><span class="desc">$!{errorVO.description}</span></h3>
+                    </div>
+                    <div class="mailbox-read-info">
                         #foreach($pic in $!errorVO.pics)
-                            <li>
-                                <img src="$pic">
-                            </li>
+                            <img src="$pic" data-action="zoom" width="120px">
                         #end
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary pull-right">
+                        确认该问题
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="row">
+        <ul class="timeline">
+            #foreach($errorRecordVO in $!errorRecordVOs)
+                <li>
+                    <i class="fa fa-comment bg-blue"></i>
+                    <div class="timeline-item">
+                    <span class="time">
+                         <i class="fa fa-clock-o"></i>
+                         $errorRecordVO.relativeCreate
+                    </span>
+                        <h3 class="timeline-header">
+                            操作者：$errorRecordVO.operatorFlowerName
+                        </h3>
+                        <div class="timeline-body">
+                            $errorRecordVO.operationTypeDesc
+                        </div>
+                        <div class="timeline-footer">
+                            $!errorRecordVO.memo
+                        </div>
+                    </div>
+                </li>
+            #end
+        </ul>
+    </div>
 </section>
 </body>
+<script src="/static/js/zoom.min.js"></script>

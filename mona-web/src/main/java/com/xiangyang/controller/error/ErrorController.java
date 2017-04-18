@@ -1,8 +1,10 @@
 package com.xiangyang.controller.error;
 
 import com.xiangyang.AO.ErrorAO;
+import com.xiangyang.AO.ErrorRecordAO;
 import com.xiangyang.AO.ProductAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.VO.ErrorRecordVO;
 import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.contants.MobilePageContants;
 import com.xiangyang.dto.ErrorInfoDTO;
@@ -41,6 +43,9 @@ public class ErrorController {
 
     @Autowired
     ErrorAO errorAO;
+
+    @Autowired
+    ErrorRecordAO errorRecordAO;
 
     /**
      * 线上业务异常页面路由,默认未结束的的异常
@@ -85,11 +90,13 @@ public class ErrorController {
             return "/error";
         }
         ErrorVO errorVO=errorAO.findErrorVOById(errorId);
+        List<ErrorRecordVO> errorRecordVOs = errorRecordAO.queryErrorRecordList(errorId);
+        int operateSignal = 0;
         modelMap.addAttribute("errorVO",errorVO);
-
+        modelMap.addAttribute("errorRecordVOs",errorRecordVOs);
         return "/error/detail";
-
     }
+
 
 
 }

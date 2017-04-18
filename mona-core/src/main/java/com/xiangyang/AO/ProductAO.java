@@ -28,4 +28,6 @@ public interface ProductAO {
     BizResult<ProductDO> addProduct(CreateProductForm createProductForm);
 
     List<Long> findProductIdsByTeamIds(List<Long> teamIds);
+
+    Long queryTeamIdByProductId(Long productId);
 }

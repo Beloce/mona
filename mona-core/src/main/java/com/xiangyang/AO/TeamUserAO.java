@@ -11,4 +11,15 @@ public interface TeamUserAO {
 
     List<Long> findTeamIdsByUserId(Long UserId);
 
+    /**
+     * 用户是否在这个团队中
+     * @param userId
+     * @param teamId
+     * @return
+     */
+    boolean isUserInTeam(Long userId,Long teamId);
+
+    boolean isUserTheLeader(Long userId,Long teamId);
+
+
 }

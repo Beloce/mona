@@ -166,4 +166,13 @@ public class ProductAOImpl implements ProductAO {
         }
         return productIds;
     }
+
+    @Override
+    public Long queryTeamIdByProductId(Long productId) {
+        if(productId == null){
+            return null;
+        }
+        ProductDO productDO = productManager.selectByPrimaryKey(productId);
+        return productDO.getTeamId();
+    }
 }

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.List;
 @Service
 public class TeamUserAOImpl implements TeamUserAO{
     final Logger logger  =  LoggerFactory.getLogger(this.getClass());
-
 
     @Autowired
     TeamUserManager teamUserManager;
@@ -55,5 +55,33 @@ public class TeamUserAOImpl implements TeamUserAO{
             userIds.add(teamUserDO.getTeamId());
         }
         return userIds;
+    }
+
+    @Override
+    public boolean isUserInTeam(Long userId, Long teamId) {
+        TeamUserQuery query = new TeamUserQuery();
+        query.createCriteria().andUserIdEqualTo(userId).andTeamIdEqualTo(teamId);
+        List<TeamUserDO> teamUserDOs = teamUserManager.selectByQuery(query);
+        if(CollectionUtils.isEmpty(teamUserDOs) || teamUserDOs.size() == 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    public boolean isUserTheLeader(Long userId, Long teamId) {
+        TeamUserQuery query = new TeamUserQuery();
+        query.createCriteria().andTeamIdEqualTo(userId).andTeamIdEqualTo(teamId);
+        List<TeamUserDO> teamUserDOs = teamUserManager.selectByQuery(query);
+        if(CollectionUtils.isEmpty(teamUserDOs) || teamUserDOs.size() == 0){
+            return false;
+        }else{
+            if(teamUserDOs.get(0).getRole().equals(TeamRoleEnum.Leader.getCode())){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 }

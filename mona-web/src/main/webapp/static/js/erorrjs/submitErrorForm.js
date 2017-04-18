@@ -56,14 +56,11 @@ function uploadImgSync() {
             async:false,
             success:function (data) {
                 if(data.success){
-                    layer.open({
-                        title:"成功",
-                        type:false,
-                        content: '提交成功',
-                        yes: function(index, layero){
-                            layer.close(index);
-                        }
-                    });
+                    if($("#screenshot").val() == ""){
+                        $("#screenshot").val(data.result);
+                    }else{
+                        $("#screenshot").val($("#screenshot").val()+"#*#"+data.result);
+                    }
                 }
             },
             error:function (data) {

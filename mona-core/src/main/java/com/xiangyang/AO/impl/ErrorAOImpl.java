@@ -1,15 +1,14 @@
 package com.xiangyang.AO.impl;
 
-import com.xiangyang.AO.ErrorAO;
-import com.xiangyang.AO.ProductAO;
-import com.xiangyang.AO.TeamAO;
-import com.xiangyang.AO.TeamUserAO;
+import com.xiangyang.AO.*;
 import com.xiangyang.BizResult;
+import com.xiangyang.VO.ErrorRecordVO;
 import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.dto.ErrorInfoDTO;
 import com.xiangyang.enums.error.ErrorSourceEnum;
 import com.xiangyang.enums.error.ErrorStatusEnum;
 import com.xiangyang.enums.error.ErrorTypeEnum;
+import com.xiangyang.enums.error.OperationSignalEnum;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.manager.ErrorManager;
@@ -18,6 +17,7 @@ import com.xiangyang.model.*;
 import com.xiangyang.query.ErrorQuery;
 import com.xiangyang.util.ImgUrlUtil;
 import com.xiangyang.util.TimeUtils;
+import com.xiangyang.util.UserUtil;
 import com.xiangyang.util.query.support.PageResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +49,12 @@ public class ErrorAOImpl implements ErrorAO {
     @Autowired
     ProductAO productAO;
 
+    @Autowired
+    ErrorRecordAO errorRecordAO;
+
+    @Autowired
+    TeamAO teamAO;
+
     @Override
     public BizResult addNewError(ErrorForm errorForm) {
         BizResult bizResult = new BizResult();
@@ -69,14 +75,13 @@ public class ErrorAOImpl implements ErrorAO {
         errorDO.setGmtCreate(nowData);
         errorDO.setGmtModified(nowData);
         errorManager.insertSelective(errorDO);
-
+        errorRecordAO.addCreateErrorRecord(errorDO);//创建发布问题记录
         return bizResult;
     }
 
     @Override
     public List<ErrorVO> queryBussinessErrorListByUserDO(UserDO userDO) {
         List<ErrorVO> errorVOs = new ArrayList<>();
-
         if(userDO == null){
             return errorVOs;
         }
@@ -168,11 +173,53 @@ public class ErrorAOImpl implements ErrorAO {
         try {
             ErrorDO errorDO = errorManager.selectByPrimaryKey(errorId);
             errorVO = ErrorVO2DO(errorDO);
+            setErrorOperationSignal(errorVO);
         }catch (Exception e){
             logger.error(e.getMessage());
         }
-
         return errorVO;
+    }
+
+    /*
+    设置技术方人员你的操作栈
+     */
+    private void setErrorOperationSignal(ErrorVO errorVO){
+        UserDO userDO = UserUtil.getUser();
+        //相对于技术方人员来说
+        if(isErrorBelongTechUser(errorVO,userDO)){
+            List<Integer> signalList = new ArrayList<>();
+            if(errorVO.getStatus().equals(ErrorStatusEnum.CREATED.getCode())){//问题已创建
+                signalList.add(OperationSignalEnum.CONFIRM_ERROR.getCode());
+                if(isUserTheLeader(errorVO,userDO)){
+                    signalList.add(OperationSignalEnum.POINT_ERROR.getCode());
+                }
+                errorVO.setOperationSingal(signalList);
+            }else if(errorVO.getStatus().equals(ErrorStatusEnum.CONFIRMED.getCode())){//问题已确认
+                signalList.add(OperationSignalEnum.SOLVE_ERROR.getCode());
+                signalList.add(OperationSignalEnum.CLOSE_ERROR.getCode());
+            }else if(errorVO.getStatus().equals(ErrorStatusEnum.EVALUATED.getCode())){//问题已被评价
+                signalList.add(OperationSignalEnum.FILL_INVENTORY_ERROR.getCode());
+            }else{
+
+            }
+            errorVO.setOperationSingal(signalList);
+        }
+    }
+    /*
+     该问题是否是该用户是否有管理权限
+     */
+    private boolean isErrorBelongTechUser(ErrorVO errorVO,UserDO userDO){
+        Long teamId = productAO.queryTeamIdByProductId(errorVO.getProductId());
+        return teamUserAO.isUserInTeam(teamId, userDO.getUserId());
+
+    }
+
+    /*
+    该用户是否为leader
+     */
+    private boolean isUserTheLeader(ErrorVO errorVO,UserDO userDO){
+        Long teamId = productAO.queryTeamIdByProductId(errorVO.getProductId());
+        return teamUserAO.isUserTheLeader(userDO.getUserId(),teamId);
     }
 
     private List<ErrorVO>  ErrorDOs2VOs(List<ErrorDO> errorDOs){

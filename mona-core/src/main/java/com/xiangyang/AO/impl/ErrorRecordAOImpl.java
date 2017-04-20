@@ -81,9 +81,9 @@ public class ErrorRecordAOImpl implements ErrorRecordAO {
 
 
     /**
-     *
+     *获得莫倩正在跟进的技术人员Id
      * @param errorId
-     * @return
+     * @return null:说明当前没有人确认接收该问题
      */
     @Override
     public Long getHeadTechUserId(Long errorId) {
@@ -96,8 +96,6 @@ public class ErrorRecordAOImpl implements ErrorRecordAO {
         }else{
             return null;
         }
-
-
     }
 
 

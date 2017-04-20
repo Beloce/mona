@@ -173,7 +173,7 @@ public class ErrorAOImpl implements ErrorAO {
         try {
             ErrorDO errorDO = errorManager.selectByPrimaryKey(errorId);
             errorVO = ErrorVO2DO(errorDO);
-            setErrorOperationSignal(errorVO);
+            setErrorOperationSignal(errorVO);//设置该用户的协议栈
         }catch (Exception e){
             logger.error(e.getMessage());
         }
@@ -181,7 +181,7 @@ public class ErrorAOImpl implements ErrorAO {
     }
 
     /*
-    设置技术方人员你的操作栈
+    设置技术方人员的操作栈，用户前端判断出现什么类型的按钮
      */
     private void setErrorOperationSignal(ErrorVO errorVO){
         UserDO userDO = UserUtil.getUser();
@@ -194,13 +194,15 @@ public class ErrorAOImpl implements ErrorAO {
                     signalList.add(OperationSignalEnum.POINT_ERROR.getCode());
                 }
                 errorVO.setOperationSingal(signalList);
-            }else if(errorVO.getStatus().equals(ErrorStatusEnum.CONFIRMED.getCode())){//问题已确认
+            }
+            if(errorVO.getStatus().equals(ErrorStatusEnum.CONFIRMED.getCode())
+                    && errorRecordAO.getHeadTechUserId(errorVO.getErrorId()).equals(userDO.getUserId())){//问题已确认,正在被解决
                 signalList.add(OperationSignalEnum.SOLVE_ERROR.getCode());
                 signalList.add(OperationSignalEnum.CLOSE_ERROR.getCode());
-            }else if(errorVO.getStatus().equals(ErrorStatusEnum.EVALUATED.getCode())){//问题已被评价
+            }
+            if(errorVO.getStatus().equals(ErrorStatusEnum.EVALUATED.getCode())
+                    && errorRecordAO.getHeadTechUserId(errorVO.getErrorId()).equals(userDO.getUserId())){//问题已被评价，等待填写问题清单
                 signalList.add(OperationSignalEnum.FILL_INVENTORY_ERROR.getCode());
-            }else{
-
             }
             errorVO.setOperationSingal(signalList);
         }
@@ -210,8 +212,7 @@ public class ErrorAOImpl implements ErrorAO {
      */
     private boolean isErrorBelongTechUser(ErrorVO errorVO,UserDO userDO){
         Long teamId = productAO.queryTeamIdByProductId(errorVO.getProductId());
-        return teamUserAO.isUserInTeam(teamId, userDO.getUserId());
-
+        return teamUserAO.isUserInTeam(userDO.getUserId(),teamId);
     }
 
     /*

@@ -61,6 +61,6 @@
 </body>
 <script type='text/javascript' src='/static/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/static/js/sm-extend.min.js' charset='utf-8'></script>
-<script type="text/javascript" src="/static/js/erorrjs/submitErrorForm.js" ></script>
+<script type="text/javascript" src="/static/js/errorjs/submitErrorForm.js" ></script>
 <script>$.init()</script>
 </html>

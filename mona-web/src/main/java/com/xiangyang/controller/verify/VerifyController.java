@@ -1,8 +1,6 @@
 package com.xiangyang.controller.verify;
 
-import com.xiangyang.AO.DepartmentAO;
-import com.xiangyang.AO.UserAO;
-import com.xiangyang.AO.VerifyAO;
+import com.xiangyang.AO.*;
 import com.xiangyang.BizResult;
 import com.xiangyang.enums.RoleEnum;
 import com.xiangyang.enums.department.DepartmentTypeEnum;
@@ -20,9 +18,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.LinkedHashMap;
 
 /**
  * Created by xiangyang on 16/11/1.
@@ -39,6 +41,9 @@ public class VerifyController {
 
     @Autowired
     DepartmentAO departmentAO;
+
+    @Autowired
+    OperationAO operationAO;
 
     /**
      * 登录界面转跳
@@ -96,4 +101,17 @@ public class VerifyController {
         return "/nopermission";
     }
 
+    @RequestMapping(value = "/getOpMap.json",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getOpMap(@RequestParam Long errorId){
+        UserDO userDO = UserUtil.getUser();
+        LinkedHashMap map = new LinkedHashMap();
+        if(userDO.getRole().equals(RoleEnum.developer.getCode())){
+            map = operationAO.getDevErrorOperationSignal(errorId,userDO.getUserId());
+        }
+        if(userDO.getRole().equals(RoleEnum.clerk.getCode())){
+            map = operationAO.getBusErrorOperationSignal(errorId,userDO.getUserId());
+        }
+        return map;
+    }
 }

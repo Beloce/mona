@@ -7,7 +7,7 @@ public enum  OperationSignalEnum {
     CONFIRM_ERROR(1,"确认问题"),
     POINT_ERROR(2,"指派问题"),
     CLOSE_ERROR(3,"关闭问题"),
-    SOLVE_ERROR(4,"解决问题"),
+    SOLVE_ERROR(4,"已解决问题"),
     CONFIRM_SOLVE_ERROR(5,"确认解决"),
     REJECT_SOLVE_ERROR(6,"问题未解决"),
     COMMENT_ERROR(7,"评论问题"),

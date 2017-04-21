@@ -28,6 +28,7 @@
                 <div class="box-body no-padding">
                     <div class="mailbox-read-info">
                         <h3>
+                            <input type="hidden" id="errorid" value="$!{errorVO.errorId}"/>
                             <small><b>问题标题：</b></small>
                             <span class="title"><u>$!{errorVO.title}</u></span>
                         </h3>
@@ -50,10 +51,7 @@
                         #end
                     </div>
                 </div>
-                <div class="box-footer">
-                    <button class="btn btn-primary pull-right">
-                        确认该问题
-                    </button>
+                <div class="box-footer" id = "footer">
                 </div>
             </div>
         </div>
@@ -87,3 +85,4 @@
 </section>
 </body>
 <script src="/static/js/zoom.min.js"></script>
+<script src="/static/js/errorjs/getOp.js"></script>

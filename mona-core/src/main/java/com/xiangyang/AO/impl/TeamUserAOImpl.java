@@ -72,7 +72,7 @@ public class TeamUserAOImpl implements TeamUserAO{
     @Override
     public boolean isUserTheLeader(Long userId, Long teamId) {
         TeamUserQuery query = new TeamUserQuery();
-        query.createCriteria().andTeamIdEqualTo(userId).andTeamIdEqualTo(teamId);
+        query.createCriteria().andTeamIdEqualTo(teamId).andUserIdEqualTo(userId);
         List<TeamUserDO> teamUserDOs = teamUserManager.selectByQuery(query);
         if(CollectionUtils.isEmpty(teamUserDOs) || teamUserDOs.size() == 0){
             return false;

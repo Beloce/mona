@@ -84,6 +84,13 @@ public class ErrorController {
         modelMap.addAttribute("productList",productAO.queryAllProductList().getResult());
         return "/error/businessErrorList";
     }
+
+    /**
+     * 错误详情页
+     * @param errorId
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("/detail.htm")
     public String detail(@RequestParam Long errorId, ModelMap modelMap){
         if(errorId == null){
@@ -96,7 +103,4 @@ public class ErrorController {
         modelMap.addAttribute("errorRecordVOs",errorRecordVOs);
         return "/error/detail";
     }
-
-
-
 }

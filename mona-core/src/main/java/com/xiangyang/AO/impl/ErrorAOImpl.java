@@ -173,55 +173,13 @@ public class ErrorAOImpl implements ErrorAO {
         try {
             ErrorDO errorDO = errorManager.selectByPrimaryKey(errorId);
             errorVO = ErrorVO2DO(errorDO);
-            setErrorOperationSignal(errorVO);//设置该用户的协议栈
         }catch (Exception e){
             logger.error(e.getMessage());
         }
         return errorVO;
     }
 
-    /*
-    设置技术方人员的操作栈，用户前端判断出现什么类型的按钮
-     */
-    private void setErrorOperationSignal(ErrorVO errorVO){
-        UserDO userDO = UserUtil.getUser();
-        //相对于技术方人员来说
-        if(isErrorBelongTechUser(errorVO,userDO)){
-            List<Integer> signalList = new ArrayList<>();
-            if(errorVO.getStatus().equals(ErrorStatusEnum.CREATED.getCode())){//问题已创建
-                signalList.add(OperationSignalEnum.CONFIRM_ERROR.getCode());
-                if(isUserTheLeader(errorVO,userDO)){
-                    signalList.add(OperationSignalEnum.POINT_ERROR.getCode());
-                }
-                errorVO.setOperationSingal(signalList);
-            }
-            if(errorVO.getStatus().equals(ErrorStatusEnum.CONFIRMED.getCode())
-                    && errorRecordAO.getHeadTechUserId(errorVO.getErrorId()).equals(userDO.getUserId())){//问题已确认,正在被解决
-                signalList.add(OperationSignalEnum.SOLVE_ERROR.getCode());
-                signalList.add(OperationSignalEnum.CLOSE_ERROR.getCode());
-            }
-            if(errorVO.getStatus().equals(ErrorStatusEnum.EVALUATED.getCode())
-                    && errorRecordAO.getHeadTechUserId(errorVO.getErrorId()).equals(userDO.getUserId())){//问题已被评价，等待填写问题清单
-                signalList.add(OperationSignalEnum.FILL_INVENTORY_ERROR.getCode());
-            }
-            errorVO.setOperationSingal(signalList);
-        }
-    }
-    /*
-     该问题是否是该用户是否有管理权限
-     */
-    private boolean isErrorBelongTechUser(ErrorVO errorVO,UserDO userDO){
-        Long teamId = productAO.queryTeamIdByProductId(errorVO.getProductId());
-        return teamUserAO.isUserInTeam(userDO.getUserId(),teamId);
-    }
 
-    /*
-    该用户是否为leader
-     */
-    private boolean isUserTheLeader(ErrorVO errorVO,UserDO userDO){
-        Long teamId = productAO.queryTeamIdByProductId(errorVO.getProductId());
-        return teamUserAO.isUserTheLeader(userDO.getUserId(),teamId);
-    }
 
     private List<ErrorVO>  ErrorDOs2VOs(List<ErrorDO> errorDOs){
         List<ErrorVO> errorVOs = new ArrayList<>();

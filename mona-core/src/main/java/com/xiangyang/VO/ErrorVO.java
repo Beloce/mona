@@ -81,6 +81,4 @@ public class ErrorVO implements Serializable {
 
     //相对于当前时间的创建时间
     private String relativeCreate;
-
-    private List<Integer> operationSingal;
 }

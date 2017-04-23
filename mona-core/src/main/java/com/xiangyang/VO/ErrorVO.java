@@ -22,6 +22,8 @@ public class ErrorVO implements Serializable {
      */
     private Long productId;
 
+    private String productName;
+
     /**
      * This field corresponds to the database column mona_error.title
      */

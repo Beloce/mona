@@ -1,10 +1,17 @@
 package com.xiangyang.AO.impl;
 
 import com.xiangyang.AO.*;
+import com.xiangyang.BizResult;
 import com.xiangyang.enums.error.ErrorStatusEnum;
 import com.xiangyang.enums.error.OperationSignalEnum;
+import com.xiangyang.enums.errorrecord.ErrorRecordOpTypeEnum;
+import com.xiangyang.form.opeartion.PostOpForm;
 import com.xiangyang.manager.ErrorManager;
+import com.xiangyang.manager.ErrorRecordManager;
 import com.xiangyang.model.ErrorDO;
+import com.xiangyang.model.ErrorRecordDO;
+import com.xiangyang.model.UserDO;
+import com.xiangyang.util.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +36,9 @@ public class OperationAOImpl implements OperationAO{
 
     @Autowired
     ErrorRecordAO errorRecordAO;
+
+    @Autowired
+    ErrorRecordManager errorRecordManager;
 
     @Autowired
     TeamUserAO teamUserAO;
@@ -72,6 +82,63 @@ public class OperationAOImpl implements OperationAO{
     @Override
     public LinkedHashMap<String, Integer> getBusErrorOperationSignal(Long errorId, Long userId) {
         return null;
+    }
+
+    @Override
+    public BizResult doDevOperation(PostOpForm postOpForm) {
+        BizResult bizResult = new BizResult();
+        UserDO userDO = UserUtil.getUser();
+        try{
+            ErrorDO errorDO = errorManager.selectByPrimaryKey(postOpForm.getErrorId());
+            if(!isErrorBelongTechUser(errorDO.getProductId(),userDO.getUserId())){
+                bizResult.setMsg("您无权限进行此操作");
+                bizResult.setSuccess(false);
+                return bizResult;
+            }
+            ErrorRecordDO errorRecordDO = new ErrorRecordDO();
+            errorRecordDO.setErrorId(errorDO.getErrorId());//问题记录的问题ID
+            errorRecordDO.setOperatorId(userDO.getUserId());//操作者的ID
+
+            if(postOpForm.getOpid().equals(OperationSignalEnum.CONFIRM_ERROR.getCode())){//确认问题
+                errorDO.setStatus(ErrorStatusEnum.CONFIRMED.getCode());
+                errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.CONFIRM.getCode());
+            }
+            else if(postOpForm.getOpid().equals(OperationSignalEnum.POINT_ERROR.getCode())){//指派问题
+            /*
+             问题指派的相关代码 todo
+             */
+                errorDO.setStatus(ErrorStatusEnum.CLOSED.getCode());
+                errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.POINT.getCode());
+            }
+            else if(postOpForm.getOpid().equals(OperationSignalEnum.CLOSE_ERROR.getCode())){//关闭问题
+                errorDO.setStatus(ErrorStatusEnum.CLOSED.getCode());
+                errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.CLOSE.getCode());
+            }
+            else if(postOpForm.getOpid().equals(OperationSignalEnum.SOLVE_ERROR.getCode())){//解决问题
+                errorDO.setStatus(ErrorStatusEnum.PROCESSED.getCode());
+                errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.RESOLVE.getCode());
+            }
+            else if(postOpForm.getOpid().equals(OperationSignalEnum.FILL_INVENTORY_ERROR)){//填写问题清单
+            /*
+            填写问题清单。。。todo
+             */
+                errorDO.setStatus(ErrorStatusEnum.OVER.getCode());
+                errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.FILL_INVENTORY.getCode());
+            }
+            else{
+                bizResult.setMsg("异常操作");
+                bizResult.setSuccess(false);
+                return bizResult;
+            }
+            errorRecordManager.insertSelective(errorRecordDO);
+            errorManager.updateByPrimaryKeySelective(errorDO);
+        }catch (Exception e){
+            bizResult.setSuccess(false);
+            logger.error(e.toString());
+            return bizResult;
+        }
+        bizResult.setSuccess(true);
+        return bizResult;
     }
 
 

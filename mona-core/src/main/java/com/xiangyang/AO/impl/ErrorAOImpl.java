@@ -12,6 +12,7 @@ import com.xiangyang.enums.error.OperationSignalEnum;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.manager.ErrorManager;
+import com.xiangyang.manager.ProductManager;
 import com.xiangyang.manager.UserManager;
 import com.xiangyang.model.*;
 import com.xiangyang.query.ErrorQuery;
@@ -42,6 +43,9 @@ public class ErrorAOImpl implements ErrorAO {
 
     @Autowired
     UserManager userManager;
+
+    @Autowired
+    ProductManager productManager;
 
     @Autowired
     TeamUserAO teamUserAO;
@@ -187,6 +191,8 @@ public class ErrorAOImpl implements ErrorAO {
             ErrorVO errorVO = new ErrorVO();
             BeanUtils.copyProperties(errorDO,errorVO);
             UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
+            ProductDO productDO = productManager.selectByPrimaryKey(errorDO.getProductId());
+            errorVO.setProductName(productDO.getProductName());
             errorVO.setProviderFlowerName(providerDO.getFlowerName());
             errorVO.setProviderRealName(providerDO.getRealName());
             errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
@@ -203,6 +209,8 @@ public class ErrorAOImpl implements ErrorAO {
         ErrorVO errorVO = new ErrorVO();
         BeanUtils.copyProperties(errorDO,errorVO);
         UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
+        ProductDO productDO = productManager.selectByPrimaryKey(errorDO.getProductId());
+        errorVO.setProductName(productDO.getProductName());
         errorVO.setProviderFlowerName(providerDO.getFlowerName());
         errorVO.setProviderRealName(providerDO.getRealName());
         errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));

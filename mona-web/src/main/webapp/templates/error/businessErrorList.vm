@@ -35,7 +35,7 @@
                                 ##反馈者 真名+花名
                                     <td>$!{myError.providerRealName}($!{myError.providerFlowerName})</td>
                                 ## 产品
-                                    <td></td>
+                                    <td>$!{myError.productName}</td>
                                 ## 标题
                                     <td>$!{myError.title}</td>
                                 ##描述
@@ -92,7 +92,7 @@
                                     ##反馈者 真名+花名
                                     <td>$!{allError.providerRealName}($!{allError.providerFlowerName})</td>
                                     ## 产品
-                                    <td></td>
+                                    <td>$!{allError.productName}</td>
                                     ## 标题
                                     <td>$!{allError.title}</td>
                                     ##描述

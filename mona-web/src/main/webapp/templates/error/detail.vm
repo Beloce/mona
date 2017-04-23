@@ -66,16 +66,16 @@
                     <div class="timeline-item">
                     <span class="time">
                          <i class="fa fa-clock-o"></i>
-                         $errorRecordVO.relativeCreate
+                         $!{errorRecordVO.relativeCreate}
                     </span>
                         <h3 class="timeline-header">
-                            操作者：$errorRecordVO.operatorFlowerName
+                            操作者：$!{errorRecordVO.operatorFlowerName}
                         </h3>
                         <div class="timeline-body">
-                            $errorRecordVO.operationTypeDesc
+                            $!{errorRecordVO.operationTypeDesc}
                         </div>
                         <div class="timeline-footer">
-                            $!errorRecordVO.memo
+                            <span style="color: #00a157"> $!{errorRecordVO.memo}</span>
                         </div>
                     </div>
                 </li>

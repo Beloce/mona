@@ -1,5 +1,8 @@
 package com.xiangyang.AO;
 
+import com.xiangyang.BizResult;
+import com.xiangyang.form.opeartion.PostOpForm;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,5 +25,8 @@ public interface OperationAO {
      * @param userId
      */
     LinkedHashMap<String,Integer> getBusErrorOperationSignal(Long errorId, Long userId);
+
+
+    BizResult doDevOperation(PostOpForm postOpForm);
 
 }

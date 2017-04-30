@@ -302,7 +302,7 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="height:16px">
-        <iframe src="index.htm"  style="display: bloc;height:100%;width:100%"  frameborder="no" border="0" scrolling="no" name="frame" id="frames"></iframe>
+        <iframe src="index.htm"  style="display: bloc;height:100%;width:100%"  frameborder="no" border="0" scrolling="yes" name="frame" id="frames"></iframe>
     </div>
     </aside>
     <!-- /.control-sidebar -->

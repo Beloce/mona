@@ -27,6 +27,11 @@ public interface OperationAO {
     LinkedHashMap<String,Integer> getBusErrorOperationSignal(Long errorId, Long userId);
 
 
+    /**
+     * 进行问题操作
+     * @param postOpForm
+     * @return
+     */
     BizResult doDevOperation(PostOpForm postOpForm);
 
 }

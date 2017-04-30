@@ -12,4 +12,8 @@ public class PostOpForm {
     private Long errorId;
 
     private String memo;
+
+    private Long pointTo;
+
+    private String reason;
 }

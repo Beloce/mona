@@ -98,22 +98,30 @@ public class OperationAOImpl implements OperationAO{
             ErrorRecordDO errorRecordDO = new ErrorRecordDO();
             errorRecordDO.setErrorId(errorDO.getErrorId());//问题记录的问题ID
             errorRecordDO.setOperatorId(userDO.getUserId());//操作者的ID
+            errorRecordDO.setMemo(postOpForm.getMemo());//备注信息
 
+            //确认问题-----------------------------------------------------------
             if(postOpForm.getOpid().equals(OperationSignalEnum.CONFIRM_ERROR.getCode())){//确认问题
                 errorDO.setStatus(ErrorStatusEnum.CONFIRMED.getCode());
+                errorRecordDO.setMemo("预计完成时间："+postOpForm.getMemo());
                 errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.CONFIRM.getCode());
             }
-            else if(postOpForm.getOpid().equals(OperationSignalEnum.POINT_ERROR.getCode())){//指派问题
-            /*
-             问题指派的相关代码 todo
-             */
-                errorDO.setStatus(ErrorStatusEnum.CLOSED.getCode());
+            //指派问题-----------------------------------------------------------
+            else if(postOpForm.getOpid().equals(OperationSignalEnum.POINT_ERROR.getCode()) && postOpForm.getPointTo()!=null){//指派问题
+                Long originalProductId = errorDO.getProductId();//原来的问题id
+                errorDO.setProductId(postOpForm.getPointTo());
+                errorRecordDO.setOriginalProductId(originalProductId);
+                errorRecordDO.setReplaceProductId(postOpForm.getPointTo());
                 errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.POINT.getCode());
             }
+            //关闭问题-----------------------------------------------------------
             else if(postOpForm.getOpid().equals(OperationSignalEnum.CLOSE_ERROR.getCode())){//关闭问题
                 errorDO.setStatus(ErrorStatusEnum.CLOSED.getCode());
+                errorDO.setReason(postOpForm.getReason());
+                errorRecordDO.setMemo("问题关闭原因："+postOpForm.getMemo());
                 errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.CLOSE.getCode());
             }
+            //问题解决-----------------------------------------------------------
             else if(postOpForm.getOpid().equals(OperationSignalEnum.SOLVE_ERROR.getCode())){//解决问题
                 errorDO.setStatus(ErrorStatusEnum.PROCESSED.getCode());
                 errorRecordDO.setOperationType(ErrorRecordOpTypeEnum.RESOLVE.getCode());

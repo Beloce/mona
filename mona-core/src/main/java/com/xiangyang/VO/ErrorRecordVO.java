@@ -15,6 +15,8 @@ public class ErrorRecordVO {
     private Long errorId;
 
     private Integer operationType;
+
+    private String operationTypeName;
     /*
     操作的中文描述
      */
@@ -24,11 +26,17 @@ public class ErrorRecordVO {
 
     private String operatorFlowerName;
 
-    private Long replacementId;
+    private Long originalProductId;
+
+    private Long replaceProductId;
     /*
-    被指派者的花名
+    被指派前的产品名称
+    */
+    private String originalProductName;
+    /*
+    被指派的产品名称
      */
-    private String replacementFlowerName;
+    private String replacementProductName;
 
     private Date gmtCreate;
 

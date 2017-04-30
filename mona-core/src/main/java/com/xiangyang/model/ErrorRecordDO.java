@@ -31,9 +31,14 @@ public class ErrorRecordDO implements Serializable {
     private Long operatorId;
 
     /**
-     * This field corresponds to the database column mona_error_record.replacement_id
+     * This field corresponds to the database column mona_error_record.original_product_id
      */
-    private Long replacementId;
+    private Long originalProductId;
+
+    /**
+     * This field corresponds to the database column mona_error_record.replace_product_id
+     */
+    private Long replaceProductId;
 
     /**
      * This field corresponds to the database column mona_error_record.gmt_create
@@ -87,12 +92,20 @@ public class ErrorRecordDO implements Serializable {
 		this.operatorId = operatorId;
 	}
 
-	public Long getReplacementId() {
-		return replacementId;
+	public Long getOriginalProductId() {
+		return originalProductId;
 	}
 
-	public void setReplacementId(Long replacementId) {
-		this.replacementId = replacementId;
+	public void setOriginalProductId(Long originalProductId) {
+		this.originalProductId = originalProductId;
+	}
+
+	public Long getReplaceProductId() {
+		return replaceProductId;
+	}
+
+	public void setReplaceProductId(Long replaceProductId) {
+		this.replaceProductId = replaceProductId;
 	}
 
 	public Date getGmtCreate() {

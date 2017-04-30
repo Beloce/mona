@@ -29,13 +29,20 @@
                     <div class="mailbox-read-info">
                         <h3>
                             <input type="hidden" id="errorid" value="$!{errorVO.errorId}"/>
+                            <input type="hidden" id="productid" value="$!{errorVO.productId}">
                             <small><b>问题标题：</b></small>
                             <span class="title"><u>$!{errorVO.title}</u></span>
                         </h3>
                         <br>
                         <h3>
                             <small><b>问题发起人：</b></small>
-                            $!{errorVO.providerRealName}($!{errorVO.providerFlowerName})</h3>
+                            $!{errorVO.providerRealName}($!{errorVO.providerFlowerName})
+                        </h3>
+                        <br>
+                        <h3>
+                            <small><b>所属产品：</b></small>
+                            $!{errorVO.productName}
+                        </h3>
                             <span class="mailbox-read-time pull-right">创建时间：$!{errorVO.relativeCreate}</span>
                     </div>
                     <div class="mailbox-read-info">
@@ -45,13 +52,12 @@
                         </br>
                         <h3><span class="desc">$!{errorVO.description}</span></h3>
                     </div>
+
                     <div class="mailbox-read-info">
                         #foreach($pic in $!errorVO.pics)
                             <img src="$pic" data-action="zoom" width="120px">
                         #end
                     </div>
-                </div>
-                <div class="box-footer" id = "footer">
                 </div>
             </div>
         </div>
@@ -69,7 +75,7 @@
                          $!{errorRecordVO.relativeCreate}
                     </span>
                         <h3 class="timeline-header">
-                            操作者：$!{errorRecordVO.operatorFlowerName}
+                            操作：$!{errorRecordVO.operationTypeName}
                         </h3>
                         <div class="timeline-body">
                             $!{errorRecordVO.operationTypeDesc}
@@ -85,4 +91,4 @@
 </section>
 </body>
 <script src="/static/js/zoom.min.js"></script>
-<script src="/static/js/errorjs/getOp.js"></script>
+<script src="/static/js/errorjs/errorOp.js"></script>

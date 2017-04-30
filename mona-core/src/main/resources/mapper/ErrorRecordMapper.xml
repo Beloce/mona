@@ -9,7 +9,8 @@
         <result column="error_id" jdbcType="BIGINT" property="errorId" />
         <result column="operation_type" jdbcType="TINYINT" property="operationType" />
         <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
-        <result column="replacement_id" jdbcType="BIGINT" property="replacementId" />
+        <result column="original_product_id" jdbcType="BIGINT" property="originalProductId" />
+        <result column="replace_product_id" jdbcType="BIGINT" property="replaceProductId" />
         <result column="status" jdbcType="TINYINT" property="status" />
         <result column="memo" jdbcType="VARCHAR" property="memo" />
     </resultMap>
@@ -75,7 +76,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        record_id,gmt_create,gmt_modified,error_id,operation_type,operator_id,replacement_id,status,memo
+        record_id,gmt_create,gmt_modified,error_id,operation_type,operator_id,original_product_id,replace_product_id,status,memo
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.ErrorRecordQuery" resultMap="BaseResultMap">
@@ -125,8 +126,11 @@
             <if test="operatorId != null">
                 operator_id,
             </if>
-            <if test="replacementId != null">
-                replacement_id,
+            <if test="originalProductId != null">
+                original_product_id,
+            </if>
+            <if test="replaceProductId != null">
+                replace_product_id,
             </if>
             <if test="status != null">
                 status,
@@ -146,8 +150,11 @@
             <if test="operatorId != null">
                 #{operatorId,jdbcType=BIGINT},
             </if>
-            <if test="replacementId != null">
-                #{replacementId,jdbcType=BIGINT},
+            <if test="originalProductId != null">
+                #{originalProductId,jdbcType=BIGINT},
+            </if>
+            <if test="replaceProductId != null">
+                #{replaceProductId,jdbcType=BIGINT},
             </if>
             <if test="status != null">
                 #{status,jdbcType=TINYINT},
@@ -178,8 +185,11 @@
             <if test="record.operatorId != null">
                 operator_id = #{record.operatorId,jdbcType=BIGINT},
             </if>
-            <if test="record.replacementId != null">
-                replacement_id = #{record.replacementId,jdbcType=BIGINT},
+            <if test="record.originalProductId != null">
+                original_product_id = #{record.originalProductId,jdbcType=BIGINT},
+            </if>
+            <if test="record.replaceProductId != null">
+                replace_product_id = #{record.replaceProductId,jdbcType=BIGINT},
             </if>
             <if test="record.status != null">
                 status = #{record.status,jdbcType=TINYINT},
@@ -198,7 +208,8 @@
         error_id = #{record.errorId,jdbcType=BIGINT},
         operation_type = #{record.operationType,jdbcType=TINYINT},
         operator_id = #{record.operatorId,jdbcType=BIGINT},
-        replacement_id = #{record.replacementId,jdbcType=BIGINT},
+        original_product_id = #{record.originalProductId,jdbcType=BIGINT},
+        replace_product_id = #{record.replaceProductId,jdbcType=BIGINT},
         status = #{record.status,jdbcType=TINYINT},
         memo = #{record.memo,jdbcType=VARCHAR},
         gmt_modified = now()
@@ -220,8 +231,11 @@
             <if test="operatorId != null">
                 operator_id = #{operatorId,jdbcType=BIGINT},
             </if>
-            <if test="replacementId != null">
-                replacement_id = #{replacementId,jdbcType=BIGINT},
+            <if test="originalProductId != null">
+                original_product_id = #{originalProductId,jdbcType=BIGINT},
+            </if>
+            <if test="replaceProductId != null">
+                replace_product_id = #{replaceProductId,jdbcType=BIGINT},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=TINYINT},

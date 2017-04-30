@@ -17,7 +17,7 @@ public class ErrorRecodDescUtil {
             return errorRecordVO.getOperatorFlowerName()+" 发布了该问题";
         }
         else if(operationId.equals(ErrorRecordOpTypeEnum.POINT.getCode())){
-            return errorRecordVO.getOperatorFlowerName()+" 将问题指派给—>"+ errorRecordVO.getReplacementFlowerName();
+            return errorRecordVO.getOperatorFlowerName()+" 将问题对应的产品 【"+ errorRecordVO.getOriginalProductName()+"】 变更为—> 【"+ errorRecordVO.getReplacementProductName()+"】";
         }
         else if(operationId.equals(ErrorRecordOpTypeEnum.CLOSE.getCode())){
             return errorRecordVO.getOperatorFlowerName()+"关闭了该问题";

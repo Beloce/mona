@@ -7,6 +7,7 @@ import com.xiangyang.enums.errorrecord.ErrorRecordOpTypeEnum;
 import com.xiangyang.enums.errorrecord.ErrorRecordStatusEnum;
 import com.xiangyang.manager.ErrorManager;
 import com.xiangyang.manager.ErrorRecordManager;
+import com.xiangyang.manager.ProductManager;
 import com.xiangyang.manager.UserManager;
 import com.xiangyang.model.ErrorDO;
 import com.xiangyang.model.ErrorRecordDO;
@@ -36,6 +37,8 @@ public class ErrorRecordAOImpl implements ErrorRecordAO {
     @Autowired
     ErrorManager errorManager;
 
+    @Autowired
+    ProductManager productManager;
 
     @Autowired
     UserManager userManager;
@@ -106,9 +109,11 @@ public class ErrorRecordAOImpl implements ErrorRecordAO {
         }
         BeanUtils.copyProperties(errorRecordDO,errorRecordVO);
         errorRecordVO.setOperatorFlowerName(userManager.selectByPrimaryKey(errorRecordVO.getOperatorId()).getFlowerName());
-        if(errorRecordVO.getReplacementId()!=null){
-            errorRecordVO.setReplacementFlowerName(userManager.selectByPrimaryKey(errorRecordVO.getReplacementId()).getFlowerName());
+        if(errorRecordVO.getOperatorId()!=null && errorRecordVO.getReplaceProductId()!=null){
+            errorRecordVO.setOriginalProductName(productManager.selectByPrimaryKey(errorRecordVO.getOriginalProductId()).getProductName());
+            errorRecordVO.setReplacementProductName(productManager.selectByPrimaryKey(errorRecordVO.getReplaceProductId()).getProductName());
         }
+        errorRecordVO.setOperationTypeName(ErrorRecordOpTypeEnum.getDescByCode(errorRecordVO.getOperationType()));
         errorRecordVO.setOperationTypeDesc(ErrorRecodDescUtil.transOperation(errorRecordDO.getOperationType(),errorRecordVO));
         errorRecordVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorRecordDO.getGmtCreate()));
         return errorRecordVO;

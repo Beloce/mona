@@ -37,6 +37,22 @@ public interface ErrorAO {
      */
     List<ErrorVO> queryUserBussinessErrorList(UserDO userDO, QueryErrorForm queryErrorForm);
 
+    /**
+     * 获取当前业务人员的待解决业务问题
+     * @param userDO
+     * @param queryErrorForm
+     * @return
+     */
+    List<ErrorVO> queryBussinessWaitErrorList(UserDO userDO, QueryErrorForm queryErrorForm);
+
+    /**
+     * 获取当前业务人员的待已解决业务问题
+     * @param userDO
+     * @param queryErrorForm
+     * @return
+     */
+    List<ErrorVO> queryBussinessOverErrorList(UserDO userDO, QueryErrorForm queryErrorForm);
+
 
     /**
      * 通过产品Id获取该产品所有待处理的所有的问题

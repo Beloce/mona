@@ -123,6 +123,62 @@ public class ErrorAOImpl implements ErrorAO {
     }
 
     @Override
+    public List<ErrorVO> queryBussinessWaitErrorList(UserDO userDO, QueryErrorForm queryErrorForm) {
+        if(userDO == null){
+            return null;
+        }
+        if(queryErrorForm == null || queryErrorForm.getPageNo() == null || queryErrorForm.getPageSize() == null){
+            return null;
+        }
+        try{
+            ErrorQuery errorQuery = new ErrorQuery();
+            errorQuery.setOrderByClause("status asc, type asc, error_id desc");//按照问题的状态正序排序
+            errorQuery.setPageSize(queryErrorForm.getPageSize());
+            errorQuery.setPageNo(queryErrorForm.getPageNo());
+
+            List<Integer> overStatus = new ArrayList<>();
+            overStatus.add(ErrorStatusEnum.CLOSED.getCode());
+            overStatus.add(ErrorStatusEnum.OVER.getCode());
+
+            errorQuery.createCriteria().andProviderIdEqualTo(userDO.getUserId()).andStatusNotIn(overStatus);
+            List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+            List<ErrorVO> errorVOs = ErrorDOs2VOs(errorDOs);
+            return errorVOs;
+        }catch (Exception e){
+            logger.error(e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public List<ErrorVO> queryBussinessOverErrorList(UserDO userDO, QueryErrorForm queryErrorForm) {
+        if(userDO == null){
+            return null;
+        }
+        if(queryErrorForm == null || queryErrorForm.getPageNo() == null || queryErrorForm.getPageSize() == null){
+            return null;
+        }
+        try{
+            ErrorQuery errorQuery = new ErrorQuery();
+            errorQuery.setOrderByClause("status asc, type asc, error_id desc");//按照问题的状态正序排序
+            errorQuery.setPageSize(queryErrorForm.getPageSize());
+            errorQuery.setPageNo(queryErrorForm.getPageNo());
+
+            List<Integer> overStatus = new ArrayList<>();
+            overStatus.add(ErrorStatusEnum.CLOSED.getCode());
+            overStatus.add(ErrorStatusEnum.OVER.getCode());
+
+            errorQuery.createCriteria().andProviderIdEqualTo(userDO.getUserId()).andStatusIn(overStatus);
+            List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+            List<ErrorVO> errorVOs = ErrorDOs2VOs(errorDOs);
+            return errorVOs;
+        }catch (Exception e){
+            logger.error(e.toString());
+            return null;
+        }
+    }
+
+    @Override
     public List<ErrorVO> queryWaitBussErrorsByProductIds(List<Long> productIds) {
         List<ErrorVO> errorVOs = new ArrayList<>();
         if(productIds == null || productIds.size() == 0){
@@ -176,7 +232,7 @@ public class ErrorAOImpl implements ErrorAO {
         ErrorVO errorVO = new ErrorVO();
         try {
             ErrorDO errorDO = errorManager.selectByPrimaryKey(errorId);
-            errorVO = ErrorVO2DO(errorDO);
+            errorVO = ErrorDO2VO(errorDO);
         }catch (Exception e){
             logger.error(e.getMessage());
         }
@@ -188,24 +244,13 @@ public class ErrorAOImpl implements ErrorAO {
     private List<ErrorVO>  ErrorDOs2VOs(List<ErrorDO> errorDOs){
         List<ErrorVO> errorVOs = new ArrayList<>();
         for(ErrorDO errorDO : errorDOs){
-            ErrorVO errorVO = new ErrorVO();
-            BeanUtils.copyProperties(errorDO,errorVO);
-            UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
-            ProductDO productDO = productManager.selectByPrimaryKey(errorDO.getProductId());
-            errorVO.setProductName(productDO.getProductName());
-            errorVO.setProviderFlowerName(providerDO.getFlowerName());
-            errorVO.setProviderRealName(providerDO.getRealName());
-            errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
-            errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
-            errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
-            errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
-            errorVO.setPics(ImgUrlUtil.parseList(errorDO.getScreenshot()));
+            ErrorVO errorVO =ErrorDO2VO(errorDO);
             errorVOs.add(errorVO);
         }
         return errorVOs;
     }
 
-    private ErrorVO ErrorVO2DO(ErrorDO errorDO){
+    private ErrorVO ErrorDO2VO(ErrorDO errorDO){
         ErrorVO errorVO = new ErrorVO();
         BeanUtils.copyProperties(errorDO,errorVO);
         UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());

@@ -1,8 +1,10 @@
 package com.xiangyang.controller.error;
 
 import com.xiangyang.AO.ErrorAO;
+import com.xiangyang.AO.ErrorRecordAO;
 import com.xiangyang.AO.ProductAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.VO.ErrorRecordVO;
 import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.contants.MobilePageContants;
 import com.xiangyang.enums.error.ErrorTypeEnum;
@@ -35,6 +37,9 @@ public class MobileErrorController {
 
     @Autowired
     ErrorAO errorAO;
+
+    @Autowired
+    ErrorRecordAO errorRecordAO;
 
     final Logger logger  =  LoggerFactory.getLogger(this.getClass());
 //=============================page1=====================================
@@ -87,20 +92,58 @@ public class MobileErrorController {
     }
 
     /**
-     * H5业务人员ajax异步获取他的提问列表
+     * 通过问题编号获取问题详情
+     * @param errorId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/detail.htm" )
+    public String detail(Long errorId,ModelMap modelMap){
+        if(errorId != null){
+           ErrorVO errorVO = errorAO.findErrorVOById(errorId);
+           List<ErrorRecordVO> errorRecordVOs = errorRecordAO.queryErrorRecordList(errorId);
+           modelMap.addAttribute("page", MobilePageContants.MOBILE_PAGE_2);
+           modelMap.addAttribute("errorRecordVOs",errorRecordVOs);
+           modelMap.addAttribute("errorVO",errorVO);
+        }
+
+        return "/error/mobile/detail";
+    }
+    /**
+     * H5业务人员ajax异步获取他的待解决的提问列表
      * @param queryErrorForm
      * @return
      */
-    @RequestMapping(value = "/getErrorListAjax.json", method = RequestMethod.POST)
+    @RequestMapping(value = "/getWaitResolveErrorListAjax.json", method = RequestMethod.GET)
     @ResponseBody
-    public Object getErrorListAjax(@RequestBody QueryErrorForm queryErrorForm){
+    public Object getWaitResolveErrorListAjax(QueryErrorForm queryErrorForm){
         BizResult bizResult = new BizResult();
         UserDO userDO = UserUtil.getUser();
         if(userDO == null){
             bizResult.setSuccess(false);
             bizResult.setMsg("请登录后操作");
         }
-        List<ErrorVO> errorVOs = errorAO.queryUserBussinessErrorList(userDO,queryErrorForm);
+        List<ErrorVO> errorVOs = errorAO.queryBussinessWaitErrorList(userDO,queryErrorForm);
+        bizResult.setResult(errorVOs);
+        bizResult.setSuccess(true);
+        return bizResult;
+    }
+
+    /**
+     * H5业务人员ajax异步获取他的已结束提问列表
+     * @param queryErrorForm
+     * @return
+     */
+    @RequestMapping(value = "/getOverErrorListAjax.json", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getOverErrorListAjax(QueryErrorForm queryErrorForm){
+        BizResult bizResult = new BizResult();
+        UserDO userDO = UserUtil.getUser();
+        if(userDO == null){
+            bizResult.setSuccess(false);
+            bizResult.setMsg("请登录后操作");
+        }
+        List<ErrorVO> errorVOs = errorAO.queryBussinessOverErrorList(userDO,queryErrorForm);
         bizResult.setResult(errorVOs);
         bizResult.setSuccess(true);
         return bizResult;

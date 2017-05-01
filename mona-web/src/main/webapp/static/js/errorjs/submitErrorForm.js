@@ -12,6 +12,16 @@ function submitForm(){
         $.alert('请将信息填写完毕！', '警告');
         return;
     }
+    var flag = false;
+    if(fileArray.length > 0){
+        $.showPreloader();
+        flag = uploadImgSync();
+        $.hidePreloader();
+        if(!flag){
+            return;
+        }
+
+    }
     var screenshot =  $("#screenshot").val();
     var postData = {
         title :   title,
@@ -29,7 +39,7 @@ function submitForm(){
         success:function (data) {
             if(data.success){
                 $.alert("提交成功","成功");
-                self.location("/mobileError/mobileErrorList.htm")
+                location.href="/mobileError/mobileErrorList.htm";
             }else{
                 $.alert("服务器错误，提交失败","错误");
             }
@@ -39,7 +49,6 @@ function submitForm(){
             return;
         }
     });
-
 }
 //异步上传图片
 function uploadImgSync() {
@@ -69,7 +78,6 @@ function uploadImgSync() {
                 return false;
             }
         });
-
     }
     return true;
 }
@@ -97,23 +105,16 @@ $(function(){
         }
 
     });
-    $uploaderFiles.on("tap", "li", function(){
+    $uploaderFiles.on("click", "li", function(){
         $galleryImg.attr("style", this.getAttribute("style"));
         $gallery.show(100);
     });
-    $gallery.on("tap", function(){
+    $gallery.on("click", function(){
         $gallery.hide(100);
     });
     //点击提交按钮
     $("#submits").on("click",function(){
         var flag = true;
-        if(fileArray.length > 0){
-            $.showPreloader("上传图片中请稍等");
-            flag = uploadImgSync();
-            $.hidePreloader();
-        }
-        if(flag){
-            submitForm();
-        }
+        submitForm();
     });
 });

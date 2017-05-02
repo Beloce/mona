@@ -11,10 +11,10 @@ public enum ErrorRecordOpTypeEnum {
     CONFIRM(3,"确认"),
     CLOSE(4,"关闭"),
     RESOLVE(5,"已解决"),
-    RESOLVE_CONFIRM(6,"解决确认"),
+    RESOLVE_CONFIRM(6,"解决确认,已评论"),
     RESOLVE_REJECT(7,"解决驳回"),
-    COMMENT(8,"评论"),
-    FILL_INVENTORY(9,"填写问题清单"),;
+    FILL_INVENTORY(8,"填写问题清单"),
+    OVER(9,"问题解决完成");
 
 
     Integer code;

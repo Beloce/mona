@@ -132,7 +132,7 @@ public class ErrorAOImpl implements ErrorAO {
         }
         try{
             ErrorQuery errorQuery = new ErrorQuery();
-            errorQuery.setOrderByClause("status asc, type asc, error_id desc");//按照问题的状态正序排序
+            errorQuery.setOrderByClause(" type asc, status asc, error_id desc");//按照问题的状态正序排序
             errorQuery.setPageSize(queryErrorForm.getPageSize());
             errorQuery.setPageNo(queryErrorForm.getPageNo());
 

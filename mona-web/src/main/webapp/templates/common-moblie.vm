@@ -58,6 +58,100 @@
             <div class="popup-overlay">
             ##        提示框模板
             </div>
+
+            ##-----------------评价popup---------------
+            <div class="popup popup-confirm">
+                <div class="page-group">
+                    <header class="bar bar-nav">
+                        <button class="button pull-left close-popup">
+                            关闭
+                        </button>
+                        <h1 class="title">请评价</h1>
+                    </header>
+                    <div class="content">
+                        <div class="content-block">
+                            <div class="row">
+                                <div class="content-block-title" style="margin-top: 0.75rem">*请评分</div>
+                                <div class="col-20">
+                                    <a href="#" class="button star" id="1">1星</a>
+                                </div>
+                                <div class="col-20">
+                                    <a href="#" class="button star" id="2">2星</a>
+                                </div>
+                                <div class="col-20">
+                                    <a href="#" class="button star" id="3">3星</a>
+                                </div>
+                                <div class="col-20">
+                                    <a href="#" class="button star" id="4">4星</a>
+                                </div>
+                                <div class="col-20">
+                                    <a href="#" class="button star" id="5">5星</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="content-block-title">点赞或吐槽（非必填项）</div>
+                                <div class="col-100" >
+                                    <div class="list-block" style="margin: 0rem 0rem 2rem 0rem">
+                                        <ul>
+                                            <li class="align-top">
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <textarea id="comt_memo"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-100">
+                                    <a href="#" class="button button-big button-fill button-success" id="comt_submit">提交</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup popup-reject">
+                <div class="page-group">
+                    <header class="bar bar-nav">
+                        <button class="button pull-left close-popup">
+                            关闭
+                        </button>
+                        <h1 class="title">填写驳回原因</h1>
+                    </header>
+                    <div class="content">
+                        <div class="content-block">
+                            <div class="row">
+                                <div class="content-block-title">*驳回原因说明</div>
+                                <div class="col-100" >
+                                    <div class="list-block" style="margin: 0rem 0rem 2rem 0rem">
+                                        <ul>
+                                            <li class="align-top">
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <textarea id="reject_memo"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-100">
+                                    <a href="#" class="button button-big button-fill button-danger" id="reject_submit">驳回</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -65,5 +159,6 @@
 <script type='text/javascript' src='/static/js/sm-extend.min.js' charset='utf-8'></script>
 <script type="text/javascript" src="/static/js/errorjs/submitErrorForm.js" ></script>
 <script type="text/javascript" src="/static/js/errorjs/mobile/imgView.js"></script>
+<script type="text/javascript" src="/static/js/errorjs/mobile/mobileErrorOp.js"></script>
 <script>$.init()</script>
 </html>

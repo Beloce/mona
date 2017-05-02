@@ -8,10 +8,9 @@ public enum  OperationSignalEnum {
     POINT_ERROR(2,"指派问题"),
     CLOSE_ERROR(3,"关闭问题"),
     SOLVE_ERROR(4,"已解决问题"),
-    CONFIRM_SOLVE_ERROR(5,"确认解决"),
+    CONFIRM_SOLVE_ERROR(5,"确认解决，评论问题"),
     REJECT_SOLVE_ERROR(6,"问题未解决"),
-    COMMENT_ERROR(7,"评论问题"),
-    FILL_INVENTORY_ERROR(8,"填写问题清单"),;
+    FILL_INVENTORY_ERROR(7,"填写问题清单"),;
 
     Integer code;
     String desc;

@@ -1,6 +1,7 @@
 #set($layout="common-moblie.vm")
 <div class="content-block-title" style="margin-top: 0.75rem">问题基本信息</div>
 <div class="list-block">
+    <input type="hidden" value="$!{errorVO.errorId}" id="errorid"/>
     <ul>
         <li class="item-content">
             <div class="item-inner">
@@ -26,16 +27,21 @@
                 <div class="item-after">
                     #if($!{errorVO.status} == 7)
                     <i class="fa fa-window-close" style="color:red" aria-hidden="true">
-                        $!{errorVO.statusDesc}
+                        <small>$!{errorVO.statusDesc}</small>
                     </i>
                     #elseif($!{errorVO.status} == 6)
-                        <i class="fa fa-check-square" style="color:green" aria-hidden="true">
-                            $!{errorVO.statusDesc}
-                        </i>
+                    <i class="fa fa-check-circle" style="color:green" aria-hidden="true">
+                        <small>$!{errorVO.statusDesc}</small>
+                    </i>
+                    #elseif($!{errorVO.status} == 3)
+                    <i class="fa  fa-question-circle" style="color:#0a8ddf" aria-hidden="true">
+                        <small>$!{errorVO.statusDesc}</small>
+                    </i>
+                    <a href="#" class="button create-actions" style="margin-top: -0.2rem;margin-left: 0.2rem">操作</a>
                     #else
-                        <i class="fa fa-spinner" style="color:orange" aria-hidden="true">
-                            $!{errorVO.statusDesc}
-                        </i>
+                    <i class="fa fa-spinner" style="color:orange" aria-hidden="true">
+                        <small>$!{errorVO.statusDesc}</small>
+                    </i>
                     #end
                 </div>
             </div>
@@ -78,5 +84,3 @@
     #end
 </div>
 #end
-
-<script src="/static/js/errorjs/mobile/mobileErrorOp.js"></script>

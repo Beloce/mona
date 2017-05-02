@@ -8,9 +8,7 @@ import com.xiangyang.VO.ErrorRecordVO;
 import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.contants.MobilePageContants;
 import com.xiangyang.dto.ErrorInfoDTO;
-import com.xiangyang.enums.error.ErrorSourceEnum;
-import com.xiangyang.enums.error.ErrorStatusEnum;
-import com.xiangyang.enums.error.ErrorTypeEnum;
+import com.xiangyang.enums.error.*;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.model.ErrorDO;
@@ -30,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -65,9 +64,8 @@ public class ErrorController {
         List<Integer> errorStatusList = new ArrayList<Integer>();
         errorStatusList.add(ErrorStatusEnum.CREATED.getCode());
         errorStatusList.add(ErrorStatusEnum.CONFIRMED.getCode());
-        errorStatusList.add(ErrorStatusEnum.EVALUATED.getCode());
-        errorStatusList.add(ErrorStatusEnum.PROCESSED.getCode());
         errorStatusList.add(ErrorStatusEnum.VALIDATED.getCode());
+        errorStatusList.add(ErrorStatusEnum.PROCESSED.getCode());
         queryErrorForm.setStatus(errorStatusList);
         //查詢操作
         List<ErrorVO> myErrorDOList = errorAO.queryBussinessErrorListByUserDO(userDO);
@@ -102,5 +100,27 @@ public class ErrorController {
         modelMap.addAttribute("errorVO",errorVO);
         modelMap.addAttribute("errorRecordVOs",errorRecordVOs);
         return "/error/detail";
+    }
+
+    /**
+     * 获取解决方案map
+     * @return
+     */
+    @RequestMapping("/getResolveType.json")
+    @ResponseBody
+    public Object getResolveType(){
+        LinkedHashMap<String,String> map = ResolveTypeEnum.getCodeAndDescMap();
+        return map;
+    }
+
+    /**
+     * 获取解决方案map
+     * @return
+     */
+    @RequestMapping("/getRespType.json")
+    @ResponseBody
+    public Object getRespType(){
+        LinkedHashMap<String,String> map = ResponsibilityEnum.getCodeAndDescMap();
+        return map;
     }
 }

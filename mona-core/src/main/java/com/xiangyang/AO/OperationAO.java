@@ -1,10 +1,10 @@
 package com.xiangyang.AO;
 
 import com.xiangyang.BizResult;
-import com.xiangyang.form.opeartion.PostOpForm;
+import com.xiangyang.form.opeartion.PostBusOpForm;
+import com.xiangyang.form.opeartion.PostDevOpForm;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * Created by xiangyang on 17/4/21.
@@ -28,10 +28,17 @@ public interface OperationAO {
 
 
     /**
-     * 进行问题操作
-     * @param postOpForm
+     * 技术人员进行问题操作
+     * @param postDevOpForm
      * @return
      */
-    BizResult doDevOperation(PostOpForm postOpForm);
+    BizResult doDevOperation(PostDevOpForm postDevOpForm);
+
+    /**
+     * 业务人员进行问题操作
+     * @param postBusOpForm
+     * @return
+     */
+    BizResult doBusOperation(PostBusOpForm postBusOpForm);
 
 }

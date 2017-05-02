@@ -9,8 +9,7 @@ public enum ErrorStatusEnum {
     CREATED(1,"已创建，待确认"),
     CONFIRMED(2,"已确认，正在处理"),
     PROCESSED(3,"已处理，待验证"),
-    VALIDATED(4,"已验证，待评价"),
-    EVALUATED(5,"已评价，待填写清单"),
+    VALIDATED(4,"已验证，待填写问题清单"),
     OVER(6,"问题完结"),
     CLOSED(7,"被关闭"),;
 

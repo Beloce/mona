@@ -1,13 +1,15 @@
 /**
  * Created by xiangyang on 17/4/21.
  */
-function sendOpData(opid,errorId,memo,pointTo,reason) {
+function sendOpData(opid,errorId,memo,pointTo,reason,resolveType,respType) {
     var postdata = {
         opid:opid,
         errorId:errorId,
         memo:memo,
         pointTo:pointTo,
-        reason:reason
+        reason:reason,
+        resolveType:resolveType,
+        respType:respType
     }
     console.log(postdata);
     $.ajax({
@@ -18,11 +20,17 @@ function sendOpData(opid,errorId,memo,pointTo,reason) {
         data:JSON.stringify(postdata),
         async:false,
         success:function (data) {
-            layer.msg('提交成功');
+            if(data.success){
+                layer.msg('提交成功');
+                location.reload();
+            }else{
+                layer.msg('失败'+data.msg);
+            }
         },
     });
-    location.reload();
 }
+
+//***************生成产品列表HTML***************
 function createProductHtml(){
     var productHtml;
     $.ajax({//获取所有的产品
@@ -49,6 +57,55 @@ function createProductHtml(){
     productHtml +="</div>";
     //--------------------------------------------------------
     return productHtml;
+}
+
+//*************生成问题清单HTML***************
+function createErrorBill() {
+    var resolveTypeMap = "";
+    var respTypeMap = "";
+    $.ajax({//获取所有解决方案
+        type:"GET",
+        url:"/error/getResolveType.json",
+        dataType: 'json',
+        contentType:"application/json",
+        async:false,
+        success:function (data) {
+            resolveTypeMap = data;
+        },
+    });
+    $.ajax({//获取所有解决方案
+        type:"GET",
+        url:"/error/getRespType.json",
+        dataType: 'json',
+        contentType:"application/json",
+        async:false,
+        success:function (data) {
+            respTypeMap = data;
+        },
+    });
+    var resolveTypeHtml = "";
+    for(var resolveType in resolveTypeMap){
+        resolveTypeHtml += "<option value="+resolveType+">"+resolveTypeMap[resolveType]+"</option>";
+    }
+    var respTypeHtml = "";
+    for(var respType in respTypeMap){
+        respTypeHtml += "<option value="+respType+">"+respTypeMap[respType]+"</option>";
+    }
+    console.log(JSON.stringify(resolveTypeMap));
+    console.log(JSON.stringify(respTypeMap));
+
+    var errorBillHtml = "<div class='form-group content'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-6'><label>*责任方</label><select class='form-control' id='resolveType'>"+resolveTypeHtml+"</select></div>" +
+        "<div class='col-xs-6'><label>*解决方案</label><select class='form-control' id='respType'>"+respTypeHtml+"</select></div>" +
+        "</div>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12'><label>*问题原因</label><textarea class='form-control' placeholder='请输入原因' id='reason' rows='7'></textarea></div>" +
+        "</div>" +
+        "</div>"
+
+    return errorBillHtml;
+
 }
 $(function(){
     var errorId = $("#errorid").val();
@@ -141,6 +198,34 @@ $(function(){
                      }else{
                          sendOpData(opid,errorId,memo,pointTo,reason);
                      }
+                }
+            });
+        }
+        //------------------------------------
+        if(opid == 4){//已解决问题
+            layer.confirm('确认问题已经解决？', function(index){
+                sendOpData(opid,errorId,memo,pointTo);
+                layer.close(index);
+            });
+        }
+        //------------------------------------
+        if(opid == 7){//填写问题清单
+            layer.open({
+                type:1,
+                title:"关闭问题",
+                area: ['500px', '400px'],
+                content:createErrorBill(),
+                btn: ['确认提交', '取消'],
+                yes: function(index){
+                    var resolveType = $("#resolveType").val();
+                    var respType= $("#respType").val();
+                    var reason = $("#reason").val();
+                    console.log(resolveType+'  '+respType+'  '+reason);
+                    if(reason == null || reason=="" || resolveType==null || resolveType==""||respType==null||respType==""){
+                        layer.msg('请填写内容');
+                    }else{
+                        sendOpData(opid,errorId,memo,pointTo,reason,resolveType,respType);
+                    }
                 }
             });
         }

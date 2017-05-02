@@ -3,17 +3,17 @@ package com.xiangyang.form.opeartion;
 import lombok.Data;
 
 /**
- * Created by peiji on 2017/4/22.
+ * Created by xiangyang on 17/5/2.
  */
 @Data
-public class PostOpForm {
+public class PostBusOpForm {
     private Integer opid;
 
     private Long errorId;
 
+    private Integer appraiseLevel;//打分
+
     private String memo;
 
-    private Long pointTo;
 
-    private String reason;
 }

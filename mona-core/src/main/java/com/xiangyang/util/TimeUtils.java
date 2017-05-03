@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Map;
@@ -49,6 +50,11 @@ public class TimeUtils {
         return time;
     }
 
+    public static Date formatStrToDate(String pattern,String dateStr) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.parse(dateStr);
+    }
+
     public static final Date getNow() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -73,6 +79,48 @@ public class TimeUtils {
             System.out.println(e.getMessage());
             return "";
         }
+    }
+
+    //获得当天0点时间
+    public static Date getTodayStartTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+    //获得当天24点时间
+    public static Date getTodayEndTime(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+
+
+    //获得当天0点时间
+    public static Date getDateStartTime(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+    //获得当天24点时间
+    public static Date getDateEndTime(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 
     public static String formatRelativeTime(Date dateFromDB){
@@ -101,5 +149,10 @@ public class TimeUtils {
         else {
             return minutes+"分钟前";
         }
+    }
+
+    public static String getTodayDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat(YYYY年MM月DD);
+        return sdf.format(new Date());
     }
 }

@@ -251,7 +251,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="/log/show.htm" target="frame">
                         <i class="fa fa-file-text-o"></i> <span>消防日志</span>
                     </a>
                 </li>

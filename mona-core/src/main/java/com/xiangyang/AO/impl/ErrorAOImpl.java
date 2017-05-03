@@ -9,13 +9,16 @@ import com.xiangyang.enums.error.ErrorSourceEnum;
 import com.xiangyang.enums.error.ErrorStatusEnum;
 import com.xiangyang.enums.error.ErrorTypeEnum;
 import com.xiangyang.enums.error.OperationSignalEnum;
+import com.xiangyang.enums.errorrecord.ErrorRecordOpTypeEnum;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.manager.ErrorManager;
+import com.xiangyang.manager.ErrorRecordManager;
 import com.xiangyang.manager.ProductManager;
 import com.xiangyang.manager.UserManager;
 import com.xiangyang.model.*;
 import com.xiangyang.query.ErrorQuery;
+import com.xiangyang.query.ErrorRecordQuery;
 import com.xiangyang.util.ImgUrlUtil;
 import com.xiangyang.util.TimeUtils;
 import com.xiangyang.util.UserUtil;
@@ -27,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +59,9 @@ public class ErrorAOImpl implements ErrorAO {
 
     @Autowired
     ErrorRecordAO errorRecordAO;
+
+    @Autowired
+    ErrorRecordManager errorRecordManager;
 
     @Autowired
     TeamAO teamAO;
@@ -93,6 +100,12 @@ public class ErrorAOImpl implements ErrorAO {
             List<Long> teamIds = teamUserAO.findTeamIdsByUserId(userDO.getUserId());
             List<Long> productIds = productAO.findProductIdsByTeamIds(teamIds);
             errorVOs = this.queryWaitBussErrorsByProductIds(productIds);
+            for(ErrorVO errorVO : errorVOs){
+                if(!userDO.getUserId().equals(errorRecordAO.getHeadTechUserId(errorVO.getErrorId()))){
+                    errorVOs.remove(errorVO);
+                }
+            }
+
         }catch (Exception e){
             logger.error("|===用户："+userDO.getFlowerName()+" 正在查询问题业务，异常==|"+e.getMessage());
         }
@@ -228,6 +241,36 @@ public class ErrorAOImpl implements ErrorAO {
     }
 
     @Override
+    public int countAllWaitToSolveError() {
+        ErrorQuery errorQuery = new ErrorQuery();
+
+        List<Integer> errorStatusList = new ArrayList<>();
+        errorStatusList.add(ErrorStatusEnum.OVER.getCode());
+        errorStatusList.add(ErrorStatusEnum.CLOSED.getCode());
+        errorQuery.createCriteria().andStatusNotIn(errorStatusList);
+        return errorManager.countByQuery(errorQuery);
+
+    }
+
+    @Override
+    public int countTodayNewError() {
+        ErrorQuery errorQuery = new ErrorQuery();
+        errorQuery.createCriteria().andGmtCreateBetween(TimeUtils.getTodayStartTime(),TimeUtils.getTodayEndTime());
+        return errorManager.countByQuery(errorQuery);
+    }
+
+    @Override
+    public int countTodayDoneError() {
+        List<Integer> errorReStatusList = new ArrayList<>();
+        errorReStatusList.add(ErrorRecordOpTypeEnum.CLOSE.getCode());
+        errorReStatusList.add(ErrorRecordOpTypeEnum.OVER.getCode());
+
+        ErrorRecordQuery errorRecordQuery = new ErrorRecordQuery();
+        errorRecordQuery.createCriteria().andOperationTypeIn(errorReStatusList).andGmtCreateBetween(TimeUtils.getTodayStartTime(),TimeUtils.getTodayEndTime());
+        return errorRecordManager.countByQuery(errorRecordQuery);
+    }
+
+    @Override
     public ErrorVO findErrorVOById(Long errorId) {
         ErrorVO errorVO = new ErrorVO();
         try {
@@ -237,6 +280,14 @@ public class ErrorAOImpl implements ErrorAO {
             logger.error(e.getMessage());
         }
         return errorVO;
+    }
+
+    @Override
+    public List<ErrorVO> findErrorVOByLogDate(Date date) {
+        ErrorQuery errorQuery = new ErrorQuery();
+        errorQuery.createCriteria().andGmtCreateBetween(TimeUtils.getDateStartTime(date),TimeUtils.getDateEndTime(date));
+        List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+        return this.ErrorDOs2VOs(errorDOs);
     }
 
 

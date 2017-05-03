@@ -1,0 +1,37 @@
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">消防日志</h3>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <div class="form-group">
+                                <lable>请选择日期：</lable>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="datepicker" value="$!{todayDate}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="/static/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/static/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script>
+    //Date picker
+    $('#datepicker').datepicker({
+        autoclose: true,
+        language:'zh-CN'
+    });
+</script>

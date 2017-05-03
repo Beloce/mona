@@ -7,14 +7,14 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>$!{myWait}</h3>
 
-                        <p>待我处理</p>
+                        <p>待我处理问题</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-android-warning"></i>
                     </div>
-                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/error/businessErrorList.htm" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 <!---------------------- 我的消息 ------------------------>
@@ -22,14 +22,14 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>$!{allWait}</h3>
 
-                        <p>我的消息</p>
+                        <p>所有代办问题</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-android-notifications"></i>
                     </div>
-                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/error/businessErrorList.htm" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 <!---------------------- 我的团队 ------------------------>
@@ -37,14 +37,14 @@
                 <!-- small box -->
                 <div class="small-box bg-light-blue-gradient">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3>$!{todayNew}</h3>
 
-                        <p>我的团队</p>
+                        <p>今日新增</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-android-people"></i>
                     </div>
-                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/error/businessErrorList.htm" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
 <!----------------------- 我的回复 ------------------------>
@@ -52,13 +52,13 @@
                 <!-- small box -->
                 <div class="small-box bg-green-gradient">
                     <div class="inner">
-                        <h3>65</h3>
-                        <p>我的回复</p>
+                        <h3>$!{todayDone}</h3>
+                        <p>今日解决</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-chatbox-working"></i>
                     </div>
-                    <a href="#" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="/error/businessErrorList.htm" class="small-box-footer">点击查看 <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>

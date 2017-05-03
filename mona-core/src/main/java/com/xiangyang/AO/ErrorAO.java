@@ -8,6 +8,7 @@ import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.model.ErrorDO;
 import com.xiangyang.model.UserDO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,7 +70,35 @@ public interface ErrorAO {
     BizResult<List<ErrorVO>> queryBussinessErrorList(QueryErrorForm queryErrorForm);
 
 
+    /**
+     * 统计目前所有的待处理问题数量
+     * @return
+     */
+    int countAllWaitToSolveError();
+
+
+
+    /**
+     * 统计目前所有的待处理问题数量
+     * @return
+     */
+    int countTodayNewError();
+
+    /**
+     * 统计目前所有的待处理问题数量
+     * @return
+     */
+    int countTodayDoneError();
+
+
+    /**
+     * 根据id获取errorVO
+     * @param errorId
+     * @return
+     */
     ErrorVO findErrorVOById(Long errorId);
+
+    List<ErrorVO> findErrorVOByLogDate(Date date);
 
 
 

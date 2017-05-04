@@ -5,7 +5,8 @@ import com.xiangyang.BizResult;
 import com.xiangyang.VO.ProductVO;
 import com.xiangyang.enums.product.ProductEnum;
 import com.xiangyang.enums.product.ProductStatusEnum;
-import com.xiangyang.form.product.CreateProductForm;
+import com.xiangyang.form.product.AddProductForm;
+import com.xiangyang.form.product.DeleteProductForm;
 import com.xiangyang.form.product.UpdateProductForm;
 import com.xiangyang.manager.ProductManager;
 import com.xiangyang.manager.TeamManager;
@@ -15,6 +16,7 @@ import com.xiangyang.query.ProductQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ public class ProductAOImpl implements ProductAO {
         BizResult<List<ProductDO>> bizResult = new BizResult<List<ProductDO>>();
         try{
             ProductQuery productQuery = new ProductQuery();
-            productQuery.createCriteria().andProductIdIsNotNull();
+            productQuery.createCriteria().andProductIdIsNotNull().andStatusNotEqualTo(ProductStatusEnum.Deleted.getCode());
             List<ProductDO> productDOList = productManager.selectByQuery(productQuery);
             bizResult.setSuccess(true);
             bizResult.setResult(productDOList);
@@ -56,7 +58,7 @@ public class ProductAOImpl implements ProductAO {
         BizResult<List<ProductVO>> bizResult = new BizResult<List<ProductVO>>();
         try{
             ProductQuery productQuery = new ProductQuery();
-            productQuery.createCriteria().andProductIdIsNotNull();
+            productQuery.createCriteria().andProductIdIsNotNull().andStatusNotEqualTo(ProductStatusEnum.Deleted.getCode());
             List<ProductDO> productDOList = productManager.selectByQuery(productQuery);
             List<ProductVO> productVOs = new ArrayList<>();
             for(ProductDO productDO : productDOList){
@@ -101,6 +103,21 @@ public class ProductAOImpl implements ProductAO {
     }
 
     @Override
+    public ProductVO queryProductVOById(Long productId) {
+        ProductVO productVO = new ProductVO();
+        if(productId == null){
+            return productVO;
+        }
+        ProductDO productDO = productManager.selectByPrimaryKey(productId);
+        BeanUtils.copyProperties(productDO,productVO);
+        if(productDO.getTeamId()!=null){
+            TeamDO teamDO = teamManager.selectByPrimaryKey(productDO.getTeamId());
+            productVO.setTeamName(teamDO.getTeamName());
+        }
+        return productVO;
+    }
+
+    @Override
     public boolean updateProductDO(UpdateProductForm updateProductForm) {
         if(updateProductForm == null || updateProductForm.getProductId() == null){
             return false;
@@ -129,18 +146,18 @@ public class ProductAOImpl implements ProductAO {
     }
 
     @Override
-    public BizResult<ProductDO> addProduct(CreateProductForm createProductForm) {
+    public BizResult<ProductDO> addProduct(AddProductForm addProductForm) {
         BizResult bizResult = new BizResult();
-        if(createProductForm == null || StringUtils.isEmpty(createProductForm.getProductDesc()) || StringUtils.isEmpty(createProductForm.getProductName()) || createProductForm.getTeamId() == null){
+        if(addProductForm == null || StringUtils.isEmpty(addProductForm.getProductDesc()) || StringUtils.isEmpty(addProductForm.getProductName()) || addProductForm.getTeamId() == null){
             bizResult.setSuccess(false);
             bizResult.setMsg("参数为空，创建失败！");
         }
         try {
             ProductDO productDO = new ProductDO();
-            productDO.setProductDesc(createProductForm.getProductDesc());
-            productDO.setProductName(createProductForm.getProductName());
+            productDO.setProductDesc(addProductForm.getProductDesc());
+            productDO.setProductName(addProductForm.getProductName());
             productDO.setStatus(ProductStatusEnum.using.getCode());
-            productDO.setTeamId(createProductForm.getTeamId());
+            productDO.setTeamId(addProductForm.getTeamId());
             productManager.insertSelective(productDO);
             bizResult.setResult(productDO);
             bizResult.setSuccess(true);
@@ -175,4 +192,19 @@ public class ProductAOImpl implements ProductAO {
         ProductDO productDO = productManager.selectByPrimaryKey(productId);
         return productDO.getTeamId();
     }
+
+    @Override
+    public BizResult deleteProduct(DeleteProductForm deleteProductForm) {
+        BizResult bizResult = new BizResult();
+        if(deleteProductForm==null || deleteProductForm.getProductId() == null){
+            bizResult.setSuccess(false);
+            return bizResult;
+        }
+        ProductDO productDO = productManager.selectByPrimaryKey(deleteProductForm.getProductId());
+        productDO.setStatus(ProductStatusEnum.Deleted.getCode());
+        productManager.updateByPrimaryKeySelective(productDO);
+        bizResult.setSuccess(true);
+        return bizResult;
+    }
+
 }

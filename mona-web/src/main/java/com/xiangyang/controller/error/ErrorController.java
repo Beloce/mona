@@ -12,6 +12,7 @@ import com.xiangyang.enums.error.*;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.model.ErrorDO;
+import com.xiangyang.model.ProductDO;
 import com.xiangyang.model.UserDO;
 import com.xiangyang.util.TimeUtils;
 import com.xiangyang.util.UserUtil;
@@ -55,8 +56,6 @@ public class ErrorController {
     public String errorList(ModelMap modelMap,HttpServletRequest request){
         UserDO userDO = UserUtil.getUser();
         QueryErrorForm queryErrorForm = new QueryErrorForm();
-        queryErrorForm.setPageNo(1);
-        queryErrorForm.setPageSize(5);
         /*
         这边系统写死默认查询到的所有异常为待解决状态
          */
@@ -66,8 +65,8 @@ public class ErrorController {
         errorStatusList.add(ErrorStatusEnum.CONFIRMED.getCode());
         errorStatusList.add(ErrorStatusEnum.VALIDATED.getCode());
         errorStatusList.add(ErrorStatusEnum.PROCESSED.getCode());
-        queryErrorForm.setStatus(errorStatusList);
-        //查詢操作
+        queryErrorForm.setStatusList(errorStatusList);
+        //查询操作
         List<ErrorVO> myErrorDOList = errorAO.queryBussinessErrorListByUserDO(userDO);
         BizResult<List<ErrorVO>> allErrorResult = errorAO.queryBussinessErrorList(queryErrorForm);
         if(!allErrorResult.isSuccess()){
@@ -122,5 +121,36 @@ public class ErrorController {
     public Object getRespType(){
         LinkedHashMap<String,String> map = ResponsibilityEnum.getCodeAndDescMap();
         return map;
+    }
+
+
+    @RequestMapping("/myHisError.htm")
+    public String myHisError(QueryErrorForm queryErrorForm,ModelMap modelMap){
+        if(queryErrorForm == null || queryErrorForm.getPageSize() == null || queryErrorForm.getPageNo() == null){
+            queryErrorForm = new QueryErrorForm();
+            queryErrorForm.setPageNo(1);
+            queryErrorForm.setPageSize(20);
+        }
+        List<ErrorVO> errorVOs = errorAO.queryUserSolveErrorList(queryErrorForm);
+        modelMap.addAttribute("errorVOs",errorVOs);
+        modelMap.addAttribute("queryErrorForm",queryErrorForm);
+        return "/error/myHisError";
+    }
+    @RequestMapping("/allHisError.htm")
+    public String allHisError(QueryErrorForm queryErrorForm,ModelMap modelMap){
+        if(queryErrorForm == null || queryErrorForm.getPageSize() == null || queryErrorForm.getPageNo() == null){
+            queryErrorForm = new QueryErrorForm();
+            queryErrorForm.setPageNo(1);
+            queryErrorForm.setPageSize(10);
+        }
+        List<ErrorVO> errorVOs = errorAO.queryAllHisErrorList(queryErrorForm);
+        List<ProductDO> productDOs = productAO.queryAllProductList().getResult();
+        queryErrorForm.setRecordNum(errorAO.countQueryError(queryErrorForm));
+        modelMap.addAttribute("queryErrorForm",queryErrorForm);
+        modelMap.addAttribute("productDOs",productDOs);
+        modelMap.addAttribute("errorStatusMap",ErrorStatusEnum.getCodeAndDescMap());
+        modelMap.addAttribute("errorTypeMap",ErrorTypeEnum.getErrorTypeList());
+        modelMap.addAttribute("errorVOs",errorVOs);
+        return "/error/allHisError";
     }
 }

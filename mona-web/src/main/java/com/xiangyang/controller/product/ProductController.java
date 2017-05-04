@@ -1,11 +1,15 @@
 package com.xiangyang.controller.product;
 
 import com.xiangyang.AO.ProductAO;
+import com.xiangyang.AO.TeamAO;
 import com.xiangyang.BizResult;
 import com.xiangyang.VO.ProductVO;
+import com.xiangyang.VO.TeamVO;
 import com.xiangyang.enums.RoleEnum;
-import com.xiangyang.form.product.CreateProductForm;
+import com.xiangyang.form.product.AddProductForm;
+import com.xiangyang.form.product.DeleteProductForm;
 import com.xiangyang.form.product.UpdateProductForm;
+import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.model.ProductDO;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,9 @@ public class ProductController {
     @Autowired
     ProductAO productAO;
 
+    @Autowired
+    TeamAO teamAO;
+
     @RequiresRoles("admin")
     @RequestMapping("list.htm")
     public String getProductList(ModelMap modelMap){
@@ -41,6 +48,8 @@ public class ProductController {
         return bizResult;
     }
 
+
+
     @RequiresRoles("admin")
     @RequestMapping(value = "/update.json",method = RequestMethod.POST)
     public Object update(@RequestBody UpdateProductForm updateProductForm){
@@ -51,10 +60,11 @@ public class ProductController {
     }
 
     @RequiresRoles("admin")
-    @RequestMapping(value = "/create.json",method = RequestMethod.POST)
-    public Object create(@RequestBody CreateProductForm createProductForm){
+    @RequestMapping(value = "/delete.json",method = RequestMethod.POST)
+    @ResponseBody
+    public Object update(@RequestBody DeleteProductForm deleteProductForm){
         BizResult bizResult = new BizResult();
-        bizResult = productAO.addProduct(createProductForm);
+        bizResult= productAO.deleteProduct(deleteProductForm);
         return bizResult;
     }
 
@@ -65,5 +75,23 @@ public class ProductController {
         return bizResult.getResult();
     }
 
+    @RequestMapping(value = "/getProduct.json",method = RequestMethod.GET)
+    @ResponseBody
+    public Object getAll(Long productId){
+        ProductVO productVO = productAO.queryProductVOById(productId);
+        return productVO;
+    }
 
+    @RequestMapping("add.htm")
+    public String add(ModelMap modelMap){
+        List<TeamVO> teamVOs = teamAO.queryAllTeamVOs();
+        modelMap.addAttribute("teamList",teamVOs);
+        return "/product/add";
+    }
+
+    @RequestMapping("doAdd.htm")
+    public String doAdd(AddProductForm addProductForm , ModelMap modelMap){
+        productAO.addProduct(addProductForm);
+        return "redirect:/product/list.htm";
+    }
 }

@@ -1,0 +1,57 @@
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <form role="form" action="/product/doAdd.htm" onsubmit="return checksubmit()" >
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            新增产品
+                        </h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label>产品名称</label>
+                                        <input id="productName" name="productName" type="text" class="form-control" placeholder="请输入..."/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="form-group">
+                                        <label>*负责团队</label>
+                                        <select class="form-control" name="teamId" id="teamId">
+                                            <option value=""></option>
+                                            #foreach($teamVO in $!{teamList})
+                                            <option value=$!{teamVO.teamId}>${teamVO.teamName}</option>
+                                            #end
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div class="form-group">
+                                        <label>*产品描述</label>
+                                        <input id="productDesc" name="productDesc" type="textarea" class="form-control" placeholder="请输入..."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <div class="row">
+                            <div class="col-xs-2 pull-right">
+                                <input type="submit" id="submitbtn" class="btn btn-block btn-primary" >
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+<script src="/static/js/product/add.js"></script>

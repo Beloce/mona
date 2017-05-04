@@ -46,6 +46,14 @@ public class TeamController {
     }
 
     @RequiresRoles("admin")
+    @RequestMapping("getTeamList.json")
+    @ResponseBody
+    public Object getTeamList(){
+        List<TeamVO> teamVOs = teamAO.queryAllTeamVOs();
+        return teamVOs;
+    }
+
+    @RequiresRoles("admin")
     @RequestMapping("addTeam.htm")
     public String addTeamList(ModelMap modelMap){
         Long techDepartTopId = 12l;//暂时写死

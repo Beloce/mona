@@ -33,4 +33,12 @@ public enum ResolveTypeEnum {
         }
         return map;
     }
+    public static String getDescByCode(Integer code){
+        for(ResolveTypeEnum resolveTypeEnum : ResolveTypeEnum.values()){
+            if(code.equals(resolveTypeEnum.getCode())){
+                return resolveTypeEnum.getDesc();
+            }
+        }
+        return "";
+    }
 }

@@ -98,8 +98,31 @@ public interface ErrorAO {
      */
     ErrorVO findErrorVOById(Long errorId);
 
+    /**
+     * 通过问题编号寻找确认问题的人
+     * @param errorId
+     * @return
+     */
+    UserDO findSolverByErrorId(Long errorId);
+
+    /**
+     * 根据时间去获取当天的日志信息
+     * @param date
+     * @return
+     */
     List<ErrorVO> findErrorVOByLogDate(Date date);
 
+    /**
+     * 根据用户查询历史所有问题列表
+     * @param queryErrorForm
+     * @return
+     */
+    List<ErrorVO> queryUserSolveErrorList(QueryErrorForm queryErrorForm);
+
+    List<ErrorVO> queryAllHisErrorList(QueryErrorForm queryErrorForm);
+
+
+    int countQueryError(QueryErrorForm queryErrorForm);
 
 
 

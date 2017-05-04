@@ -234,53 +234,21 @@
                         <i class="fa fa-user"></i> <span>个人信息</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-warning"></i>
-                        <span>系统异常</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-##                        <span class="pull-right-container">
-##                          <span class="label pull-right bg-red">4</span>
-##                        </span>
+                <li>
+                    <a href="/error/businessErrorList.htm" target="frame">
+                        <i class="fa fa-times-circle"></i> <span>业务异常</span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#" target="frame"><i class="fa fa-cloud"></i> 线上异常</a></li>
-                        <li><a href="/error/businessErrorList.htm" target="frame"><i class="fa fa-times-circle"></i> 业务异常</a></li>
-                    </ul>
                 </li>
                 <li>
                     <a href="/log/show.htm" target="frame">
                         <i class="fa fa-file-text-o"></i> <span>消防日志</span>
                     </a>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa  fa-line-chart"></i>
-                        <span>消防报表</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#" target="frame"><i class="fa fa-circle-o"></i> 周度报表</a></li>
-                        <li><a href="#" target="frame"><i class="fa fa-moon-o"></i> 月度报表</a></li>
-                        <li><a href="#" target="frame"><i class="fa fa-calendar"></i> 季度报表</a></li>
-                    </ul>
+                <li>
+                  <a href="/statistics/show.htm" target="frame"><i class="fa fa-line-chart" aria-hidden="true"></i> <span>智能统计</span></a>
                 </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa  fa-question-circle"></i>
-                        <span>问答平台</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="qa/questionList.htm" target="frame"><i class="fa fa-circle-o"></i> 常见问题</a></li>
-                        <li><a href="#"><i class="fa fa-circle-o"></i> 技术&业务相关</a></li>
-                    </ul>
+                <li>
+                   <a href="qa/questionList.htm" target="frame"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span>常见问题</span></a>
                 </li>
                 <li class="treeview">
                     <a href="#">

@@ -30,6 +30,7 @@ public class TimeUtils {
     public static final String YYYYMM = "yyyyMM";
     public static final String YYMM = "yyMM";
     public static final String YYYY = "yyyy";
+    public static final String HH_mm = "HH:mm";
 
     final Logger logger  =  LoggerFactory.getLogger(this.getClass());
     /**
@@ -53,6 +54,10 @@ public class TimeUtils {
     public static Date formatStrToDate(String pattern,String dateStr) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.parse(dateStr);
+    }
+    public static String formatDateToStr(String pattern,Date date) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 
     public static final Date getNow() {
@@ -80,6 +85,17 @@ public class TimeUtils {
             return "";
         }
     }
+
+    public static final String getHourAndMin(Date date){
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat(TimeUtils.HH_mm);
+            return sdf.format(date);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return "";
+        }
+    }
+
 
     //获得当天0点时间
     public static Date getTodayStartTime(){

@@ -1,5 +1,7 @@
 package com.xiangyang.enums.error;
 
+import java.util.LinkedHashMap;
+
 /**
  * Created by peiji on 2017/1/31.
  * 问题的处理状态
@@ -36,5 +38,12 @@ public enum ErrorStatusEnum {
             }
         }
         return "";
+    }
+    public static LinkedHashMap<String,String> getCodeAndDescMap(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        for(ErrorStatusEnum es : ErrorStatusEnum.values()){
+            map.put(es.getCode().toString(),es.getDesc());
+        }
+        return map;
     }
 }

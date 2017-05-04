@@ -1,0 +1,54 @@
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">我处理的历史问题</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>问题名称</th>
+                            <th>报告者</th>
+                            <th>报告时间</th>
+                            <th>紧急程度</th>
+                            <th>问题原因</th>
+                            <th>解决方案</th>
+                            <th>评价</th>
+                            <th>解决状态</th>
+                            <th>操作</th>
+                        </tr>
+
+                        #foreach($errorVO in $errorVOs)
+                            <tr>
+                                <td>$!{errorVO.title}</td>
+                                <td>$!{errorVO.providerFlowerName}</td>
+                                <td>$!{errorVO.gmtCreateYYMMDD}</td>
+                        ##异常目前的类型
+                                <td>
+                                    #if($!{errorVO.type} == 1)##紧急状态
+                                    <span class="label label-danger">
+                                    #elseif($!{errorVO.type} == 2)
+                                    <span class="label label-warning">
+                                    #elseif($!{errorVO.type} == 3)
+                                    <span class="label label-primary">
+                                    #elseif($!{errorVO.type} == 4)
+                                    <span class="label label-success">
+                                    #end
+                                    $!{errorVO.typeDesc}
+                                    </span>
+                                </td>
+                                <td>$!{errorVO.reason}</td>
+                                <td>$!{errorVO.resolDesc}</td>
+                                <td>$!{errorVO.appraiseLevelDesc}</td>
+                                <td>$!{errorVO.statusDesc}</td>
+                                <td><a href="/error/detail.htm?errorId=$!{errorVO.errorId}">详情</a></td>
+                        </tr>
+                        #end
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

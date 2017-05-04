@@ -1,0 +1,24 @@
+#pageDiv{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-left: 0 !important;
+}
+#pageDiv a{
+    border: 1px solid #ddd;
+    color: #428bca;
+    background: #fff;
+    padding: 2px 10px;
+    font-size: 16px !important;
+}
+#pageDiv a:hover{
+    background: #428bca;
+    text-decoration: none;
+    color: #fff;
+}
+.activePage{
+    background: #428bca;
+    padding: 3px 11px;
+    color: #fff !important;
+    font-size: 16px !important;
+}

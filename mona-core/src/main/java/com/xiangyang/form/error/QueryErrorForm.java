@@ -15,10 +15,14 @@ public class QueryErrorForm extends PageForm {
 
     private Integer errorType;
 
-    private String title;
+    private Long productId;
 
-    private List<Integer> status;
+    private Integer status;
+
+    private List<Integer> statusList;
 
     private Long providerId;
+
+    private int recordNum;
 
 }

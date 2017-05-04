@@ -1,0 +1,143 @@
+<body style="background-color: #ecf0f5;font-family: 'Helvitica Neue',Helvitica,Arial,'Hiragino Sans GB','Microsoft YaHei','Arial Regular','Microsoft JhengHei',sans-serif">
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">我处理的历史问题</h3>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <div class="content"  style="min-height: auto">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <form role="form" action="/error/allHisError.htm">
+                                    <input type="hidden" id="recordNum" value="$!{queryErrorForm.recordNum}">
+                                    <input type="hidden" id="pageNo" value="$!{queryErrorForm.pageNo}" name="pageNo"/>
+                                    <div class="content" style="min-height: auto">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <div class="form-group">
+                                                    <label>产品名称</label>
+                                                    <select class="form-control" name="productId">
+                                                        #if($!{queryErrorForm.productId} != "")
+                                                            <option value="">所有</option>
+                                                        #else
+                                                            <option value="" selected>所有</option>
+                                                        #end
+                                                        #foreach($productDO in $!{productDOs})
+                                                            #if($!{queryErrorForm.productId} == $!{productDO.productId})
+                                                                <option value="$!{productDO.productId}"
+                                                                        selected>$!{productDO.productName}</option>
+                                                            #else
+                                                                <option value="$!{productDO.productId}">$!{productDO.productName}</option>
+                                                            #end
+
+                                                        #end
+                                                    </select>
+                                                </div>
+                                            </div>##产品名称
+                                            <div class="col-xs-3">
+                                                <div class="form-group">
+                                                    <label>问题状态</label>
+                                                    <select class="form-control" name="status">
+                                                        #if($!{queryErrorForm.status} != "")
+                                                            <option value="">所有</option>
+                                                        #else
+                                                            <option value="" selected>所有</option>
+                                                        #end
+                                                        #foreach($errorStatus in $!{errorStatusMap.keySet()})
+                                                            #if($!{queryErrorForm.status} == $!{errorStatus})
+                                                                <option value="$!{errorStatus}" selected>$!{errorStatusMap.get($!{errorStatus})}</option>
+                                                            #else
+                                                                <option value="$!{errorStatus}">$!{errorStatusMap.get($!{errorStatus})}</option>
+                                                            #end
+                                                        #end
+                                                    </select>
+                                                </div>
+                                            </div>##问题状态
+                                            <div class="col-xs-3">
+                                                <div class="form-group">
+                                                    <label>问题类型</label>
+                                                    <select class="form-control" name="errorType">
+                                                        #if($!{queryErrorForm.errorType} != "")
+                                                            <option value="">所有</option>
+                                                        #else
+                                                            <option value="" selected>所有</option>
+                                                        #end
+                                                        #foreach($errorType in $!{errorTypeMap.keySet()})
+                                                            #if($!{queryErrorForm.errorType} == $!{errorType})
+                                                                <option value="$!{errorType}" selected>$!{errorTypeMap.get($!{errorType})}</option>
+                                                            #else
+                                                                <option value="$!{errorType}">$!{errorTypeMap.get($!{errorType})}</option>
+                                                            #end
+
+                                                        #end
+                                                    </select>
+                                                </div>
+                                            </div>##问题类型
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <input type="submit" class="btn btn-primary" id="submit" value="搜索">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>问题名称</th>
+                            <th>产品名称</th>
+                            <th>报告者</th>
+                            <th>报告时间</th>
+                            <th>紧急程度</th>
+                            <th>问题原因</th>
+                            <th>解决者</th>
+                            <th>解决方案</th>
+                            <th>解决状态</th>
+                            <th>评价</th>
+                            <th>操作</th>
+                        </tr>
+                        #foreach($errorVO in $errorVOs)
+                            <tr>
+                                <td>$!{errorVO.title}</td>
+                                <td>$!{errorVO.productName}</td>
+                                <td>$!{errorVO.providerFlowerName}</td>
+                                <td>$!{errorVO.gmtCreateYYMMDD}</td>
+                            ##异常目前的类型
+                                <td>
+                                    #if($!{errorVO.type} == 1)##紧急状态
+                                    <span class="label label-danger">
+                                    #elseif($!{errorVO.type} == 2)
+                                    <span class="label label-warning">
+                                    #elseif($!{errorVO.type} == 3)
+                                    <span class="label label-primary">
+                                    #elseif($!{errorVO.type} == 4)
+                                    <span class="label label-success">
+                                    #end
+                                    $!{errorVO.typeDesc}
+                                </span>
+                                </td>
+                                <td>$!{errorVO.reason}</td>
+                                <td>$!{errorVO.solverFolwerName}</td>
+                                <td>$!{errorVO.resolDesc}</td>
+                                <td>$!{errorVO.statusDesc}</td>
+                                <td>$!{errorVO.appraiseLevelDesc}</td>
+                                <td><a href="/error/detail.htm?errorId=$!{errorVO.errorId}">详情</a></td>
+                            </tr>
+                        #end
+                    </table>
+                </div>
+                <div class="box-footer clearfix">
+                    <ul id="pageIndex" class="pagination pagination-sm no-margin pull-right">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="/static/js/errorjs/allError.js"></script>

@@ -68,6 +68,8 @@ public class ErrorVO implements Serializable {
     private String providerFlowerName;
 
     private String providerRealName;
+
+    private String solverFolwerName;
     /**
      * This field corresponds to the database column mona_error.gmt_modified
      */
@@ -81,6 +83,25 @@ public class ErrorVO implements Serializable {
      */
     private Date gmtCreate;
 
+    private String gmtCreateHourAndMin;
+
+    private String gmtCreateYYMMDD;
+
+
     //相对于当前时间的创建时间
     private String relativeCreate;
+
+    private String reason;
+
+    private Integer responsibility;
+
+    private String respDesc;
+
+    private Integer resolveType;
+
+    private String resolDesc;
+
+    private Integer appraiseLevel;
+
+    private String appraiseLevelDesc;
 }

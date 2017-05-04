@@ -10,7 +10,7 @@ import java.util.List;
 public class BaseQuery implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public static int DEFAULT_PAGE_SIZE = 20;  //  默认页大小
+    public static int DEFAULT_PAGE_SIZE = 10;  //  默认页大小
     public static int MAX_PAGE_SIZE = 100;      // 最大页大小
     public static int DEFAULT_PAGE = 1;  // 默认分页
     /**

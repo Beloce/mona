@@ -2,7 +2,8 @@ package com.xiangyang.AO;
 
 import com.xiangyang.BizResult;
 import com.xiangyang.VO.ProductVO;
-import com.xiangyang.form.product.CreateProductForm;
+import com.xiangyang.form.product.AddProductForm;
+import com.xiangyang.form.product.DeleteProductForm;
 import com.xiangyang.form.product.UpdateProductForm;
 import com.xiangyang.model.ProductDO;
 
@@ -23,11 +24,15 @@ public interface ProductAO {
 
     BizResult<ProductDO> queryProductDOById(Long productId);
 
+    ProductVO queryProductVOById(Long productId);
+
     boolean updateProductDO(UpdateProductForm updateProductForm);
 
-    BizResult<ProductDO> addProduct(CreateProductForm createProductForm);
+    BizResult<ProductDO> addProduct(AddProductForm addProductForm);
 
     List<Long> findProductIdsByTeamIds(List<Long> teamIds);
 
     Long queryTeamIdByProductId(Long productId);
+
+    BizResult deleteProduct(DeleteProductForm deleteProductForm);
 }

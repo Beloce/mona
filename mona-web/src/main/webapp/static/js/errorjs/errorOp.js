@@ -91,8 +91,6 @@ function createErrorBill() {
     for(var respType in respTypeMap){
         respTypeHtml += "<option value="+respType+">"+respTypeMap[respType]+"</option>";
     }
-    console.log(JSON.stringify(resolveTypeMap));
-    console.log(JSON.stringify(respTypeMap));
 
     var errorBillHtml = "<div class='form-group content'>" +
         "<div class='row'>" +

@@ -33,4 +33,12 @@ public enum ResponsibilityEnum {
         }
         return map;
     }
+    public static String getDescByCode(Integer code){
+        for(ResponsibilityEnum responsibilityEnum : ResponsibilityEnum.values()){
+            if(code.equals(responsibilityEnum.getCode())){
+                return responsibilityEnum.getDesc();
+            }
+        }
+        return "";
+    }
 }

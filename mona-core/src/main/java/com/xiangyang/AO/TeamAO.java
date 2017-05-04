@@ -33,5 +33,11 @@ public interface TeamAO {
      */
     BizResult<TeamVO> queryTeamVOById(Long teamId);
 
+    /**
+     * 获取所有的团队信息
+     * @return
+     */
+    List<TeamVO> queryAllTeamVOs();
+
 
 }

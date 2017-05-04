@@ -5,11 +5,9 @@ import com.xiangyang.BizResult;
 import com.xiangyang.VO.ErrorRecordVO;
 import com.xiangyang.VO.ErrorVO;
 import com.xiangyang.dto.ErrorInfoDTO;
-import com.xiangyang.enums.error.ErrorSourceEnum;
-import com.xiangyang.enums.error.ErrorStatusEnum;
-import com.xiangyang.enums.error.ErrorTypeEnum;
-import com.xiangyang.enums.error.OperationSignalEnum;
+import com.xiangyang.enums.error.*;
 import com.xiangyang.enums.errorrecord.ErrorRecordOpTypeEnum;
+import com.xiangyang.enums.errorrecord.ErrorRecordStatusEnum;
 import com.xiangyang.form.error.ErrorForm;
 import com.xiangyang.form.error.QueryErrorForm;
 import com.xiangyang.manager.ErrorManager;
@@ -225,7 +223,7 @@ public class ErrorAOImpl implements ErrorAO {
 
             //简单分类筛选
             errorQuery.createCriteria().andSourceEqualTo(queryErrorForm.getErrorSource())
-                    .andStatusIn(queryErrorForm.getStatus());
+                    .andStatusIn(queryErrorForm.getStatusList());
 
             PageResult<ErrorDO> errorDOs = errorManager.selectByQueryWithPage(errorQuery);
             //循环获取errorDO
@@ -283,13 +281,102 @@ public class ErrorAOImpl implements ErrorAO {
     }
 
     @Override
+    public UserDO findSolverByErrorId(Long errorId) {
+        UserDO userDO = new UserDO();
+        ErrorRecordQuery errorRecordQuery = new ErrorRecordQuery();
+        errorRecordQuery.createCriteria().andErrorIdEqualTo(errorId).andOperationTypeEqualTo(ErrorRecordOpTypeEnum.CONFIRM.getCode()).andStatusEqualTo(ErrorRecordStatusEnum.USING.getCode());
+        errorRecordQuery.setOrderByClause("error_id desc");
+        List<ErrorRecordDO> errorRecordDOs = errorRecordManager.selectByQuery(errorRecordQuery);
+        if(errorRecordDOs.size() > 0){
+            userDO = userManager.selectByPrimaryKey(errorRecordDOs.get(0).getOperatorId());
+        }
+        return userDO;
+    }
+
+    @Override
     public List<ErrorVO> findErrorVOByLogDate(Date date) {
         ErrorQuery errorQuery = new ErrorQuery();
         errorQuery.createCriteria().andGmtCreateBetween(TimeUtils.getDateStartTime(date),TimeUtils.getDateEndTime(date));
         List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
-        return this.ErrorDOs2VOs(errorDOs);
+        List<ErrorVO> errorVOs = this.ErrorDOs2VOs(errorDOs);
+        for (ErrorVO errorVO : errorVOs){
+            errorVO.setSolverFolwerName(findSolverByErrorId(errorVO.getErrorId()).getFlowerName());
+        }
+        return errorVOs;
     }
 
+    @Override
+    public List<ErrorVO> queryUserSolveErrorList(QueryErrorForm queryErrorForm) {
+        ErrorRecordQuery errorRecordQuery = new ErrorRecordQuery();
+        errorRecordQuery.createCriteria().andOperationTypeEqualTo(ErrorRecordOpTypeEnum.CONFIRM.getCode()).
+                andStatusEqualTo(ErrorRecordStatusEnum.USING.getCode());
+        errorRecordQuery.setPageNo(queryErrorForm.getPageNo());
+        errorRecordQuery.setPageSize(queryErrorForm.getPageSize());
+        errorRecordQuery.setOrderByClause("error_id desc");
+        List<ErrorRecordDO> errorRecordDOs = errorRecordManager.selectByQuery(errorRecordQuery);
+        List<Long> errorIds = new ArrayList<>();
+        for(ErrorRecordDO errorRecordDO : errorRecordDOs){
+            errorIds.add(errorRecordDO.getErrorId());
+        }
+        ErrorQuery errorQuery = new ErrorQuery();
+        errorQuery.createCriteria().andErrorIdIn(errorIds);
+        List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+        return ErrorDOs2VOs(errorDOs);
+    }
+
+    @Override
+    public List<ErrorVO> queryAllHisErrorList(QueryErrorForm queryErrorForm) {
+        List<ErrorVO> errorVOs = new ArrayList<>();
+        try {
+            ErrorQuery errorQuery = new ErrorQuery();
+            ErrorQuery.Criteria query = errorQuery.createCriteria();
+            query.andErrorIdNotEqualTo(0l);
+            if(queryErrorForm.getErrorType()!=null){
+                query.andTypeEqualTo(queryErrorForm.getErrorType());
+            }
+            if(queryErrorForm.getProductId()!=null){
+                query.andProductIdEqualTo(queryErrorForm.getProductId());
+            }
+            if(queryErrorForm.getStatus()!=null){
+                query.andStatusEqualTo(queryErrorForm.getStatus());
+            }
+            errorQuery.setOrderByClause("error_id desc");
+            errorQuery.setPageNo(queryErrorForm.getPageNo());
+            errorQuery.setPageSize(queryErrorForm.getPageSize());
+            List<ErrorDO> errorDOs = errorManager.selectByQuery(errorQuery);
+            errorVOs =  ErrorDOs2VOs(errorDOs);
+            for (ErrorVO errorVO : errorVOs){
+                errorVO.setSolverFolwerName(findSolverByErrorId(errorVO.getErrorId()).getFlowerName());
+            }
+        }catch (Exception e){
+            logger.error(e.toString());
+        }
+        return errorVOs;
+    }
+
+    @Override
+    public int countQueryError(QueryErrorForm queryErrorForm) {
+        int count = 0;
+        try {
+            ErrorQuery errorQuery = new ErrorQuery();
+            ErrorQuery.Criteria query = errorQuery.createCriteria();
+            query.andErrorIdNotEqualTo(0l);
+            if(queryErrorForm.getErrorType()!=null){
+                query.andTypeEqualTo(queryErrorForm.getErrorType());
+            }
+            if(queryErrorForm.getProductId()!=null){
+                query.andProductIdEqualTo(queryErrorForm.getProductId());
+            }
+            if(queryErrorForm.getStatus()!=null){
+                query.andStatusEqualTo(queryErrorForm.getStatus());
+            }
+            count = errorManager.countByQuery(errorQuery);
+
+        }catch (Exception e){
+            logger.error(e.toString());
+        }
+        return count;
+    }
 
 
     private List<ErrorVO>  ErrorDOs2VOs(List<ErrorDO> errorDOs){
@@ -307,13 +394,24 @@ public class ErrorAOImpl implements ErrorAO {
         UserDO providerDO = userManager.selectByPrimaryKey(errorDO.getProviderId());
         ProductDO productDO = productManager.selectByPrimaryKey(errorDO.getProductId());
         errorVO.setProductName(productDO.getProductName());
+        errorVO.setGmtCreateHourAndMin(TimeUtils.getHourAndMin(errorDO.getGmtCreate()));
         errorVO.setProviderFlowerName(providerDO.getFlowerName());
         errorVO.setProviderRealName(providerDO.getRealName());
         errorVO.setStatusDesc(ErrorStatusEnum.getDescByCode(errorDO.getStatus()));
         errorVO.setTypeDesc(ErrorTypeEnum.getDescByCode(errorDO.getType()));
         errorVO.setRelativeCreate(TimeUtils.formatRelativeTime(errorDO.getGmtCreate()));
         errorVO.setRelativeModified(TimeUtils.formatRelativeTime(errorDO.getGmtModified()));
+        errorVO.setGmtCreateYYMMDD(TimeUtils.DateToStr(errorDO.getGmtCreate(),TimeUtils.YYYY_MM_DD));
         errorVO.setPics(ImgUrlUtil.parseList(errorDO.getScreenshot()));
+        if(errorDO.getResolveType()!=null){
+            errorVO.setResolDesc(ResolveTypeEnum.getDescByCode(errorDO.getResolveType()));
+        }
+        if(errorDO.getResponsibility()!=null){
+            errorVO.setRespDesc(ResponsibilityEnum.getDescByCode(errorDO.getResponsibility()));
+        }
+        if(errorDO.getAppraiseLevel() !=null){
+            errorVO.setAppraiseLevelDesc(errorVO.getAppraiseLevel()+"星");
+        }
         return errorVO;
     }
 }

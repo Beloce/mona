@@ -149,4 +149,34 @@ public class TeamAOImpl implements TeamAO {
         }
         return bizResult;
     }
+
+    @Override
+    public List<TeamVO> queryAllTeamVOs() {
+        TeamQuery teamQuery = new TeamQuery();
+        teamQuery.createCriteria().andTeamIdIsNotNull();
+        List<TeamDO> teamDOs = teamManager.selectByQuery(teamQuery);
+        return teamDOs2VOs(teamDOs);
+    }
+
+    private TeamVO teamDO2VO(TeamDO teamDO){
+        TeamVO teamVO = new TeamVO();
+        if(teamDO == null){
+            return teamVO;
+        }
+        BeanUtils.copyProperties(teamDO,teamVO);
+        return teamVO;
+    }
+
+    private List<TeamVO> teamDOs2VOs(List<TeamDO> teamDOs){
+        List<TeamVO> teamVOs = new ArrayList<>();
+        if(teamDOs == null || teamDOs.size() == 0){
+            return teamVOs;
+        }
+        for(TeamDO teamDO : teamDOs){
+            TeamVO teamVO = new TeamVO();
+            BeanUtils.copyProperties(teamDO,teamVO);
+            teamVOs.add(teamVO);
+        }
+        return teamVOs;
+    }
 }

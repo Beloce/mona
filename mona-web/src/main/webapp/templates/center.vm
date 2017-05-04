@@ -252,14 +252,14 @@
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-edit"></i> <span>项目管理</span>
+                        <i class="fa fa-edit"></i> <span>团队产品管理</span>
                         <span class="pull-right-container">
                           <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="/product/list.htm" target="frame"><i class="fa  fa-product-hunt"></i>产品编辑</a></li>
-                        <li><a href="/department/departmentList.htm" target="frame"><i class="fa fa-user-o"></i>部门/人员管理</a></li>
+                        <li><a href="/department/departmentList.htm" target="frame"><i class="fa fa-user-o"></i>部门/人员查看</a></li>
                         <li><a href="/team/teamList.htm" target="frame"><i class="fa fa-group"></i>团队管理</a></li>
                     </ul>
                 </li>

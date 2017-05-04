@@ -5,8 +5,10 @@
         }
     </style>
 </head>
-<body >
+<body>
+    <div class="content">
     <form class="layui-form" action="">
+
         <input type="hidden" value="$!teamVO.teamId" id ="teamId" />
         <div class="layui-form-item">
             <label class="layui-form-label">团队名称:</label>
@@ -59,4 +61,6 @@
             </table>
         </div>
     </form>
+    </div>
+
 </body>

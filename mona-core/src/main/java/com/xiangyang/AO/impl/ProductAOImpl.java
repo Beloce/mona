@@ -138,6 +138,7 @@ public class ProductAOImpl implements ProductAO {
                 productDO.setTeamId(updateProductForm.getTeamId());
             }
             productManager.updateByPrimaryKeySelective(productDO);
+            logger.info("更新产品信息,产品id"+productDO.getProductId());
         }catch (Exception e){
             logger.error(e.getMessage());
             return false;

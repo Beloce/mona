@@ -52,6 +52,7 @@ public class ProductController {
 
     @RequiresRoles("admin")
     @RequestMapping(value = "/update.json",method = RequestMethod.POST)
+    @ResponseBody
     public Object update(@RequestBody UpdateProductForm updateProductForm){
         BizResult bizResult = new BizResult();
         boolean flag = productAO.updateProductDO(updateProductForm);
@@ -62,7 +63,7 @@ public class ProductController {
     @RequiresRoles("admin")
     @RequestMapping(value = "/delete.json",method = RequestMethod.POST)
     @ResponseBody
-    public Object update(@RequestBody DeleteProductForm deleteProductForm){
+    public Object delete(@RequestBody DeleteProductForm deleteProductForm){
         BizResult bizResult = new BizResult();
         bizResult= productAO.deleteProduct(deleteProductForm);
         return bizResult;

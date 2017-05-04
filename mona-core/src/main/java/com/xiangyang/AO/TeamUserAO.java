@@ -1,5 +1,7 @@
 package com.xiangyang.AO;
 
+import com.xiangyang.VO.TeamUserVO;
+
 import java.util.List;
 
 /**
@@ -20,6 +22,8 @@ public interface TeamUserAO {
     boolean isUserInTeam(Long userId,Long teamId);
 
     boolean isUserTheLeader(Long userId,Long teamId);
+
+    List<TeamUserVO> queryTeamUserVOByTeamId(Long teamId);
 
 
 }

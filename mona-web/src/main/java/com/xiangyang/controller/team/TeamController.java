@@ -2,11 +2,16 @@ package com.xiangyang.controller.team;
 
 import com.xiangyang.AO.DepartmentAO;
 import com.xiangyang.AO.TeamAO;
+import com.xiangyang.AO.TeamUserAO;
 import com.xiangyang.BizResult;
+import com.xiangyang.VO.TeamUserVO;
 import com.xiangyang.VO.TeamVO;
 import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.form.team.QueryTeamForm;
+import com.xiangyang.form.team.UpdateTeamForm;
 import com.xiangyang.model.DepartmentDO;
+import com.xiangyang.model.TeamDO;
+import com.xiangyang.model.TeamUserDO;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +34,9 @@ public class TeamController {
 
     @Autowired
     DepartmentAO departmentAO;
+
+    @Autowired
+    TeamUserAO teamUserAO;
 
     /**
      * 获取team信息
@@ -62,8 +70,35 @@ public class TeamController {
         return "/team/addTeam";
     }
 
+    /**
+     * 编辑团队信息
+     * @param teamId
+     * @param modelMap
+     * @return
+     */
     @RequiresRoles("admin")
-    @RequestMapping(value = "doAddTeam",method = RequestMethod.POST)
+    @RequestMapping("edit.htm")
+    public String edit(@RequestParam Long teamId, ModelMap modelMap){
+        Long techDepartTopId = 12l;//暂时写死
+        List<DepartmentDO> departmentDOs = departmentAO.querySonDepartmentListById(techDepartTopId);
+        TeamVO teamVO = teamAO.queryTeamVOById(teamId).getResult();
+        List<TeamUserVO> teamUserVOs = teamUserAO.queryTeamUserVOByTeamId(teamId);
+        modelMap.addAttribute("departmentTreeList",departmentDOs);
+        modelMap.addAttribute("teamUserVOs",teamUserVOs);
+        modelMap.addAttribute("teamVO",teamVO);
+        return "/team/edit";
+    }
+
+    @RequiresRoles("admin")
+    @RequestMapping(value = "doUpdate.json",method = RequestMethod.POST)
+    @ResponseBody
+    public Object doUpdate(@RequestBody UpdateTeamForm updateTeamForm){
+        BizResult bizResult = teamAO.updateTeamInfo(updateTeamForm);
+        return bizResult;
+    }
+
+    @RequiresRoles("admin")
+    @RequestMapping(value = "doAddTeam.json",method = RequestMethod.POST)
     @ResponseBody
     public Object doAddTeam(@RequestBody AddTeamForm addTeamForm){
         BizResult bizResult = teamAO.addTeamByForm(addTeamForm);

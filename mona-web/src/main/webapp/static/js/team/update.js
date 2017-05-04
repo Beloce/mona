@@ -1,9 +1,7 @@
-/**
- * Created by peiji on 2017/3/30.
- */
 $("#submitbtn").on("click",function(){
     var teamName = $("#teamName").val();
     var teamDesc = $("#teamDesc").val();
+    var teamId = $("#teamId").val();
     var teamUserList = new Array();
     var leaderList = new Array();
     var UserLength = $("#selected li").size();
@@ -20,11 +18,13 @@ $("#submitbtn").on("click",function(){
             icon:2,
             yes: function(index, layero){
                 layer.close(index);
+
             }
         });
         return;
     }
-var dataForm = {
+    var dataForm = {
+        teamId:teamId,
         teamName:teamName,
         teamDesc:teamDesc,
         teamUserIds:teamUserList,
@@ -33,7 +33,7 @@ var dataForm = {
 
     $.ajax({
         type:"POST",
-        url:"/team/doAddTeam.json",
+        url:"/team/doUpdate.json",
         data:JSON.stringify(dataForm),
         dataType: 'json',
         contentType:"application/json",
@@ -42,7 +42,7 @@ var dataForm = {
             if(data.success){
                 layer.open({
                     title:"成功",
-                    content: '团队创建成功',
+                    content: '团队信息修改成功',
                     icon:1,
                     yes: function(index, layero){
                         layer.close(index);

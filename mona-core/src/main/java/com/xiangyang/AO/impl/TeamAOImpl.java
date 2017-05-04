@@ -8,6 +8,7 @@ import com.xiangyang.VO.TeamVO;
 import com.xiangyang.enums.team.TeamRoleEnum;
 import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.form.team.QueryTeamForm;
+import com.xiangyang.form.team.UpdateTeamForm;
 import com.xiangyang.manager.TeamManager;
 import com.xiangyang.manager.TeamUserManager;
 import com.xiangyang.manager.UserManager;
@@ -156,6 +157,40 @@ public class TeamAOImpl implements TeamAO {
         teamQuery.createCriteria().andTeamIdIsNotNull();
         List<TeamDO> teamDOs = teamManager.selectByQuery(teamQuery);
         return teamDOs2VOs(teamDOs);
+    }
+
+    @Override
+    public BizResult updateTeamInfo(UpdateTeamForm updateTeamForm) {
+        BizResult bizResult = new BizResult();
+        try {
+            if(updateTeamForm == null || updateTeamForm.getTeamUserIds()==null || updateTeamForm.getTeamUserIds().size()==0
+                    || StringUtils.isBlank(updateTeamForm.getTeamDesc())|| StringUtils.isBlank(updateTeamForm.getTeamName())
+                    || updateTeamForm.getLeaderIds()==null || updateTeamForm.getTeamUserIds().size()==0){
+                bizResult.setSuccess(false);
+                bizResult.setMsg("参数有误");
+            }
+            TeamDO teamDO = teamManager.selectByPrimaryKey(updateTeamForm.getTeamId());
+            teamDO.setTeamDec(updateTeamForm.getTeamDesc());
+            teamDO.setTeamName(updateTeamForm.getTeamName());
+            teamManager.updateByPrimaryKeySelective(teamDO);
+
+            TeamUserQuery teamUserQuery = new TeamUserQuery();
+            teamUserQuery.createCriteria().andTeamIdEqualTo(updateTeamForm.getTeamId());
+            teamUserManager.deleteByQuery(teamUserQuery);
+            for(Long userId : updateTeamForm.getTeamUserIds()){
+                TeamUserDO teamUserDO = new TeamUserDO();
+                teamUserDO.setTeamId(updateTeamForm.getTeamId());
+                teamUserDO.setUserId(userId);
+                teamUserManager.insertSelective(teamUserDO);
+            }
+            teamUserAO.addTeamLeader(updateTeamForm.getLeaderIds(), updateTeamForm.getTeamId());//设置团队leader
+            bizResult.setSuccess(true);
+        }catch (Exception e){
+            logger.error(e.toString());
+            bizResult.setMsg("更新失败，服务器异常");
+            bizResult.setSuccess(false);
+        }
+        return bizResult;
     }
 
     private TeamVO teamDO2VO(TeamDO teamDO){

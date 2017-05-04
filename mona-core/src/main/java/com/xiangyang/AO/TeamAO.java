@@ -4,6 +4,7 @@ import com.xiangyang.BizResult;
 import com.xiangyang.VO.TeamVO;
 import com.xiangyang.form.team.AddTeamForm;
 import com.xiangyang.form.team.QueryTeamForm;
+import com.xiangyang.form.team.UpdateTeamForm;
 import com.xiangyang.model.TeamDO;
 
 import java.util.List;
@@ -38,6 +39,8 @@ public interface TeamAO {
      * @return
      */
     List<TeamVO> queryAllTeamVOs();
+
+    BizResult updateTeamInfo(UpdateTeamForm updateTeamForm);
 
 
 }

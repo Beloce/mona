@@ -9,6 +9,7 @@
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="author_id" jdbcType="BIGINT" property="authorId" />
         <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
         <result column="product_id" jdbcType="BIGINT" property="productId" />
         <result column="status" jdbcType="TINYINT" property="status" />
     </resultMap>
@@ -74,7 +75,7 @@
     </sql>
 
     <sql id="Base_Column_List">
-        question_id,gmt_create,gmt_modified,title,author_id,description,product_id,status
+        question_id,gmt_create,gmt_modified,title,author_id,description,content,product_id,status
     </sql>
 
     <select id="selectByQuery" parameterType="com.xiangyang.query.QuestionShowQuery" resultMap="BaseResultMap">
@@ -124,6 +125,9 @@
             <if test="description != null">
                 description,
             </if>
+            <if test="content != null">
+                content,
+            </if>
             <if test="productId != null">
                 product_id,
             </if>
@@ -141,6 +145,9 @@
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
             </if>
             <if test="productId != null">
                 #{productId,jdbcType=BIGINT},
@@ -171,6 +178,9 @@
             <if test="record.description != null">
                 description = #{record.description,jdbcType=VARCHAR},
             </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
             <if test="record.productId != null">
                 product_id = #{record.productId,jdbcType=BIGINT},
             </if>
@@ -188,6 +198,7 @@
         title = #{record.title,jdbcType=VARCHAR},
         author_id = #{record.authorId,jdbcType=BIGINT},
         description = #{record.description,jdbcType=VARCHAR},
+        content = #{record.content,jdbcType=VARCHAR},
         product_id = #{record.productId,jdbcType=BIGINT},
         status = #{record.status,jdbcType=TINYINT},
         gmt_modified = now()
@@ -208,6 +219,9 @@
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
             </if>
             <if test="productId != null">
                 product_id = #{productId,jdbcType=BIGINT},

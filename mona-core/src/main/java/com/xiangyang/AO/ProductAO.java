@@ -35,4 +35,5 @@ public interface ProductAO {
     Long queryTeamIdByProductId(Long productId);
 
     BizResult deleteProduct(DeleteProductForm deleteProductForm);
+
 }

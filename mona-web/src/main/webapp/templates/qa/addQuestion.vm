@@ -23,18 +23,10 @@
                     <div class="row">
                         <div class="col-xs-3">
                             <label>*产品名称</label>
-                            <select class="form-control">
+                            <select id="productId" class="form-control">
                                 #foreach($product in $!{productList})
                                 <option value="$product.productId">$product.productName</option>
                                 #end
-                            </select>
-                        </div>
-                        <div class="col-xs-3">
-                            <label>*问题等级</label>
-                            <select class="form-control">
-                            #foreach($questionLevel in $!{questionLevelList.keySet()})
-                                <option vlaue="$questionLevel"> $!{questionLevelList.get($questionLevel)}</option>
-                            #end
                             </select>
                         </div>
                         <div class="col-xs-6">
@@ -45,24 +37,25 @@
                     <div class="row">
                         <div class="col-xs-6">
                             <label>*问题标题</label>
-                            <input type="text" class="form-control" placeholder="请输入...">
+                            <input id="questionTitle" type="text" class="form-control" placeholder="请输入...">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label>*问题简介</label>
-                    <input type="text" class="form-control" placeholder="请输入...">
+                    <input type="text" id="questionDesc" class="form-control" placeholder="请输入...">
                 </div>
                 ##编辑框
                 <div class="form-group">
                     <label>*问题描述</label>
-                    <textarea id="textarea" style="height:400px;max-height:500px;width: auto">
+                    <textarea id="content" style="height:400px;max-height:500px;width: auto">
+                        $!{quote}
                     </textarea>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-xs-2">
-                            <submit type="button" class="btn btn-block btn-success">提交</submit>
+                            <button id="add_submit" class="btn btn-block btn-success">提交</button>
                         </div>
                         <div class="col-xs-10">
                         </div>
@@ -75,8 +68,8 @@
 ##end---------------------------
 <script type="text/javascript" src="/static/wangEditor/js/wangEditor.min.js"></script>
 <script>
-    var editor = new wangEditor('textarea');
+    var editor = new wangEditor('content');
     editor.create();
 </script>
-
+<script src="/static/js/qajs/add.js"></script>
 </body>

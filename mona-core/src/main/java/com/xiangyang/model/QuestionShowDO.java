@@ -31,6 +31,11 @@ public class QuestionShowDO implements Serializable {
     private String description;
 
     /**
+     * This field corresponds to the database column mona_question_show.content
+     */
+    private String content;
+
+    /**
      * This field corresponds to the database column mona_question_show.product_id
      */
     private Long productId;
@@ -80,6 +85,14 @@ public class QuestionShowDO implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Long getProductId() {

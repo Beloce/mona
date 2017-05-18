@@ -6,8 +6,6 @@
                   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        ">
 
-    <!--<context:property-placeholder-->
-    <!--location="classpath:config/maybach-config.properties"/>-->
 
     <import resource="classpath:testconfig/applicationContext-dao.xml"/>
     <import resource="classpath:testconfig/applicationContext-manager.xml"/>
